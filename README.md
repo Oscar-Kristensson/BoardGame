@@ -1,4 +1,4 @@
-# WorldGame
+# BoardGame
 
 is a tool for automating stoichiometric calculations by automatically calculating the mass, molarmass, amount of substance, concentration, volume and more.
 
