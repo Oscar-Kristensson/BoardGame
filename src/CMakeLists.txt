@@ -3,6 +3,7 @@ set(SOURCES
     main.cpp
     parser.cpp
     game.cpp
+    startMenu.cpp
 )
 
 

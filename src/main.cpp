@@ -30,37 +30,69 @@ int main()
 
 #endif
 
+    enum ApplicationState
+    {
+        StartMenu = 0,
+        Game = 1
+    };
+
+
+    ApplicationState applicationState = StartMenu;
+
     const unsigned int windowWidth = 1920;
     const unsigned int windowHeight = 1080;
     const unsigned int targetFPS = 60;
     
+    SetConfigFlags(FLAG_WINDOW_RESIZABLE);  
     InitWindow(windowWidth, windowHeight, "BoardGame");
 
     SetTargetFPS(targetFPS);
         
     BoardGame::Game gameApp = BoardGame::Game();
+    BoardGame::StartMenu startMenu = BoardGame::StartMenu();
 
 
     while (!WindowShouldClose())
     {
         // Update game
 
-        gameApp.update();
+        if (IsKeyDown(KEY_Q))
+        {
+            
+            if (IsKeyDown(KEY_M))
+                applicationState = StartMenu;
+            else if (IsKeyDown(KEY_G))
+                applicationState = Game;
+        }
+
+        switch (applicationState)
+        {
+        case StartMenu:
+            startMenu.update();
+            break;
+        case Game:
+            gameApp.update();
+            break;
+        default:
+            break;
+        }
         
-        // Player movement
-        // Camera zoom controls
-        // Uses log scaling to provide consistent zoom speed
-
-
-
-        // Move camera to player
-
 
         // Drawing
         BeginDrawing();
             ClearBackground(WHITE);
 
-            gameApp.render();
+            switch (applicationState)
+            {
+            case StartMenu:
+                startMenu.render();
+                break;
+            case Game:
+                gameApp.render();
+                break;
+            default:
+                break;
+            }
         EndDrawing();
     };
 

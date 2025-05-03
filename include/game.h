@@ -3,6 +3,7 @@
 #include "parser.h"
 #include "app.h"
 #include "raylib.h"
+#include "startMenu.h"
 #include <unordered_map>
 #include <string>
 
