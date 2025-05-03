@@ -15,16 +15,14 @@ Then open the generated solution file in VS and compile as normal.
 ### Cmake
 Run cmake :)
 
+### Generate Assets
+Currently all assets are created as SVG:s. To render them out you can use the following python scripts:
+``` bash
+python scripts/renderAssets.py
+```
+The script requires inkscape to be installed and that the correct path is in the script.
 
 ## Usage
-1. It is recommended to enter the molecules in the reaction. This step is not necessary unless you want to fill the molarmass, but is recommended inorder to allow for balansing checks. To add more molecules, press the "add column button" (CTRL + SHIFT + K). When adding molecules, all subscript numbers should be prefixed with a underscore. For example: CO_2. Superscript characters should be prefixed with either ' or ^, for example: H_3O'+.
-
-2. Balance you reaction by using the ratio inputs. 
-
-3. Add the correct operators by clicking the operator to open the dropdown menu. To see options for equilibrium calculations, you have to use the double arrow operator.
-
-3. When all the required information for the calculation is enterd, click the Calculate button. Please note that some inputs are going to be locked to protect from unexpected erros. The inputs can be unlocked by pressing the unlock icon.
-
 
 ## Licenses
 ChemistryCalculator uses fonts and icons from Google Fonts. The licenses can be found in the licenses folder. The license for the icons can be found through this (external)
