@@ -3,10 +3,11 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <sstream>
 #include <filesystem>
+#include <map>
 
 
 namespace BoardGame::parser {
-	void ping();
-	void readFile(const std::filesystem::path& path);
+	BoardGame::GameConfigData readFile(const std::filesystem::path& path);
 }

@@ -1,1 +1,5 @@
-Entity "Entity ID" img="assets/map.png" clickable=false
+GameInfo,
+    boardWidth=2000,
+    boardHeight=4000;
+
+Entity, id="Entity ID", img="assets/map.png", clickable=false;

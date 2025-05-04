@@ -4,8 +4,8 @@ set(SOURCES
     parser.cpp
     game.cpp
     startMenu.cpp
+    utils.cpp
 )
-
 
 # Automatically find all header files in the include/ directory
 file(GLOB HEADERS "${CMAKE_SOURCE_DIR}/include/*.h")

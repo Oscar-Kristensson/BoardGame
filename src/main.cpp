@@ -48,7 +48,7 @@ int main()
 
     SetTargetFPS(targetFPS);
         
-    BoardGame::Game gameApp = BoardGame::Game();
+    BoardGame::Game gameApp = BoardGame::Game({ 4000, 4000 });
     BoardGame::StartMenu startMenu = BoardGame::StartMenu();
 
 
