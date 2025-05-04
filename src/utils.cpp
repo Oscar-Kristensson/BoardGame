@@ -15,3 +15,30 @@ bool BoardGame::utils::convertToUint16(const std::string& str, uint16_t& result)
         return false; // Invalid format or other error
     }
 }
+
+
+Color BoardGame::utils::convertHEXToRGB(std::string& hex)
+{
+    unsigned int hexValue;
+    std::stringstream ss;
+    
+    // Remove '#' if present
+    if (hex[0] == '#') {
+        ss << std::hex << hex.substr(1);
+    }
+    else {
+        ss << std::hex << hex;
+    }
+
+    ss >> hexValue;
+
+    // Extract RGB values
+    uint8_t red = (hexValue >> 16) & 0xFF;   // Extract red component
+    uint8_t green = (hexValue >> 8) & 0xFF;  // Extract green component
+    uint8_t blue = hexValue & 0xFF;          // Extract blue component
+
+    // If alpha exists in the hex code, use it; otherwise, default to 255 (fully opaque)
+    int alpha = (hex.length() == 9) ? (hexValue >> 24) & 0xFF : 255;
+
+    return Color{ (unsigned char)red, (unsigned char)green, (unsigned char)blue, (unsigned char)alpha };
+}

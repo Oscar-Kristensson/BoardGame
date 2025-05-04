@@ -21,7 +21,7 @@ int main()
 {
 
     std::filesystem::path gameDataPath = "assets/testGameData.txt";
-    BoardGame::parser::readFile(gameDataPath);
+    BoardGame::GameConfigData gameConfigData =  BoardGame::parser::readFile(gameDataPath);
     
 #if DEBUG
     
@@ -48,7 +48,7 @@ int main()
 
     SetTargetFPS(targetFPS);
         
-    BoardGame::Game gameApp = BoardGame::Game({ 4000, 4000 });
+    BoardGame::Game gameApp = BoardGame::Game(Vector2(gameConfigData.info.width, gameConfigData.info.height), gameConfigData.info.backgroundColor);
     BoardGame::StartMenu startMenu = BoardGame::StartMenu();
 
 
@@ -80,8 +80,6 @@ int main()
 
         // Drawing
         BeginDrawing();
-            ClearBackground(WHITE);
-
             switch (applicationState)
             {
             case StartMenu:

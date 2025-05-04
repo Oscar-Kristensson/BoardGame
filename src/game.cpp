@@ -4,6 +4,13 @@
 
 void BoardGame::Game::update()
 {
+	// Change the camera offset
+	if (IsWindowResized())
+	{
+		m_Camera.offset = Vector2(GetScreenWidth() / 2.0f, GetScreenHeight() / 2.0f);
+	}
+
+
 	if (IsKeyDown(KEY_RIGHT)) m_Camera.target.x += 10;
 	else if (IsKeyDown(KEY_LEFT)) m_Camera.target.x -= 10;
 
@@ -23,6 +30,7 @@ void BoardGame::Game::update()
 
 void BoardGame::Game::render()
 {
+	ClearBackground(m_BackgroundColor);
 
 	BeginMode2D(m_Camera);
 		DrawTexture(m_MapImage, 0, 0, WHITE);

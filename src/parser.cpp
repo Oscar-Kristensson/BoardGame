@@ -48,10 +48,12 @@ namespace BoardGame {
 
             uint16_t boardWidth;
             uint16_t boardHeight;
+            std::string backgroundColorString = cd.argumentMap.at("backgroundColor");
             BoardGame::utils::convertToUint16(cd.argumentMap.at("boardWidth"), boardWidth);
             BoardGame::utils::convertToUint16(cd.argumentMap.at("boardHeight"), boardHeight);
+            Color backgroundColor = BoardGame::utils::convertHEXToRGB(backgroundColorString);
 
-            return { boardWidth, boardHeight };
+            return { boardWidth, boardHeight, backgroundColor };
         };
 
 
