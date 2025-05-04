@@ -49,7 +49,8 @@ int main()
     SetTargetFPS(targetFPS);
         
     BoardGame::Game gameApp = BoardGame::Game(Vector2(gameConfigData.info.width, gameConfigData.info.height), gameConfigData.info.backgroundColor);
-    BoardGame::StartMenu startMenu = BoardGame::StartMenu();
+    std::cout << ">>>>>>" << gameConfigData.startMenuInfo.backgroundColor.r << std::endl;
+    BoardGame::StartMenu startMenu = BoardGame::StartMenu(gameConfigData.startMenuInfo.backgroundColor);
 
 
     while (!WindowShouldClose())

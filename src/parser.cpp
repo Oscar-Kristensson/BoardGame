@@ -58,6 +58,21 @@ namespace BoardGame {
 
 
 
+        StartMenuInfo createStartMenuInfoObject(const commandData& cd)
+        {
+            if (cd.commandType != TypeStartMenuInfo)
+                std::cerr << "Trying to create StartMenuInfoOjbect from a " << cd.commandType << "object" << std::endl;
+
+
+            std::string backgroundColorString = cd.argumentMap.at("backgroundColor");
+            std::cout << backgroundColorString << std::endl;
+            Color backgroundColor = BoardGame::utils::convertHEXToRGB(backgroundColorString);
+
+            return { backgroundColor };
+        };
+
+
+
 
 
 
@@ -145,8 +160,10 @@ namespace BoardGame {
 
         BoardGame::GameConfigData readFile(const std::filesystem::path& path)
         {
-            BoardGame::GameInfo gameInfo = { 2000, 2000 };
+            BoardGame::GameInfo gameInfo = { 2000, 2000 , Color(255, 255, 255)};
+            BoardGame::StartMenuInfo startMenuInfo = { Color(255, 255, 255)};
             bool hasGameInfo = false;
+            bool hasStartMenuInfo = false;
 
             std::ifstream file(path);
             
@@ -163,18 +180,32 @@ namespace BoardGame {
                 commandData cd = parseCommand(line);
                 std::cout << cd.str() << std::endl;
 
-                if (cd.commandType == TypeGameInfo)
+
+                switch (cd.commandType)
                 {
+                case TypeGameInfo:
                     hasGameInfo = true;
                     gameInfo = createGameInfoObject(cd);
-                };
+                    break;
+
+                case TypeStartMenuInfo:
+                    hasStartMenuInfo = true;
+                    startMenuInfo = createStartMenuInfoObject(cd);
+                    std::cout << cd.str() << std::endl;
+                    break;
+                    
+
+                default:
+                    break;
+                }
                 
             };
             
 
             file.close();
 
-            return { gameInfo };
+            std::cout << startMenuInfo.backgroundColor.r << "<--" << std::endl;
+            return { gameInfo, startMenuInfo };
         };
     };
 };

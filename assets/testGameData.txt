@@ -3,4 +3,8 @@ GameInfo,
     boardHeight=4000,
     backgroundColor=7dcfe7;
 
+StartMenu,
+    backgroundColor=7dcfe7;
+
+
 Entity, id="Entity ID", img="assets/map.png", clickable=false;

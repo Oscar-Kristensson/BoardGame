@@ -12,16 +12,24 @@ namespace BoardGame
 	};
 
 
+	struct StartMenuInfo
+	{
+		Color backgroundColor;
+	};
+
+
 	struct GameConfigData
 	{
 		GameInfo info;
+		StartMenuInfo startMenuInfo;
 	};
 
 
 	enum EntityType {
 		TypeUnkown = 0,
 		TypeEntity = 1,
-		TypeGameInfo = 2
+		TypeGameInfo = 2,
+		TypeStartMenuInfo = 3
 	};
 
 }

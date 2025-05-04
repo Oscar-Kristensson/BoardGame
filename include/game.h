@@ -18,7 +18,8 @@ namespace BoardGame
 	const std::unordered_map<std::string, EntityType> entityMap =
 	{
 		{"Entity", TypeEntity},
-		{"GameInfo", TypeGameInfo}
+		{"GameInfo", TypeGameInfo},
+		{"StartMenu", TypeStartMenuInfo}
 	};
 
 
