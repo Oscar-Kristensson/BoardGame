@@ -1,6 +1,6 @@
 GameInfo,
-    boardWidth=4000,
-    boardHeight=4000,
+    boardWidth=8000,
+    boardHeight=8000,
     backgroundColor=7dcfe7;
 
 StartMenu,
