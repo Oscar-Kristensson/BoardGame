@@ -1,6 +1,9 @@
 #pragma once
 
+#include "raylib.h"
 #include <stdint.h>
+#include <vector>
+#include <filesystem>
 
 namespace BoardGame
 {
@@ -17,12 +20,20 @@ namespace BoardGame
 		Color backgroundColor;
 	};
 
-
+	struct GameEntityData
+	{
+		std::filesystem::path imagePath;
+		int x;
+		int y;
+	};
+	
 	struct GameConfigData
 	{
 		GameInfo info;
 		StartMenuInfo startMenuInfo;
+		std::vector<BoardGame::GameEntityData> entities;
 	};
+
 
 
 	enum EntityType {

@@ -57,6 +57,34 @@ namespace BoardGame {
         };
 
 
+        BoardGame::GameEntityData createEntityObject(const commandData& cd)
+        {
+            if (cd.commandType != TypeGameInfo)
+                std::cerr << "Trying to create Entity from a " << cd.commandType << "object" << std::endl;
+            std::cout << cd.argumentMap.at("img").c_str() << std::endl;  
+
+            // The error generated here is due to the texture being
+            // loaded in before the window is created (and the GPU 
+            // therefore being initalized). This is a bit tricky to
+            // change, because the window has to be loaded after the data
+            // is loaded in (or does it? Could sacrifice the ability to
+            // change the screen size & FPS. That could be loaded from another
+            // file).
+
+            std::filesystem::path imagePath = cd.argumentMap.at("img").c_str();
+
+            int x;
+            int y;
+
+            BoardGame::utils::convertToInt(cd.argumentMap.at("x"), x);
+            BoardGame::utils::convertToInt(cd.argumentMap.at("y"), y);
+
+            
+
+            return { imagePath, x, y};
+        };
+
+
 
         StartMenuInfo createStartMenuInfoObject(const commandData& cd)
         {
@@ -158,10 +186,11 @@ namespace BoardGame {
         };
 
 
-        BoardGame::GameConfigData readFile(const std::filesystem::path& path)
+        BoardGame::GameConfigData loadGameData(const std::filesystem::path& path)
         {
             BoardGame::GameInfo gameInfo = { 2000, 2000 , Color(255, 255, 255)};
             BoardGame::StartMenuInfo startMenuInfo = { Color(255, 255, 255)};
+            std::vector<BoardGame::GameEntityData> entities;
             bool hasGameInfo = false;
             bool hasStartMenuInfo = false;
 
@@ -193,6 +222,11 @@ namespace BoardGame {
                     startMenuInfo = createStartMenuInfoObject(cd);
                     std::cout << cd.str() << std::endl;
                     break;
+
+                case TypeEntity:
+                    entities.push_back(createEntityObject(cd));
+                    std::cout << cd.str() << "Created entity" << std::endl;
+                    break;
                     
 
                 default:
@@ -205,7 +239,7 @@ namespace BoardGame {
             file.close();
 
             std::cout << startMenuInfo.backgroundColor.r << "<--" << std::endl;
-            return { gameInfo, startMenuInfo };
+            return { gameInfo, startMenuInfo, entities };
         };
     };
 };

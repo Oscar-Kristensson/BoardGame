@@ -21,7 +21,7 @@ int main()
 {
 
     std::filesystem::path gameDataPath = "assets/testGameData.txt";
-    BoardGame::GameConfigData gameConfigData =  BoardGame::parser::readFile(gameDataPath);
+    BoardGame::GameConfigData gameConfigData =  BoardGame::parser::loadGameData(gameDataPath);
     
 #if DEBUG
     
@@ -48,7 +48,11 @@ int main()
 
     SetTargetFPS(targetFPS);
         
-    BoardGame::Game gameApp = BoardGame::Game(Vector2(gameConfigData.info.width, gameConfigData.info.height), gameConfigData.info.backgroundColor);
+    BoardGame::Game gameApp = BoardGame::Game (
+        Vector2(gameConfigData.info.width, gameConfigData.info.height),
+        gameConfigData.info.backgroundColor,
+        gameConfigData.entities
+    );
     std::cout << ">>>>>>" << gameConfigData.startMenuInfo.backgroundColor.r << std::endl;
     BoardGame::StartMenu startMenu = BoardGame::StartMenu(gameConfigData.startMenuInfo.backgroundColor);
 

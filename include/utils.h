@@ -8,6 +8,7 @@ namespace BoardGame
 	namespace utils
 	{
 		bool convertToUint16(const std::string& str, uint16_t& result);
+		bool convertToInt(const std::string& str, int& result);
 		Color convertHEXToRGB(std::string& hex);
 
 	}

@@ -9,5 +9,6 @@
 
 
 namespace BoardGame::parser {
-	BoardGame::GameConfigData readFile(const std::filesystem::path& path);
+	BoardGame::GameConfigData loadGameData(const std::filesystem::path& path);
+
 }

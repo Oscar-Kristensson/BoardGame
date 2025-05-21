@@ -2,6 +2,24 @@
 
 
 
+BoardGame::Game::Game(Vector2 boardSize, Color backgroundColor, std::vector<BoardGame::GameEntityData> entityData)
+	:m_BoardSize(boardSize), m_BackgroundColor(backgroundColor)
+{
+	m_MapImage = LoadTexture("assets/map.png");
+	m_Camera.target = { m_BoardSize.x / 2, m_BoardSize.y / 2 };
+	m_Camera.offset = Vector2(GetScreenWidth() / 2.0f, GetScreenHeight() / 2.0f);
+	m_Camera.rotation = 0.0f;
+	m_Camera.zoom = 0.5f;
+
+
+	for (unsigned int i = 0; i < entityData.size(); i++)
+		m_Entities.push_back(BoardGame::Entity(entityData[0]));
+	
+
+};
+
+
+
 void BoardGame::Game::update()
 {
 	// Change the camera offset
@@ -35,9 +53,13 @@ void BoardGame::Game::render()
 	BeginMode2D(m_Camera);
 		DrawTexture(m_MapImage, 0, 0, WHITE);
 		DrawRectangleRec(m_Player, RED);
+		for (int i = 0; i < m_Entities.size(); i++)
+			m_Entities[i].draw();
+
 
 
 	EndMode2D();
+
 
 	DrawText("Hello from Raylib", 128, 128, 32, BLACK);
 

@@ -25,7 +25,8 @@ def renderSVGAssets(files = [], inputDir = "", outputDir = "", dpi = "180"):
 
 if __name__ == "__main__":
     renderSVGAssets([
-       "map"
+       "map",
+       "test"
        ],inputDir = "assets/raw/", outputDir = "assets/", dpi = "768")
 
 

@@ -16,6 +16,21 @@ bool BoardGame::utils::convertToUint16(const std::string& str, uint16_t& result)
     }
 }
 
+bool BoardGame::utils::convertToInt(const std::string& str, int& result) {
+    try {
+        long temp = std::stol(str);  // std::stol returns a long
+        if (temp < INT_MIN || temp > INT_MAX) {
+            return false; // Out of int range
+        }
+        result = static_cast<int>(temp);
+        return true;
+    }
+    catch (...) {
+        return false; // Invalid format or other error
+    }
+}
+
+
 
 Color BoardGame::utils::convertHEXToRGB(std::string& hex)
 {
