@@ -10,12 +10,13 @@ Run the following script:
 scripts/vs
 ```
 
-Then open the generated solution file in VS and compile as normal.
+The script will run cmake automatically and remove the old files. After running the script, open the generated solution file in VS and compile as normal. 
 
 ### Cmake
 Run cmake :)
 
 ### Generate Assets
+(This is game specific and should not be here)
 Currently all assets are created as SVG:s. To render them out you can use the following python scripts:
 ``` bash
 python scripts/renderAssets.py
@@ -25,11 +26,6 @@ The script requires inkscape to be installed and that the correct path is in the
 ## Usage
 
 ## Licenses
-ChemistryCalculator uses fonts and icons from Google Fonts. The licenses can be found in the licenses folder. The license for the icons can be found through this (external)
-[link](https://www.apache.org/licenses/LICENSE-2.0.html).
-
-## Contributing
-Currently, there is no plan or system for contributing. The code quality is not on top, because it is my first HTML and JS project. If you want to contribute, feel free to reach out.
 
 ## Authors
 - [@Oscar-Kristensson](https://github.com/Oscar-Kristensson)
