@@ -11,11 +11,17 @@
 #include <unordered_map>
 #include <string>
 #include <vector>
+#include <filesystem>
 
 
 namespace BoardGame 
 {
+	namespace paths
+	{
+		const std::filesystem::path gamesDirPath = "assets";
+		const std::filesystem::path gameDataTextFilePath = "game.txt";
 
+	}
 
 	const std::unordered_map<std::string, EntityType> entityMap =
 	{
@@ -45,5 +51,9 @@ namespace BoardGame
 		void update() override;
 		void render() override;
 	};
+
+
+	int convertCPToPixels(float cp);
+	float convertPixelsToCP(int pixels);
 
 };

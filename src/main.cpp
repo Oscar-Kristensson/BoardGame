@@ -19,9 +19,6 @@
 
 int main()
 {
-
-    std::filesystem::path gameDataPath = "assets/testGameData.txt";
-    BoardGame::GameConfigData gameConfigData =  BoardGame::parser::loadGameData(gameDataPath);
     
 #if DEBUG
     
@@ -30,12 +27,12 @@ int main()
 
 #endif
 
+
     enum ApplicationState
     {
         StartMenu = 0,
         Game = 1
     };
-
 
     ApplicationState applicationState = StartMenu;
 
@@ -48,13 +45,15 @@ int main()
 
     SetTargetFPS(targetFPS);
         
-    BoardGame::Game gameApp = BoardGame::Game (
+    BoardGame::Game* gameApp = nullptr;
+        
+        /*BoardGame::Game(
         Vector2(gameConfigData.info.width, gameConfigData.info.height),
         gameConfigData.info.backgroundColor,
         gameConfigData.entities
-    );
-    std::cout << ">>>>>>" << gameConfigData.startMenuInfo.backgroundColor.r << std::endl;
-    BoardGame::StartMenu startMenu = BoardGame::StartMenu(gameConfigData.startMenuInfo.backgroundColor);
+    );*/
+
+    BoardGame::StartMenu startMenu = BoardGame::StartMenu({134, 231, 134, 255});
 
 
     while (!WindowShouldClose())
@@ -63,12 +62,41 @@ int main()
 
         if (IsKeyDown(KEY_Q))
         {
-            
             if (IsKeyDown(KEY_M))
                 applicationState = StartMenu;
             else if (IsKeyDown(KEY_G))
                 applicationState = Game;
         }
+
+
+        // Start a game (Note: This code should be moved to a separate function)
+        if (IsKeyDown(KEY_ENTER) && applicationState == StartMenu)
+        {
+            std::cout << "Loading New Game" << std::endl;
+            std::string gameName = startMenu.getGameName();
+
+            std::filesystem::path gameDataPath = BoardGame::paths::gamesDirPath 
+                / std::filesystem::path(gameName)
+                / BoardGame::paths::gameDataTextFilePath;
+
+
+            if (!std::filesystem::exists(gameDataPath))
+            {
+                return 0; // This should be improved
+            };
+
+            BoardGame::GameConfigData gameConfigData = BoardGame::parser::loadGameData(gameDataPath);
+            delete gameApp;
+            gameApp = new BoardGame::Game(
+                Vector2(gameConfigData.info.width, gameConfigData.info.height),
+                gameConfigData.info.backgroundColor,
+                gameConfigData.entities
+            );
+
+            applicationState = Game;
+
+        }
+
 
         switch (applicationState)
         {
@@ -76,7 +104,8 @@ int main()
             startMenu.update();
             break;
         case Game:
-            gameApp.update();
+            if (gameApp != nullptr)
+            gameApp->update();
             break;
         default:
             break;
@@ -91,7 +120,7 @@ int main()
                 startMenu.render();
                 break;
             case Game:
-                gameApp.render();
+                gameApp->render();
                 break;
             default:
                 break;
@@ -101,6 +130,6 @@ int main()
 
     // De-Initialization
     CloseWindow();
-
+    delete gameApp;
     return 0;
 };

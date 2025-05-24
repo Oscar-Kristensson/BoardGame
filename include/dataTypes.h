@@ -43,4 +43,7 @@ namespace BoardGame
 		TypeStartMenuInfo = 3
 	};
 
+
+
+
 }

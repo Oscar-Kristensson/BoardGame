@@ -5,7 +5,7 @@
 BoardGame::Game::Game(Vector2 boardSize, Color backgroundColor, std::vector<BoardGame::GameEntityData> entityData)
 	:m_BoardSize(boardSize), m_BackgroundColor(backgroundColor)
 {
-	m_MapImage = LoadTexture("assets/map.png");
+	m_MapImage = LoadTexture("assets/WorldGame/map.png");
 	m_Camera.target = { m_BoardSize.x / 2, m_BoardSize.y / 2 };
 	m_Camera.offset = Vector2(GetScreenWidth() / 2.0f, GetScreenHeight() / 2.0f);
 	m_Camera.rotation = 0.0f;
@@ -64,3 +64,25 @@ void BoardGame::Game::render()
 	DrawText("Hello from Raylib", 128, 128, 32, BLACK);
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+int BoardGame::convertCPToPixels(float cp)
+{
+	return GetScreenHeight() * cp / 100;
+};
+
+float BoardGame::convertPixelsToCP(int pixels)
+{
+	return pixels / GetScreenHeight() * 100;
+};

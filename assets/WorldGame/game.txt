@@ -7,4 +7,4 @@ StartMenu,
     backgroundColor=7dcfe7;
 
 
-Entity, id="Entity ID", img=assets/test.png, x=2000, y=350, clickable=false;
+Entity, id="Entity ID", img=assets/WorldGame/test.png, x=2000, y=350, clickable=false;

@@ -17,6 +17,7 @@ BoardGame::Entity::Entity(BoardGame::GameEntityData entityData)
 	if (!std::filesystem::exists(entityData.imagePath))
 		throw std::runtime_error("Could not find image at " + stringPath);
 
+	std::cout << stringPath << std::endl;
 	
 	m_Texture = LoadTexture(stringPath.c_str());
 	m_Width = m_Texture.width;
