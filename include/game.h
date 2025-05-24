@@ -39,7 +39,6 @@ namespace BoardGame
 	{
 	private:
 		Rectangle m_Player = { 2000, 2000, 40, 40 };
-		Texture2D m_MapImage;
 		Camera2D m_Camera = { 0 };
         Vector2 m_BoardSize;
 		Color m_BackgroundColor;

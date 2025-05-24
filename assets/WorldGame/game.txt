@@ -3,8 +3,9 @@ GameInfo,
     boardHeight=8000,
     backgroundColor=7dcfe7;
 
-StartMenu,
-    backgroundColor=7dcfe7;
+Entity, id="Background Image", img=assets/WorldGame/map.png, x=0, y=0;
+Entity, id="Entity ID", img=assets/WorldGame/test.png, x=0, y=0;
 
 
-Entity, id="Entity ID", img=assets/WorldGame/test.png, x=2000, y=350, clickable=false;
+
+
