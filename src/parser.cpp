@@ -59,9 +59,8 @@ namespace BoardGame {
 
         BoardGame::GameEntityData createEntityObject(const commandData& cd)
         {
-            if (cd.commandType != TypeGameInfo)
+            if (cd.commandType != TypeEntity)
                 std::cerr << "Trying to create Entity from a " << cd.commandType << "object" << std::endl;
-            std::cout << cd.argumentMap.at("img").c_str() << std::endl;  
 
             // The error generated here is due to the texture being
             // loaded in before the window is created (and the GPU 
@@ -93,7 +92,6 @@ namespace BoardGame {
 
 
             std::string backgroundColorString = cd.argumentMap.at("backgroundColor");
-            std::cout << backgroundColorString << std::endl;
             Color backgroundColor = BoardGame::utils::convertHEXToRGB(backgroundColorString);
 
             return { backgroundColor };
@@ -207,7 +205,6 @@ namespace BoardGame {
             while (std::getline(file, line, ';'))
             {
                 commandData cd = parseCommand(line);
-                std::cout << cd.str() << std::endl;
 
 
                 switch (cd.commandType)
@@ -220,12 +217,10 @@ namespace BoardGame {
                 case TypeStartMenuInfo:
                     hasStartMenuInfo = true;
                     startMenuInfo = createStartMenuInfoObject(cd);
-                    std::cout << cd.str() << std::endl;
                     break;
 
                 case TypeEntity:
                     entities.push_back(createEntityObject(cd));
-                    std::cout << cd.str() << "Created entity" << std::endl;
                     break;
                     
 
@@ -238,7 +233,6 @@ namespace BoardGame {
 
             file.close();
 
-            std::cout << startMenuInfo.backgroundColor.r << "<--" << std::endl;
             return { gameInfo, startMenuInfo, entities };
         };
     };

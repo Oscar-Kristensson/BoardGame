@@ -7,5 +7,3 @@ Entity, id="Background Image", img=assets/WorldGame/map.png, x=0, y=0;
 Entity, id="Entity ID", img=assets/WorldGame/test.png, x=0, y=0;
 
 
-
-

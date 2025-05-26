@@ -6,6 +6,7 @@ set(SOURCES
     startMenu.cpp
     utils.cpp
     entity.cpp
+    player.cpp
 )
 
 # Automatically find all header files in the include/ directory

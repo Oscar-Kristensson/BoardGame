@@ -14,6 +14,7 @@ BoardGame::Game::Game(Vector2 boardSize, Color backgroundColor, std::vector<Boar
 	for (unsigned int i = 0; i < entityData.size(); i++)
 		m_Entities.push_back(BoardGame::Entity(entityData[0]));
 	
+	m_Players.push_back(BoardGame::Player(64, 64));
 
 };
 
@@ -28,12 +29,13 @@ void BoardGame::Game::update()
 	}
 
 
-	if (IsKeyDown(KEY_RIGHT)) m_Camera.target.x += 10;
-	else if (IsKeyDown(KEY_LEFT)) m_Camera.target.x -= 10;
+
+	if (IsKeyDown(KEY_RIGHT)) m_Camera.target.x += 8 / m_Camera.zoom;
+	else if (IsKeyDown(KEY_LEFT)) m_Camera.target.x -= 8 / m_Camera.zoom;
 
 
-	if (IsKeyDown(KEY_DOWN)) m_Camera.target.y += 10;
-	else if (IsKeyDown(KEY_UP)) m_Camera.target.y -= 10;
+	if (IsKeyDown(KEY_DOWN)) m_Camera.target.y += 8 / m_Camera.zoom;
+	else if (IsKeyDown(KEY_UP)) m_Camera.target.y -= 8 / m_Camera.zoom;
 
 
 
@@ -50,9 +52,11 @@ void BoardGame::Game::render()
 	ClearBackground(m_BackgroundColor);
 
 	BeginMode2D(m_Camera);
-		DrawRectangleRec(m_Player, RED);
 		for (int i = 0; i < m_Entities.size(); i++)
 			m_Entities[i].draw();
+
+		for (int i = 0; i < m_Players.size(); i++)
+			m_Players[i].draw();
 
 
 

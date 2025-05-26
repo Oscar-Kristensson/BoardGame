@@ -8,6 +8,7 @@
 #include "app.h"
 #include "startMenu.h"
 #include "parser.h"
+#include "player.h"
 #include <unordered_map>
 #include <string>
 #include <vector>
@@ -38,11 +39,11 @@ namespace BoardGame
 	class Game : public App
 	{
 	private:
-		Rectangle m_Player = { 2000, 2000, 40, 40 };
 		Camera2D m_Camera = { 0 };
         Vector2 m_BoardSize;
 		Color m_BackgroundColor;
 		std::vector<BoardGame::Entity> m_Entities;
+		std::vector<BoardGame::Player> m_Players;
 
 	public:
 		Game(Vector2 boardSize, Color backgroundColor, std::vector<BoardGame::GameEntityData> entityData);

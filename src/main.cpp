@@ -72,7 +72,6 @@ int main()
         // Start a game (Note: This code should be moved to a separate function)
         if (IsKeyDown(KEY_ENTER) && applicationState == StartMenu)
         {
-            std::cout << "Loading New Game" << std::endl;
             std::string gameName = startMenu.getGameName();
 
             std::filesystem::path gameDataPath = BoardGame::paths::gamesDirPath 
@@ -95,6 +94,8 @@ int main()
 
             applicationState = Game;
 
+            std::string windowName = "BoardGame: " + gameName;
+            SetWindowTitle(windowName.c_str());
         }
 
 

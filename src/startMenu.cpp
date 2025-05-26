@@ -7,7 +7,6 @@
 BoardGame::StartMenu::StartMenu(Color backgroundColor)
     :m_BackgroundColor(backgroundColor), m_GameNames(getGames()), m_SelectedGame(0)
 {
-    std::cout << "bg:" << backgroundColor.r << "," << backgroundColor.b << "," << backgroundColor.g << std::endl;
 
 }
 
@@ -29,11 +28,8 @@ std::vector<std::string> BoardGame::StartMenu::getGames()
 
     try {
         for (const auto& entry : std::filesystem::directory_iterator(path)) {
-            std::cout << entry.path() << std::endl;
-
             std::filesystem::path relativePath = std::filesystem::relative(entry.path(), "assets");
             games.push_back(relativePath.string());
-            std::cout << relativePath.string() << std::endl;
         }
     }
     catch (std::filesystem::filesystem_error& e) {
