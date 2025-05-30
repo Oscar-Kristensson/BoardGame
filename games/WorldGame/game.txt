@@ -1,0 +1,9 @@
+GameInfo,
+    boardWidth=8000,
+    boardHeight=8000,
+    backgroundColor=7dcfe7;
+
+Entity, id="Background Image", img=games/WorldGame/map.png, x=0, y=0;
+Entity, id="Entity ID", img=games/WorldGame/test.png, x=0, y=0;
+
+

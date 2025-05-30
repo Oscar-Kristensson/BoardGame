@@ -11,5 +11,6 @@ namespace BoardGame
 		bool convertToInt(const std::string& str, int& result);
 		Color convertHEXToRGB(std::string& hex);
 
+		int abs(int value);
 	}
 }

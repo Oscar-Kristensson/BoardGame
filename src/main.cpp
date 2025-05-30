@@ -3,12 +3,10 @@
 #include "game.h"
 #include "app.h"
 
-#define DEBUG 1
+#define DEBUG 0
 
 
-#if DEBUG
 #include <filesystem>
-#endif
 
 
 
@@ -106,7 +104,7 @@ int main()
             break;
         case Game:
             if (gameApp != nullptr)
-            gameApp->update();
+                gameApp->update();
             break;
         default:
             break;

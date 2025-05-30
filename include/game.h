@@ -19,7 +19,7 @@ namespace BoardGame
 {
 	namespace paths
 	{
-		const std::filesystem::path gamesDirPath = "assets";
+		const std::filesystem::path gamesDirPath = "games";
 		const std::filesystem::path gameDataTextFilePath = "game.txt";
 
 	}

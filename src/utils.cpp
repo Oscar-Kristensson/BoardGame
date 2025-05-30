@@ -57,3 +57,11 @@ Color BoardGame::utils::convertHEXToRGB(std::string& hex)
 
     return Color{ (unsigned char)red, (unsigned char)green, (unsigned char)blue, (unsigned char)alpha };
 }
+
+
+int BoardGame::utils::abs(int value)
+{
+    if (value < 0)
+        return -value;
+    return value;
+};

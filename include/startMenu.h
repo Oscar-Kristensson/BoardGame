@@ -11,8 +11,11 @@ namespace BoardGame
 		Color m_BackgroundColor;
 		std::vector<std::string> m_GameNames;
 		uint16_t m_SelectedGame;
+		uint8_t m_PlayerCount;
 	public:
 		StartMenu(Color backgroundColor);
+
+		void drawPlayerCountSelectMenu();
 
 		void update() override;
 		std::vector<std::string> getGames();

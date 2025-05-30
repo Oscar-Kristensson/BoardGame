@@ -29,7 +29,6 @@ void BoardGame::Game::update()
 	}
 
 
-
 	if (IsKeyDown(KEY_RIGHT)) m_Camera.target.x += 8 / m_Camera.zoom;
 	else if (IsKeyDown(KEY_LEFT)) m_Camera.target.x -= 8 / m_Camera.zoom;
 
@@ -38,13 +37,42 @@ void BoardGame::Game::update()
 	else if (IsKeyDown(KEY_UP)) m_Camera.target.y -= 8 / m_Camera.zoom;
 
 
-
 	m_Camera.zoom = expf(logf(m_Camera.zoom) + ((float)GetMouseWheelMove() * 0.1f));
 	if (m_Camera.zoom > 3.0f) m_Camera.zoom = 3.0f;
 	else if (m_Camera.zoom < 0.1f) m_Camera.zoom = 0.1f;
 
-	// m_Camera.target = Vector2(m_Player.x + 20, m_Player.y + 20);
 
+	Vector2 mouseWorldPosition = GetScreenToWorld2D(GetMousePosition(), m_Camera);
+
+	// Check if a player was clicked and dragged
+	if (IsMouseButtonPressed(0))
+		for (size_t i = 0; i < m_Players.size(); i++)
+		{
+			if (m_Players[i].mouseHovers(mouseWorldPosition.x, mouseWorldPosition.y, 1 / m_Camera.zoom / 5))
+			{
+				m_Players[0].startDragging();
+				break;
+			}
+		}
+
+	Vector2 mouseDelta = GetMouseDelta();
+
+	// Move the dragged players
+	for (size_t i = 0; i < m_Players.size(); i++)
+	{
+		if (m_Players[i].isDragged())
+		{
+			m_Players[i].move(mouseDelta.x / m_Camera.zoom, mouseDelta.y / m_Camera.zoom);
+		}
+	}
+
+	if (IsMouseButtonReleased(0))
+	{
+		for (size_t i = 0; i < m_Players.size(); i++)
+		{
+			m_Players[i].stopDragging();
+		};
+	}
 }
 
 void BoardGame::Game::render()
@@ -56,7 +84,7 @@ void BoardGame::Game::render()
 			m_Entities[i].draw();
 
 		for (int i = 0; i < m_Players.size(); i++)
-			m_Players[i].draw();
+			m_Players[i].draw(1/m_Camera.zoom/5);
 
 
 
