@@ -4,8 +4,8 @@
 #include <filesystem>
 
 
-BoardGame::StartMenu::StartMenu(Color backgroundColor)
-    :m_BackgroundColor(backgroundColor), m_GameNames(getGames()), m_SelectedGame(0), m_PlayerCount(0)
+BoardGame::StartMenu::StartMenu(Color backgroundColor, Color playerCountSelectBackgroundColor, Color playerCountSelectTextColor)
+    :m_BackgroundColor(backgroundColor), m_GameNames(getGames()), m_SelectedGame(0), m_PlayerCount(0), m_PlayerCountSelectBackgroundColor(playerCountSelectBackgroundColor), m_PlayerCountSelectTextColor(playerCountSelectTextColor)
 {
 
 }
@@ -31,22 +31,29 @@ void BoardGame::StartMenu::drawPlayerCountSelectMenu()
     int top = GetScreenHeight() - fontSize;
     int left = GetScreenWidth() - totalWidth;
 
+    Rectangle rect = { left, top, totalWidth, fontSize };
+    DrawRectangleRounded(rect, 1, 10, m_PlayerCountSelectBackgroundColor);
 
     // Player Count
-    DrawRectangle(left, top, playerCountTextLength + marginUnit * 2, fontSize, RED);
-    DrawText("Player Count", left + marginUnit, top, fontSize, BLACK);
+    //DrawRectangle(left, top, playerCountTextLength + marginUnit * 2, fontSize, m_PlayerCountSelectBackgroundColor);
+    DrawText("Player Count", left + marginUnit, top, fontSize, m_PlayerCountSelectTextColor);
     
     // Plus
-    DrawRectangle(left + playerCountTextLength + marginUnit * 2, top, plusSignLength + marginUnit * 2, fontSize, YELLOW);
-    DrawText("K+", left + playerCountTextLength + marginUnit * 3, top, fontSize, GREEN);
+    //DrawRectangle(left + playerCountTextLength + marginUnit * 2, top, plusSignLength + marginUnit * 2, fontSize, m_PlayerCountSelectBackgroundColor);
+    DrawText("K+", left + playerCountTextLength + marginUnit * 3, top, fontSize, m_PlayerCountSelectTextColor);
     
     // Amount
-    DrawRectangle(left + playerCountTextLength + marginUnit * 6, top, marginUnit * 2 + playerNumberCountTextLength, top, BLUE);
-    DrawText(playerCountString.c_str(), left + playerCountTextLength + marginUnit * 7, top, fontSize, PINK);
+    //DrawRectangle(left + playerCountTextLength + marginUnit * 6, top, marginUnit * 2 + playerNumberCountTextLength, top, m_PlayerCountSelectBackgroundColor);
+    DrawText(playerCountString.c_str(), left + playerCountTextLength + marginUnit * 7, top, fontSize, m_PlayerCountSelectTextColor);
 
     // Minus
-    DrawRectangle(left + playerCountTextLength + marginUnit * 8 + playerNumberCountTextLength, top, minusSignLength + marginUnit * 2, fontSize, MAGENTA);
-    DrawText("L-", left + playerCountTextLength + marginUnit * 9 + playerNumberCountTextLength, top, fontSize, GREEN);
+    //DrawRectangle(left + playerCountTextLength + marginUnit * 8 + playerNumberCountTextLength, top, minusSignLength + marginUnit * 2, fontSize, m_PlayerCountSelectBackgroundColor);
+    DrawText("L-", left + playerCountTextLength + marginUnit * 9 + playerNumberCountTextLength, top, fontSize, m_PlayerCountSelectTextColor);
+}
+
+uint8_t BoardGame::StartMenu::getPlayerCount()
+{
+    return m_PlayerCount;
 }
 
 void BoardGame::StartMenu::update()
@@ -56,6 +63,11 @@ void BoardGame::StartMenu::update()
     
     if (IsKeyPressed(KEY_DOWN) && m_SelectedGame < m_GameNames.size() - 1)
         m_SelectedGame++;
+
+    if (IsKeyPressed(KEY_K))
+        m_PlayerCount++;
+    if (IsKeyPressed(KEY_L) && m_PlayerCount != 0)
+        m_PlayerCount--;
 
 }
 
@@ -84,11 +96,12 @@ void BoardGame::StartMenu::render()
 {
     ClearBackground(m_BackgroundColor);
 
-    for (size_t i = 0; i < m_GameNames.size(); i++)
+    int fontSize = BoardGame::convertCPToPixels(5.0f);
+    size_t i = 0;
+    for (;i < m_GameNames.size(); i++)
     {
         std::string gameNameString; 
         Color textColor;
-        int fontSize = BoardGame::convertCPToPixels(5.0f);
 
         if (i == m_SelectedGame)
         {
@@ -107,6 +120,8 @@ void BoardGame::StartMenu::render()
 
         DrawText(gameNameString.c_str(), GetScreenWidth()/2 - textWidth / 2, GetScreenHeight() / 2 - ((m_GameNames.size()/2 - i) * BoardGame::convertCPToPixels(10.0f)) - fontSize / 2, fontSize, textColor);
     }
+
+
 
     drawPlayerCountSelectMenu();
 

@@ -1,8 +1,8 @@
 #include "player.h"
 #include "utils.h"
 
-BoardGame::Player::Player(int x, int y)
-	:m_X(x), m_Y(y), m_Id(0)
+BoardGame::Player::Player(int x, int y, Color color)
+	:m_X(x), m_Y(y), m_Id(0), m_Color(color)
 {
 
 }
@@ -47,7 +47,7 @@ void BoardGame::Player::draw(float scale)
 	Vector2 bottomLeft = { (m_X - width /2), (m_Y + height /2) };
 	Vector2 bottomRight = { (m_X + width / 2), (m_Y + height /2) };
 
-	DrawCircle(m_X, m_Y - height /2 + radius, radius, RED);
-	DrawTriangle(topPoint, bottomLeft, bottomRight, RED);
+	DrawCircle(m_X, m_Y - height /2 + radius, radius, m_Color);
+	DrawTriangle(topPoint, bottomLeft, bottomRight, m_Color);
 
 }

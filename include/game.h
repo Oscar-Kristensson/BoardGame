@@ -21,7 +21,21 @@ namespace BoardGame
 	{
 		const std::filesystem::path gamesDirPath = "games";
 		const std::filesystem::path gameDataTextFilePath = "game.txt";
+	}
 
+	namespace constants
+	{
+		constexpr uint8_t playerColorsLength = 8;
+		const Color playerColors[playerColorsLength] = {
+			{255, 42, 42, 255},		// red
+			{0, 155, 0, 255},		// green
+			{42, 42, 255, 255},		// blue
+			{255, 255, 42, 255},	// yellow
+			{148, 42, 255, 255},	// purple
+			{255, 148, 42, 255},	// orange
+			{42, 255, 255, 255},	// turkoise
+			{255, 42, 255, 255},	// pink
+		};
 	}
 
 	const std::unordered_map<std::string, EntityType> entityMap =
@@ -46,7 +60,9 @@ namespace BoardGame
 		std::vector<BoardGame::Player> m_Players;
 
 	public:
-		Game(Vector2 boardSize, Color backgroundColor, std::vector<BoardGame::GameEntityData> entityData);
+		Game(Vector2 boardSize, Color backgroundColor, 
+			std::vector<BoardGame::GameEntityData> entityData,
+			uint8_t playerCount);
 		
 		void update() override;
 		void render() override;

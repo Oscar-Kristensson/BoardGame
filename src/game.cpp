@@ -2,7 +2,7 @@
 
 
 
-BoardGame::Game::Game(Vector2 boardSize, Color backgroundColor, std::vector<BoardGame::GameEntityData> entityData)
+BoardGame::Game::Game(Vector2 boardSize, Color backgroundColor, std::vector<BoardGame::GameEntityData> entityData, uint8_t playerCount)
 	:m_BoardSize(boardSize), m_BackgroundColor(backgroundColor)
 {
 	m_Camera.target = { m_BoardSize.x / 2, m_BoardSize.y / 2 };
@@ -14,7 +14,8 @@ BoardGame::Game::Game(Vector2 boardSize, Color backgroundColor, std::vector<Boar
 	for (unsigned int i = 0; i < entityData.size(); i++)
 		m_Entities.push_back(BoardGame::Entity(entityData[0]));
 	
-	m_Players.push_back(BoardGame::Player(64, 64));
+	for (uint8_t i = 0; i < playerCount; i++)
+		m_Players.push_back(BoardGame::Player(64, 64, BoardGame::constants::playerColors[i]));
 
 };
 
@@ -46,11 +47,11 @@ void BoardGame::Game::update()
 
 	// Check if a player was clicked and dragged
 	if (IsMouseButtonPressed(0))
-		for (size_t i = 0; i < m_Players.size(); i++)
+		for (size_t i = m_Players.size(); i-- > 0; )
 		{
 			if (m_Players[i].mouseHovers(mouseWorldPosition.x, mouseWorldPosition.y, 1 / m_Camera.zoom / 5))
 			{
-				m_Players[0].startDragging();
+				m_Players[i].startDragging();
 				break;
 			}
 		}

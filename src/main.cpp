@@ -51,7 +51,7 @@ int main()
         gameConfigData.entities
     );*/
 
-    BoardGame::StartMenu startMenu = BoardGame::StartMenu({134, 231, 134, 255});
+    BoardGame::StartMenu startMenu = BoardGame::StartMenu({134, 231, 134, 255}, {95, 192, 98, 255}, BLACK);
 
 
     while (!WindowShouldClose())
@@ -87,7 +87,8 @@ int main()
             gameApp = new BoardGame::Game(
                 Vector2(gameConfigData.info.width, gameConfigData.info.height),
                 gameConfigData.info.backgroundColor,
-                gameConfigData.entities
+                gameConfigData.entities,
+                startMenu.getPlayerCount()
             );
 
             applicationState = Game;
