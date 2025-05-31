@@ -1,4 +1,5 @@
 #include "game.h"
+#include <cmath>
 
 
 
@@ -101,6 +102,19 @@ void BoardGame::Game::update()
 
 
 	Vector2 mouseWorldPosition = GetScreenToWorld2D(GetMousePosition(), m_Camera);
+	Vector2 mouseDelta = GetMouseDelta();
+
+	if (IsMouseButtonPressed(1))
+		DisableCursor();
+
+	if (IsMouseButtonDown(1))
+	{
+		m_Camera.target.x += mouseDelta.x / m_Camera.zoom;
+		m_Camera.target.y += mouseDelta.y / m_Camera.zoom;
+	}
+
+	if (IsMouseButtonReleased(1))
+		EnableCursor();
 
 	// Check if a player was clicked and dragged
 	if (m_Players.size() > 0 && IsMouseButtonPressed(0) && \
@@ -120,7 +134,6 @@ void BoardGame::Game::update()
 			}
 		}
 
-	Vector2 mouseDelta = GetMouseDelta();
 
 	// Move the dragged players
 	for (size_t i = 0; i < m_Players.size(); i++)
@@ -168,7 +181,8 @@ void BoardGame::Game::render()
 	if (m_PlayerBankInput.has_value() && m_PlayerInfo.hasAccounts)
 		(*m_PlayerBankInput).draw();
 
-	m_PlayerNumberDisplayUnit.draw();
+	if (m_Players.size() > 0)
+		m_PlayerNumberDisplayUnit.draw();
 }
 
 

@@ -31,8 +31,18 @@ target_link_directories(game PRIVATE ${CMAKE_SOURCE_DIR}/lib/)
 target_link_libraries(game PRIVATE raylib)
 
 # Link to winmm.lib (required for runtime stuff)
-target_link_libraries(game PRIVATE winmm.lib)
+if (WIN32)
+    target_link_libraries(game PRIVATE winmm.lib)
 
+elseif(APPEL)
+    find_library(COCOA_LIBRARY Cocoa)
+    find_library(IOKIT_LIBRARY IOKit)
+    find_library(COREVIDEO_LIBRARY CoreVideo)
+    target_link_libraries(game PRIVATE ${COCOA_LIBRARY} ${IOKIT_LIBRARY} ${COREVIDEO_LIBRARY})
+else()
+    target_link_libraries(game PRIVATE X11 pthread GL)
+
+endif()
 
 set_target_properties(game PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/build

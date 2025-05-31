@@ -9,7 +9,17 @@ Run the following script:
 scripts/vs
 ```
 
-The script will run cmake automatically and remove the old files. After running the script, open the generated solution file in VS and compile as normal. 
+The script will run cmake automatically and remove the old files. After running the script, open the generated solution file in VS and compile as normal. Make sure to have the raylib.lib file in the lib directory (it should be there by default, but can be ([downloaded here](https://github.com/raysan5/raylib/releases/tag/5.5))). Open the 
+
+
+### MinGW
+Run the following scripts:
+
+``` bash
+scripts/mingw
+```
+
+Make sure to get the raylib library ([download here](https://github.com/raysan5/raylib/releases/tag/5.5)) for the MinGW compiler and put it in the lib folder. The executable should be outputed in build/game.exe
 
 ### Cmake
 Run cmake :)
