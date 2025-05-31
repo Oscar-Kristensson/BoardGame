@@ -66,6 +66,7 @@ void BoardGame::StartMenu::update()
 
     if (IsKeyPressed(KEY_K) && m_PlayerCount < BoardGame::constants::playerColorsLength)
         m_PlayerCount++;
+
     if (IsKeyPressed(KEY_L) && m_PlayerCount != 0)
         m_PlayerCount--;
 

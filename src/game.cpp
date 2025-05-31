@@ -2,8 +2,8 @@
 
 
 
-BoardGame::Game::Game(Vector2 boardSize, Color backgroundColor, std::vector<BoardGame::GameEntityData> entityData, uint8_t playerCount)
-	:m_BoardSize(boardSize), m_BackgroundColor(backgroundColor)
+BoardGame::Game::Game(Vector2 boardSize, Color backgroundColor, std::vector<BoardGame::GameEntityData> entityData, uint8_t playerCount, PlayerInfo playerInfo)
+	:m_BoardSize(boardSize), m_BackgroundColor(backgroundColor), m_PlayerInfo(playerInfo)
 {
 	m_Camera.target = { m_BoardSize.x / 2, m_BoardSize.y / 2 };
 	m_Camera.offset = Vector2(GetScreenWidth() / 2.0f, GetScreenHeight() / 2.0f);
@@ -17,8 +17,54 @@ BoardGame::Game::Game(Vector2 boardSize, Color backgroundColor, std::vector<Boar
 	for (uint8_t i = 0; i < playerCount; i++)
 		m_Players.push_back(BoardGame::Player(64, 64, BoardGame::constants::playerColors[i]));
 
-};
+	for (uint8_t i = 0; i < playerCount; i++)
+		m_PlayerBankBalance.push_back(m_PlayerInfo.playerStartBalance);
 
+	if (m_PlayerInfo.hasAccounts && playerCount > 0)
+	{
+		m_PlayerBankInput.emplace(BoardGame::gui::ValueInput(120, 20));
+		(*m_PlayerBankInput).setValue(m_PlayerInfo.playerStartBalance);
+	}
+
+	m_PlayerNumberDisplayUnit.setValue(1);
+
+}
+
+
+
+
+void BoardGame::Game::changePlayer(bool increase)
+{
+	m_PlayerBankBalance[m_CurrentPlayerID] = (*m_PlayerBankInput).getValue();
+
+	if (increase)
+	{
+
+		if (m_CurrentPlayerID + 1 == m_Players.size())
+		{
+			m_CurrentPlayerID = 0;
+		}
+		else
+		{
+			m_CurrentPlayerID++;
+		}
+	}
+	else
+	{
+		if (m_CurrentPlayerID == 0)
+		{
+			m_CurrentPlayerID = m_Players.size() - 1;
+		}
+		else
+		{
+			m_CurrentPlayerID--;
+		}
+	}
+
+	(*m_PlayerBankInput).setValue(m_PlayerBankBalance[m_CurrentPlayerID]);
+
+	m_PlayerNumberDisplayUnit.setValue(m_CurrentPlayerID + 1);
+}
 
 
 void BoardGame::Game::update()
@@ -29,6 +75,15 @@ void BoardGame::Game::update()
 		m_Camera.offset = Vector2(GetScreenWidth() / 2.0f, GetScreenHeight() / 2.0f);
 	}
 
+	if (IsKeyPressed(KEY_Q))
+	{
+		changePlayer(true);
+	}
+	
+	if (IsKeyPressed(KEY_W))
+	{
+		changePlayer(false);
+	}
 
 	if (IsKeyDown(KEY_RIGHT)) m_Camera.target.x += 8 / m_Camera.zoom;
 	else if (IsKeyDown(KEY_LEFT)) m_Camera.target.x -= 8 / m_Camera.zoom;
@@ -74,6 +129,9 @@ void BoardGame::Game::update()
 			m_Players[i].stopDragging();
 		};
 	}
+
+	if (m_PlayerBankInput.has_value() && m_PlayerInfo.hasAccounts)
+		(*m_PlayerBankInput).update(GetMouseX(), GetMouseY());
 }
 
 void BoardGame::Game::render()
@@ -89,7 +147,13 @@ void BoardGame::Game::render()
 
 
 
+
 	EndMode2D();
+
+	if (m_PlayerBankInput.has_value() && m_PlayerInfo.hasAccounts)
+		(*m_PlayerBankInput).draw();
+
+	m_PlayerNumberDisplayUnit.draw();
 }
 
 

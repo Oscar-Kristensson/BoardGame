@@ -40,6 +40,21 @@ namespace BoardGame {
             };
         };
 
+        PlayerInfo createPlayerInfoObject(const commandData& cd)
+        {
+            if (cd.commandType != TypePlayerInfo)
+                std::cerr << "Trying to create PlayerInfo from a " << cd.commandType << "object" << std::endl;
+
+            bool usePlayerAccounts = BoardGame::utils::convertToBool(cd.argumentMap.at("hasAccounts"));
+
+            int playerAccountStartValue = 0;
+            BoardGame::utils::convertToInt(cd.argumentMap.at("accountBalance"), playerAccountStartValue);
+
+            PlayerInfo playerInfo = { usePlayerAccounts, playerAccountStartValue };
+
+            return playerInfo;
+        }
+
         GameInfo createGameInfoObject(const commandData& cd)
         {
             if (cd.commandType != TypeGameInfo)
@@ -62,13 +77,6 @@ namespace BoardGame {
             if (cd.commandType != TypeEntity)
                 std::cerr << "Trying to create Entity from a " << cd.commandType << "object" << std::endl;
 
-            // The error generated here is due to the texture being
-            // loaded in before the window is created (and the GPU 
-            // therefore being initalized). This is a bit tricky to
-            // change, because the window has to be loaded after the data
-            // is loaded in (or does it? Could sacrifice the ability to
-            // change the screen size & FPS. That could be loaded from another
-            // file).
 
             std::filesystem::path imagePath = cd.argumentMap.at("img").c_str();
 
@@ -189,6 +197,7 @@ namespace BoardGame {
             BoardGame::GameInfo gameInfo = { 2000, 2000 , Color(255, 255, 255)};
             BoardGame::StartMenuInfo startMenuInfo = { Color(255, 255, 255)};
             std::vector<BoardGame::GameEntityData> entities;
+            BoardGame::PlayerInfo playerInfo = { false, 0};
             bool hasGameInfo = false;
             bool hasStartMenuInfo = false;
 
@@ -207,6 +216,7 @@ namespace BoardGame {
                 commandData cd = parseCommand(line);
 
 
+
                 switch (cd.commandType)
                 {
                 case TypeGameInfo:
@@ -223,6 +233,9 @@ namespace BoardGame {
                     entities.push_back(createEntityObject(cd));
                     break;
                     
+                case TypePlayerInfo:
+                    playerInfo = createPlayerInfoObject(cd);
+                    break;
 
                 default:
                     break;
@@ -233,7 +246,7 @@ namespace BoardGame {
 
             file.close();
 
-            return { gameInfo, startMenuInfo, entities };
+            return { gameInfo, startMenuInfo, entities,  playerInfo };
         };
     };
 };

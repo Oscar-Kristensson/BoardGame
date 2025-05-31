@@ -9,10 +9,12 @@
 #include "startMenu.h"
 #include "parser.h"
 #include "player.h"
+#include "inputElement.h"
 #include <unordered_map>
 #include <string>
 #include <vector>
 #include <filesystem>
+#include <optional>
 
 
 namespace BoardGame 
@@ -42,7 +44,8 @@ namespace BoardGame
 	{
 		{"Entity", TypeEntity},
 		{"GameInfo", TypeGameInfo},
-		{"StartMenu", TypeStartMenuInfo}
+		{"StartMenu", TypeStartMenuInfo},
+		{"PlayerInfo", TypePlayerInfo}
 	};
 
 
@@ -58,14 +61,21 @@ namespace BoardGame
 		Color m_BackgroundColor;
 		std::vector<BoardGame::Entity> m_Entities;
 		std::vector<BoardGame::Player> m_Players;
+		PlayerInfo m_PlayerInfo;
+		std::optional<BoardGame::gui::ValueInput> m_PlayerBankInput;
+		BoardGame::gui::ValueInput m_PlayerNumberDisplayUnit = BoardGame::gui::ValueInput(32, 20);
+		std::vector<int> m_PlayerBankBalance;
+		uint8_t m_CurrentPlayerID = 0;
 
 	public:
 		Game(Vector2 boardSize, Color backgroundColor, 
 			std::vector<BoardGame::GameEntityData> entityData,
-			uint8_t playerCount);
+			uint8_t playerCount, PlayerInfo playerInfo);
 		
 		void update() override;
 		void render() override;
+		void changePlayer(bool increase);
+		
 	};
 
 

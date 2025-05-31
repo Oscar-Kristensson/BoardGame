@@ -6,7 +6,7 @@
 BoardGame::Entity::Entity(Texture2D texture, int x, int y)
 	:m_Texture(texture), m_X(x), m_Y(y), m_Width(texture.width), m_Height(texture.height)
 {
-};
+}
 
 
 BoardGame::Entity::Entity(BoardGame::GameEntityData entityData)
@@ -21,9 +21,9 @@ BoardGame::Entity::Entity(BoardGame::GameEntityData entityData)
 	m_Width = m_Texture.width;
 	m_Height = m_Texture.height;
 
-};
+}
 
 void BoardGame::Entity::draw()
 {
 	DrawTexture(m_Texture, m_X, m_Y, WHITE);
-};
+}

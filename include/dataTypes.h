@@ -15,6 +15,13 @@ namespace BoardGame
 	};
 
 
+	struct PlayerInfo
+	{
+		bool hasAccounts;
+		int playerStartBalance;
+	};
+
+
 	struct StartMenuInfo
 	{
 		Color backgroundColor;
@@ -32,6 +39,7 @@ namespace BoardGame
 		GameInfo info;
 		StartMenuInfo startMenuInfo;
 		std::vector<BoardGame::GameEntityData> entities;
+		PlayerInfo playerInfo;
 	};
 
 
@@ -40,7 +48,8 @@ namespace BoardGame
 		TypeUnkown = 0,
 		TypeEntity = 1,
 		TypeGameInfo = 2,
-		TypeStartMenuInfo = 3
+		TypeStartMenuInfo = 3,
+		TypePlayerInfo = 4
 	};
 
 

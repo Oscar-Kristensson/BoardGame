@@ -9,6 +9,7 @@ namespace BoardGame
 	{
 		bool convertToUint16(const std::string& str, uint16_t& result);
 		bool convertToInt(const std::string& str, int& result);
+		bool convertToBool(const std::string& str);
 		Color convertHEXToRGB(std::string& hex);
 
 		int abs(int value);

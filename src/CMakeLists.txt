@@ -7,6 +7,8 @@ set(SOURCES
     utils.cpp
     entity.cpp
     player.cpp
+    inputElement.cpp
+    uiElement.cpp
 )
 
 # Automatically find all header files in the include/ directory

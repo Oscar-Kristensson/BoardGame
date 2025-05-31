@@ -88,7 +88,8 @@ int main()
                 Vector2(gameConfigData.info.width, gameConfigData.info.height),
                 gameConfigData.info.backgroundColor,
                 gameConfigData.entities,
-                startMenu.getPlayerCount()
+                startMenu.getPlayerCount(),
+                gameConfigData.playerInfo
             );
 
             applicationState = Game;

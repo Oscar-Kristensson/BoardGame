@@ -1,6 +1,12 @@
 #include "utils.h"
 
+bool BoardGame::utils::convertToBool(const std::string& str)
+{
+    if (str == "true")
+        return true;
 
+    return false;
+}
 
 bool BoardGame::utils::convertToUint16(const std::string& str, uint16_t& result) {
     try {
