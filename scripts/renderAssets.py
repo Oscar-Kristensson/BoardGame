@@ -27,7 +27,7 @@ if __name__ == "__main__":
     renderSVGAssets([
        "map",
        "test"
-       ],inputDir = "assets/raw/", outputDir = "assets/", dpi = "768")
+       ],inputDir = "games/WorldGame/raw/", outputDir = "games/WorldGame/", dpi = "768")
 
 
 

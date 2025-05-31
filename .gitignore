@@ -1,4 +1,10 @@
 .vs
 out
 build
+
+games/*
+!games/WorldGame/
+!games/WorldGame/**
+
+
 games/WorldGame/raw
