@@ -35,6 +35,8 @@ BoardGame::Game::Game(Vector2 boardSize, Color backgroundColor, std::vector<Boar
 
 void BoardGame::Game::changePlayer(bool increase)
 {
+	if (m_Players.size() == 0)
+		return;
 	m_PlayerBankBalance[m_CurrentPlayerID] = (*m_PlayerBankInput).getValue();
 
 	if (increase)
@@ -101,7 +103,14 @@ void BoardGame::Game::update()
 	Vector2 mouseWorldPosition = GetScreenToWorld2D(GetMousePosition(), m_Camera);
 
 	// Check if a player was clicked and dragged
-	if (IsMouseButtonPressed(0))
+	if (m_Players.size() > 0 && IsMouseButtonPressed(0) && \
+		m_Players[m_CurrentPlayerID].mouseHovers(mouseWorldPosition.x, mouseWorldPosition.y, 1 / m_Camera.zoom / 5))
+	{
+		m_Players[m_CurrentPlayerID].startDragging();
+	}
+
+
+	if (IsMouseButtonPressed(0) && IsKeyDown(KEY_L))
 		for (size_t i = m_Players.size(); i-- > 0; )
 		{
 			if (m_Players[i].mouseHovers(mouseWorldPosition.x, mouseWorldPosition.y, 1 / m_Camera.zoom / 5))
@@ -142,8 +151,14 @@ void BoardGame::Game::render()
 		for (int i = 0; i < m_Entities.size(); i++)
 			m_Entities[i].draw();
 
-		for (int i = 0; i < m_Players.size(); i++)
-			m_Players[i].draw(1/m_Camera.zoom/5);
+		bool isSelectedPlayer;
+		for (uint8_t i = 0; i < m_Players.size(); i++)
+		{
+			isSelectedPlayer = m_CurrentPlayerID == i;
+
+			m_Players[i].draw(1/m_Camera.zoom/5, isSelectedPlayer);
+
+		}
 
 
 

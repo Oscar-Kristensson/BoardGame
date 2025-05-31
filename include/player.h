@@ -21,7 +21,7 @@ namespace BoardGame
 		Player() : Player(0, 0, GRAY) {}
 		Player(int x, int y, Color color);
 
-		void draw(float scale);
+		void draw(float scale, bool isSelected);
 		bool mouseHovers(int cursorX, int cursorY, float scale);
 		bool isDragged();
 		void startDragging();

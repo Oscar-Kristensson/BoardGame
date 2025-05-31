@@ -70,4 +70,28 @@ int BoardGame::utils::abs(int value)
     if (value < 0)
         return -value;
     return value;
-};
+}
+
+int BoardGame::utils::max(int a, int b)
+{
+    if (a < b)
+        return b;
+    return a;
+}
+
+int BoardGame::utils::min(int a, int b)
+{
+    if (a < b)
+        return a;
+    return b;
+}
+
+
+Color BoardGame::utils::brighten(Color color, float factor) {
+    if (factor < 0)
+        return color;
+    color.r = (unsigned char)fmin(color.r + 255 * factor, 255);
+    color.g = (unsigned char)fmin(color.g + 255 * factor, 255);
+    color.b = (unsigned char)fmin(color.b + 255 * factor, 255);
+    return color;
+}

@@ -20,6 +20,9 @@ GameInfo,
     backgroundColor=7dcfe7;
 
 Entity, id=Background, img=assets/WorldGame/map.png, x=0, y=0;
+
+PlayerInfo, hasAccounts=true, accountBalance=100;
+
 ```
 
 #### Game Info
@@ -41,3 +44,10 @@ The entity has the following parameters:
 | img             | string (path) | The path to the image (will be changed to relative to game dir) |
 | x               | int           | The x-cord |
 | y               | int           | The y-cord |
+
+#### Player Info
+The player info object has the following parameters:
+| Parameter       | Values        | Comments |
+|-----------------|---------------|----------|
+| hasAccounts     | bool          | Enables the accounts in the game |
+| accountBalance  | int           | Sets the start account balance |

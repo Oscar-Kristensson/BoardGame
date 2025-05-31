@@ -37,7 +37,7 @@ void BoardGame::Player::move(int x, int y)
 }
 
 
-void BoardGame::Player::draw(float scale)
+void BoardGame::Player::draw(float scale, bool isSelected)
 {
 	int height = k_Height * scale;
 	int width = k_Width * scale;
@@ -47,7 +47,14 @@ void BoardGame::Player::draw(float scale)
 	Vector2 bottomLeft = { (m_X - width /2), (m_Y + height /2) };
 	Vector2 bottomRight = { (m_X + width / 2), (m_Y + height /2) };
 
-	DrawCircle(m_X, m_Y - height /2 + radius, radius, m_Color);
-	DrawTriangle(topPoint, bottomLeft, bottomRight, m_Color);
+	Color color = m_Color;
+
+	if (!isSelected)
+	{
+		color = BoardGame::utils::brighten(m_Color, 0.4);
+	}
+
+	DrawCircle(m_X, m_Y - height /2 + radius, radius, color);
+	DrawTriangle(topPoint, bottomLeft, bottomRight, color);
 
 }
