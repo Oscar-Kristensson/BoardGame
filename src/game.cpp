@@ -84,6 +84,10 @@ void BoardGame::Game::changePlayer(bool increase)
 
 void BoardGame::Game::update()
 {
+	DEBUG_NEW_FRAME();
+
+
+
 	// Change the camera offset
 	if (IsWindowResized())
 	{
@@ -135,6 +139,15 @@ void BoardGame::Game::update()
 		m_Players[m_CurrentPlayerID].startDragging();
 	}
 
+#if _DEBUG
+	DEBUG_POST_UPDATE(std::format("Player count {}", m_Players.size()));
+
+	std::string temp = "Mouse pos: (" + std::to_string(GetMouseX()) + ", " + std::to_string(GetMouseY()) + ")";
+	DEBUG_POST_UPDATE(temp);
+
+	temp = "World pos: (" + std::to_string(mouseWorldPosition.x) + ", " + std::to_string(mouseWorldPosition.y) + ")";
+	DEBUG_POST_UPDATE(temp);
+#endif
 
 	if (IsMouseButtonPressed(0) && IsKeyDown(KEY_L))
 		for (size_t i = m_Players.size(); i-- > 0; )
@@ -194,6 +207,8 @@ void BoardGame::Game::render()
 
 	if (m_Players.size() > 0)
 		m_PlayerNumberDisplayUnit.draw();
+
+	DEBUG_DRAW();
 }
 
 

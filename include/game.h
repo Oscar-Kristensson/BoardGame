@@ -1,6 +1,7 @@
 #pragma once
 
 
+
 #include "raylib.h"
 #include "dataTypes.h"
 #include "entity.h"
@@ -10,6 +11,7 @@
 #include "parser.h"
 #include "player.h"
 #include "inputElement.h"
+#include "debugScreen.h"
 #include <unordered_map>
 #include <string>
 #include <vector>

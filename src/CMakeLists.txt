@@ -9,6 +9,7 @@ set(SOURCES
     player.cpp
     inputElement.cpp
     uiElement.cpp
+    debugScreen.cpp
 )
 
 # Automatically find all header files in the include/ directory

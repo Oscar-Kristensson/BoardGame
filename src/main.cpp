@@ -1,9 +1,11 @@
+#define DEBUG 1
+
+
 #include <iostream>
 #include "raylib.h"
 #include "game.h"
 #include "app.h"
 
-#define DEBUG 0
 
 
 #include <filesystem>
