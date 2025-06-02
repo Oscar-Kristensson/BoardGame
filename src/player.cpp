@@ -39,13 +39,13 @@ void BoardGame::Player::move(int x, int y)
 
 void BoardGame::Player::draw(float scale, bool isSelected)
 {
-	int height = k_Height * scale;
-	int width = k_Width * scale;
-	int radius = k_Radius * scale;
+	int height = (int)(k_Height * scale);
+	int width = (int)(k_Width * scale);
+	int radius = (int)(k_Radius * scale);
 
-	Vector2 topPoint = { m_X, (m_Y - height /2 + radius) };
-	Vector2 bottomLeft = { (m_X - width /2), (m_Y + height /2) };
-	Vector2 bottomRight = { (m_X + width / 2), (m_Y + height /2) };
+	Vector2 topPoint = { (float)m_X, (float)(m_Y - height /2 + radius) };
+	Vector2 bottomLeft = { (float)(m_X - width /2), (float)(m_Y + height /2) };
+	Vector2 bottomRight = { (float)(m_X + width / 2), (float)(m_Y + height /2) };
 
 	Color color = m_Color;
 

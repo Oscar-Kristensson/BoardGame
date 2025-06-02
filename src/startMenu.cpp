@@ -12,7 +12,7 @@ BoardGame::StartMenu::StartMenu(Color backgroundColor, Color playerCountSelectBa
 
 void BoardGame::StartMenu::drawPlayerCountSelectMenu()
 {
-    int fontSize = convertCPToPixels(4);
+    int fontSize = (int)convertCPToPixels(4);
 
     std::string playerCountString = std::to_string(m_PlayerCount);
     double time = GetTime();

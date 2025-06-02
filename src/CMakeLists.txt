@@ -34,9 +34,8 @@ target_link_libraries(game PRIVATE raylib)
 if (WIN32)
     target_link_libraries(game PRIVATE winmm.lib)
 
-elseif(APPEL)
+elseif(APPLE)
     target_link_libraries(game PRIVATE
-        ${CMAKE_SOURCE_DIR}/lib/raylib.a
         "-framework OpenGL"
         "-framework Cocoa"
         "-framework IOKit"
