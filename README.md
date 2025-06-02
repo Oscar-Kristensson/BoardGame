@@ -1,7 +1,7 @@
 # BoardGame
 TBD
 
-## Usage and installation
+## Building
 ### VS 2022
 Run the following script:
 
@@ -9,7 +9,7 @@ Run the following script:
 scripts/vs
 ```
 
-The script will run cmake automatically and remove the old files. After running the script, open the generated solution file in VS and compile as normal. Make sure to have the raylib.lib file in the lib directory (it should be there by default, but can be ([downloaded here](https://github.com/raysan5/raylib/releases/tag/5.5))). Open the 
+The script will run cmake automatically and remove the old files. After running the script, open the generated solution file in VS and compile as normal. Make sure to have the raylib.lib file in the lib directory (it should be there by default, but can be ([downloaded here](https://github.com/raysan5/raylib/releases/tag/5.5))). Open the generated solution (build/game.sln) and set "game" as the startup project.
 
 
 ### MinGW
@@ -21,8 +21,8 @@ scripts/mingw
 
 Make sure to get the raylib library ([download here](https://github.com/raysan5/raylib/releases/tag/5.5)) for the MinGW compiler and put it in the lib folder. The executable should be outputed in build/game.exe
 
-### MacOS
-Start by downloading the ([raylib library](https://github.com/raysan5/raylib/releases/tag/5.5)) and putting it in the lib folder. Then run the following commands:
+### CMake
+Start by downloading the ([raylib library](https://github.com/raysan5/raylib/releases/tag/5.5)) and putting it in the lib folder. Then run cmake with the following commands:
 
 ``` bash
 cmake . .           # Generates the build files
@@ -30,12 +30,8 @@ make                # Builds the game
 ./build/game        # Runs the game
 ```
 
-This process was tested with the MacOS default clang++ compiler.
+This is known to work for MacOS with the clang++ compiler and the "raylib-5.5_macos.tar.gz" library as well as linux Pop!_OS with g++ and "raylib-5.5-linux_amd64.tar.gz".
 
-### Cmake
-Run cmake :)
-
-Also, remember to link to raylib.
 
 ### Generate Assets
 (This is game specific and should not be here)

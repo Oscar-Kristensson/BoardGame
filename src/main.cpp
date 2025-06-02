@@ -42,6 +42,11 @@ int main()
     InitWindow(windowWidth, windowHeight, "BoardGame");
 
     SetTargetFPS(targetFPS);
+
+
+    // Load Icon
+    Image icon = LoadImage("assets/icon.png");
+    SetWindowIcon(icon);
         
     BoardGame::Game* gameApp = nullptr;
         

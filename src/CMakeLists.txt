@@ -44,7 +44,7 @@ elseif(APPLE)
         "-framework AudioToolbox"
     )
 else()
-    target_link_libraries(game PRIVATE X11 pthread GL)
+    target_link_libraries(game PRIVATE pthread)
 
 endif()
 
