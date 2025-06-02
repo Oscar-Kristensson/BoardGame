@@ -89,13 +89,7 @@ int main()
 
             BoardGame::GameConfigData gameConfigData = BoardGame::parser::loadGameData(gameDataPath);
             delete gameApp;
-            gameApp = new BoardGame::Game(
-                Vector2(gameConfigData.info.width, gameConfigData.info.height),
-                gameConfigData.info.backgroundColor,
-                gameConfigData.entities,
-                startMenu.getPlayerCount(),
-                gameConfigData.playerInfo
-            );
+            gameApp = new BoardGame::Game(gameConfigData, startMenu.getPlayerCount());
 
             applicationState = Game;
 

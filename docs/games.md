@@ -21,7 +21,7 @@ GameInfo,
 
 Entity, id=Background, img=assets/WorldGame/map.png, x=0, y=0;
 
-PlayerInfo, hasAccounts=true, accountBalance=100;
+CommonPlayerInfo, hasAccounts=true, accountBalance=100;
 
 ```
 
@@ -45,8 +45,8 @@ The entity has the following parameters:
 | x               | int           | The x-cord |
 | y               | int           | The y-cord |
 
-#### Player Info
-The player info object has the following parameters:
+#### Common Player Info
+The common player info object has the following parameters:
 | Parameter       | Values        | Comments |
 |-----------------|---------------|----------|
 | hasAccounts     | bool          | Enables the accounts in the game |

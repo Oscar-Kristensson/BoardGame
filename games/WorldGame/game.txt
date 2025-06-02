@@ -3,9 +3,12 @@ GameInfo,
     boardHeight=8000,
     backgroundColor=7dcfe7;
 
+;# Entities;
 Entity, id="Background Image", img=games/WorldGame/map.png, x=0, y=0;
 Entity, id="Entity ID", img=games/WorldGame/test.png, x=0, y=0;
 
-PlayerInfo, hasAccounts=true, accountBalance=100;
+;# Configuring players;
+CommonPlayerInfo, hasAccounts=true, accountBalance=100;
 
-
+PlayerInfo, x=1280, y=936, color=ff00ff;
+PlayerInfo, x=1040, y=904, color=ffff00;

@@ -45,6 +45,7 @@ namespace BoardGame
 		{"Entity", TypeEntity},
 		{"GameInfo", TypeGameInfo},
 		{"StartMenu", TypeStartMenuInfo},
+		{"CommonPlayerInfo", TypeCommonPlayerInfo},
 		{"PlayerInfo", TypePlayerInfo}
 	};
 
@@ -61,7 +62,7 @@ namespace BoardGame
 		Color m_BackgroundColor;
 		std::vector<BoardGame::Entity> m_Entities;
 		std::vector<BoardGame::Player> m_Players;
-		PlayerInfo m_PlayerInfo;
+		CommonPlayerInfo m_CommonPlayerInfo;
 		std::optional<BoardGame::gui::ValueInput> m_PlayerBankInput;
 		BoardGame::gui::ValueInput m_PlayerNumberDisplayUnit = BoardGame::gui::ValueInput(32, 20);
 		std::vector<int> m_PlayerBankBalance;
@@ -70,8 +71,11 @@ namespace BoardGame
 	public:
 		Game(Vector2 boardSize, Color backgroundColor, 
 			std::vector<BoardGame::GameEntityData> entityData,
-			uint8_t playerCount, PlayerInfo playerInfo);
-		
+			uint8_t playerCount, CommonPlayerInfo commonPlayerInfo,
+			std::vector<PlayerInfo> players);
+
+		Game(GameConfigData gameData, uint8_t playerCount);
+
 		void update() override;
 		void render() override;
 		void changePlayer(bool increase);

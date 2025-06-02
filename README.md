@@ -49,7 +49,7 @@ Once in the game:
 * Use the Arrowkeys to move around the viewport
 * Use the mousewheel to zoom
 * Use Q and W to change which players turn it is
-* If applicable to the game, change the players balance with the O and P keys. Use the SHIFT to change by 10 and CTRL + SHIFT to change by 100. 
+* If applicable to the game, change the players balance with the O and P keys while hovering over the bank element. Use the SHIFT to change by 10 and CTRL + SHIFT to change by 100. 
 
 
 ## Licenses

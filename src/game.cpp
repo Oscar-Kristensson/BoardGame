@@ -3,8 +3,8 @@
 
 
 
-BoardGame::Game::Game(Vector2 boardSize, Color backgroundColor, std::vector<BoardGame::GameEntityData> entityData, uint8_t playerCount, PlayerInfo playerInfo)
-	:m_BoardSize(boardSize), m_BackgroundColor(backgroundColor), m_PlayerInfo(playerInfo)
+BoardGame::Game::Game(Vector2 boardSize, Color backgroundColor, std::vector<BoardGame::GameEntityData> entityData, uint8_t playerCount, CommonPlayerInfo commonPlayerInfo, std::vector<PlayerInfo> playersData)
+	:m_BoardSize(boardSize), m_BackgroundColor(backgroundColor), m_CommonPlayerInfo(commonPlayerInfo)
 {
 	m_Camera.target = { m_BoardSize.x / 2, m_BoardSize.y / 2 };
 	m_Camera.offset = Vector2(GetScreenWidth() / 2.0f, GetScreenHeight() / 2.0f);
@@ -14,24 +14,36 @@ BoardGame::Game::Game(Vector2 boardSize, Color backgroundColor, std::vector<Boar
 
 	for (unsigned int i = 0; i < entityData.size(); i++)
 		m_Entities.push_back(BoardGame::Entity(entityData[0]));
+
+	if (playerCount > playersData.size())
+	{
+		playerCount = playersData.size();
+		std::cout << "Waring: Trying to create more players that configurated in the game file" << std::endl;
+	}
 	
 	for (uint8_t i = 0; i < playerCount; i++)
-		m_Players.push_back(BoardGame::Player(64, 64, BoardGame::constants::playerColors[i]));
+		m_Players.push_back(BoardGame::Player(playersData[i].x, playersData[i].y, playersData[i].color));
 
 	for (uint8_t i = 0; i < playerCount; i++)
-		m_PlayerBankBalance.push_back(m_PlayerInfo.playerStartBalance);
+		m_PlayerBankBalance.push_back(m_CommonPlayerInfo.playerStartBalance);
 
-	if (m_PlayerInfo.hasAccounts && playerCount > 0)
+	if (m_CommonPlayerInfo.hasAccounts && playerCount > 0)
 	{
 		m_PlayerBankInput.emplace(BoardGame::gui::ValueInput(120, 20));
-		(*m_PlayerBankInput).setValue(m_PlayerInfo.playerStartBalance);
+		(*m_PlayerBankInput).setValue(m_CommonPlayerInfo.playerStartBalance);
 	}
 
 	m_PlayerNumberDisplayUnit.setValue(1);
 
 }
 
+BoardGame::Game::Game(GameConfigData gameData, uint8_t playerCount) 
+	: Game(Vector2(gameData.info.width, gameData.info.height), 
+		gameData.info.backgroundColor, gameData.entities, playerCount,
+		gameData.commonPlayerInfo, gameData.players)
+{
 
+}
 
 
 void BoardGame::Game::changePlayer(bool increase)
@@ -152,8 +164,9 @@ void BoardGame::Game::update()
 		};
 	}
 
-	if (m_PlayerBankInput.has_value() && m_PlayerInfo.hasAccounts)
+	if (m_PlayerBankInput.has_value() && m_CommonPlayerInfo.hasAccounts)
 		(*m_PlayerBankInput).update(GetMouseX(), GetMouseY());
+
 }
 
 void BoardGame::Game::render()
@@ -174,11 +187,9 @@ void BoardGame::Game::render()
 		}
 
 
-
-
 	EndMode2D();
 
-	if (m_PlayerBankInput.has_value() && m_PlayerInfo.hasAccounts)
+	if (m_PlayerBankInput.has_value() && m_CommonPlayerInfo.hasAccounts)
 		(*m_PlayerBankInput).draw();
 
 	if (m_Players.size() > 0)

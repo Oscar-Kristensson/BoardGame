@@ -40,20 +40,57 @@ namespace BoardGame {
             };
         };
 
-        PlayerInfo createPlayerInfoObject(const commandData& cd)
+        CommonPlayerInfo createCommonPlayerInfoObject(const commandData& cd)
         {
-            if (cd.commandType != TypePlayerInfo)
-                std::cerr << "Trying to create PlayerInfo from a " << cd.commandType << "object" << std::endl;
+            if (cd.commandType != TypeCommonPlayerInfo)
+                std::cerr << "Trying to create CommonPlayerInfo from a " << cd.commandType << "object" << std::endl;
 
             bool usePlayerAccounts = BoardGame::utils::convertToBool(cd.argumentMap.at("hasAccounts"));
 
             int playerAccountStartValue = 0;
             BoardGame::utils::convertToInt(cd.argumentMap.at("accountBalance"), playerAccountStartValue);
 
-            PlayerInfo playerInfo = { usePlayerAccounts, playerAccountStartValue };
+            CommonPlayerInfo playerInfo = { usePlayerAccounts, playerAccountStartValue };
 
             return playerInfo;
         }
+
+        PlayerInfo createPlayerInfoObject(const commandData& cd)
+        {
+            if (cd.commandType != TypePlayerInfo)
+                std::cerr << "Trying to create PlayerInfo from a " << cd.commandType << "object" << std::endl;
+
+
+            int x = 0;
+            int y = 0;
+
+            if (cd.argumentMap.find("x") != cd.argumentMap.end())
+                BoardGame::utils::convertToInt(cd.argumentMap.at("x"), x);
+            else
+                std::cout << "Warning: Trying to create a player with out an x parameter" << std::endl;
+
+
+            if (cd.argumentMap.find("y") != cd.argumentMap.end())
+                BoardGame::utils::convertToInt(cd.argumentMap.at("y"), y);
+            else
+                std::cout << "Warning: Trying to create a player with out a y parameter" << std::endl;
+
+
+            std::string colorString = "ff00aa";
+            if (cd.argumentMap.find("color") != cd.argumentMap.end())
+                colorString = cd.argumentMap.at("color");
+            else
+                std::cout << "Warning: Trying to create a player with out a color parameter" << std::endl;
+
+            Color color = BoardGame::utils::convertHEXToRGB(colorString);
+
+            PlayerInfo playerInfo = { x, y, color };
+
+            std::cout << "Creating player" << std::endl;
+
+            return playerInfo;
+        }
+
 
         GameInfo createGameInfoObject(const commandData& cd)
         {
@@ -147,7 +184,7 @@ namespace BoardGame {
 
             for (uint16_t charNumber = 0; charNumber < commandLine.length(); charNumber++)
             {
-
+                
                 char character = commandLine.at(charNumber);
 
                 switch (character)
@@ -184,7 +221,7 @@ namespace BoardGame {
                 argumentMap.insert(argumentPair);
             };
 
-            
+
             BoardGame::EntityType entityType = getEntityTypeFromName(argumentName);
 
             commandData commandData = { entityType, argumentMap };
@@ -197,7 +234,9 @@ namespace BoardGame {
             BoardGame::GameInfo gameInfo = { 2000, 2000 , Color(255, 255, 255)};
             BoardGame::StartMenuInfo startMenuInfo = { Color(255, 255, 255)};
             std::vector<BoardGame::GameEntityData> entities;
-            BoardGame::PlayerInfo playerInfo = { false, 0};
+            BoardGame::CommonPlayerInfo commonPlayerInfo = { false, 0};
+            std::vector<BoardGame::PlayerInfo> players;
+
             bool hasGameInfo = false;
             bool hasStartMenuInfo = false;
 
@@ -213,6 +252,10 @@ namespace BoardGame {
             std::string line;
             while (std::getline(file, line, ';'))
             {
+                // Skips lines empty lines and comments (;#)
+                if (line[0] == '#' || line == "\n")
+                    continue;
+
                 commandData cd = parseCommand(line);
 
 
@@ -233,9 +276,12 @@ namespace BoardGame {
                     entities.push_back(createEntityObject(cd));
                     break;
                     
-                case TypePlayerInfo:
-                    playerInfo = createPlayerInfoObject(cd);
+                case TypeCommonPlayerInfo:
+                    commonPlayerInfo = createCommonPlayerInfoObject(cd);
                     break;
+
+                case TypePlayerInfo:
+                    players.emplace_back(createPlayerInfoObject(cd));
 
                 default:
                     break;
@@ -246,7 +292,7 @@ namespace BoardGame {
 
             file.close();
 
-            return { gameInfo, startMenuInfo, entities,  playerInfo };
+            return { gameInfo, startMenuInfo, entities,  commonPlayerInfo, players };
         };
     };
 };
