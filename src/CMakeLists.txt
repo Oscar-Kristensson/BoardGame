@@ -35,10 +35,15 @@ if (WIN32)
     target_link_libraries(game PRIVATE winmm.lib)
 
 elseif(APPEL)
-    find_library(COCOA_LIBRARY Cocoa)
-    find_library(IOKIT_LIBRARY IOKit)
-    find_library(COREVIDEO_LIBRARY CoreVideo)
-    target_link_libraries(game PRIVATE ${COCOA_LIBRARY} ${IOKIT_LIBRARY} ${COREVIDEO_LIBRARY})
+    target_link_libraries(game PRIVATE
+        ${CMAKE_SOURCE_DIR}/lib/raylib.a
+        "-framework OpenGL"
+        "-framework Cocoa"
+        "-framework IOKit"
+        "-framework CoreVideo"
+        "-framework CoreAudio"
+        "-framework AudioToolbox"
+    )
 else()
     target_link_libraries(game PRIVATE X11 pthread GL)
 

@@ -21,10 +21,21 @@ scripts/mingw
 
 Make sure to get the raylib library ([download here](https://github.com/raysan5/raylib/releases/tag/5.5)) for the MinGW compiler and put it in the lib folder. The executable should be outputed in build/game.exe
 
+### MacOS
+Start by downloading the ([raylib library](https://github.com/raysan5/raylib/releases/tag/5.5)) and putting it in the lib folder. Then run the following commands:
+
+``` bash
+cmake . .           # Generates the build files
+make                # Builds the game
+./build/game        # Runs the game
+```
+
+This process was tested with the MacOS default clang++ compiler.
+
 ### Cmake
 Run cmake :)
 
-Also, rember to link to raylib.
+Also, remember to link to raylib.
 
 ### Generate Assets
 (This is game specific and should not be here)

@@ -2,9 +2,23 @@
 out
 build
 
+
+# Games (only include default WorldGame)
 games/*
 !games/WorldGame/
 !games/WorldGame/**
 
-
+# SVG files etc to generate the default WorldGame 
 games/WorldGame/raw
+
+
+# CMake
+*Makefile
+*cmake_install.cmake
+*CMakeCache.txt
+
+src/CMakeFiles
+CMakeFiles
+
+# Raylib library
+lib/libraylib.a
