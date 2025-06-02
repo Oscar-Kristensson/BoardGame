@@ -31,7 +31,7 @@ void BoardGame::StartMenu::drawPlayerCountSelectMenu()
     int top = GetScreenHeight() - fontSize;
     int left = GetScreenWidth() - totalWidth;
 
-    Rectangle rect = { left, top, totalWidth, fontSize };
+    Rectangle rect = { (float)left, (float)top, (float)totalWidth, (float)fontSize };
     DrawRectangleRounded(rect, 1, 10, m_PlayerCountSelectBackgroundColor);
 
     // Player Count

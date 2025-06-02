@@ -1,6 +1,6 @@
-#pragma once
 #include "entity.h"
 #include <iostream>
+#include <filesystem>
 
 
 BoardGame::Entity::Entity(Texture2D texture, int x, int y)
