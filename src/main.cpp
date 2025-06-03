@@ -27,7 +27,6 @@ int main()
 
 #endif
 
-
     enum ApplicationState
     {
         StartMenu = 0,

@@ -10,5 +10,11 @@ Entity, id="Entity ID", img=games/WorldGame/test.png, x=0, y=0;
 ;# Configuring players;
 CommonPlayerInfo, hasAccounts=true, accountBalance=100;
 
-PlayerInfo, x=1280, y=936, color=ff00ff;
-PlayerInfo, x=1040, y=904, color=ffff00;
+PlayerInfo, x=4850, y=3555, color=ff2a2a;
+PlayerInfo, x=3950, y=3420, color=009b00;
+PlayerInfo, x=5841, y=3285, color=2a2aff;
+PlayerInfo, x=4132, y=3917, color=ffff2a;
+PlayerInfo, x=5100, y=3402, color=942aff;
+PlayerInfo, x=5679, y=3574, color=ff942a;
+PlayerInfo, x=5415, y=3409, color=2affff;
+PlayerInfo, x=5512, y=2989, color=ff2aff;

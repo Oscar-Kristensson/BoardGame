@@ -97,3 +97,15 @@ Color BoardGame::utils::brighten(Color color, float factor) {
     color.b = (unsigned char)fmin(color.b + 255 * factor, 255);
     return color;
 }
+
+
+
+
+std::string BoardGame::utils::convertRGBToHEX(Color color) {
+    std::ostringstream ss;
+    ss << std::hex << std::setfill('0');
+    ss << std::setw(2) << static_cast<int>(color.r);
+    ss << std::setw(2) << static_cast<int>(color.g);
+    ss << std::setw(2) << static_cast<int>(color.b);
+    return ss.str();
+}

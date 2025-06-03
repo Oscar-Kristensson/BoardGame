@@ -9,7 +9,7 @@ BoardGame::Entity::Entity(Texture2D texture, int x, int y)
 }
 
 
-BoardGame::Entity::Entity(BoardGame::GameEntityData entityData)
+BoardGame::Entity::Entity(const BoardGame::GameEntityData& entityData)
 	:m_X(entityData.x), m_Y(entityData.y)
 {
 	std::string stringPath = entityData.imagePath.string();
@@ -26,4 +26,48 @@ BoardGame::Entity::Entity(BoardGame::GameEntityData entityData)
 void BoardGame::Entity::draw()
 {
 	DrawTexture(m_Texture, m_X, m_Y, WHITE);
+}
+
+
+BoardGame::Entity::~Entity()
+{
+	UnloadTexture(m_Texture);
+}
+
+// Move constructor
+BoardGame::Entity::Entity(BoardGame::Entity&& other) noexcept
+	: m_Texture(other.m_Texture), m_X(other.m_X), m_Y(other.m_Y),
+	m_Width(other.m_Width), m_Height(other.m_Height)
+{
+	// Invalidate other's texture so destructor doesn't unload twice
+	other.m_Texture = { 0, 0, 0, 0 };
+	other.m_X = 0;
+	other.m_Y = 0;
+	other.m_Width = 0;
+	other.m_Height = 0;
+}
+
+
+BoardGame::Entity& BoardGame::Entity::operator=(BoardGame::Entity&& other) noexcept
+{
+	if (this != &other)
+	{
+		// Free current resource
+		UnloadTexture(m_Texture);
+
+		// Steal other's resource and data
+		m_Texture = other.m_Texture;
+		m_X = other.m_X;
+		m_Y = other.m_Y;
+		m_Width = other.m_Width;
+		m_Height = other.m_Height;
+
+		// Invalidate other
+		other.m_Texture = { 0, 0, 0, 0 };
+		other.m_X = 0;
+		other.m_Y = 0;
+		other.m_Width = 0;
+		other.m_Height = 0;
+	}
+	return *this;
 }

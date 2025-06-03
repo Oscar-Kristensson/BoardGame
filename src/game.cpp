@@ -11,9 +11,9 @@ BoardGame::Game::Game(Vector2 boardSize, Color backgroundColor, std::vector<Boar
 	m_Camera.rotation = 0.0f;
 	m_Camera.zoom = 0.5f;
 
-
+	m_Entities.reserve(entityData.size());
 	for (unsigned int i = 0; i < entityData.size(); i++)
-		m_Entities.push_back(BoardGame::Entity(entityData[0]));
+		m_Entities.emplace_back(entityData[i]);
 
 	if (playerCount > playersData.size())
 	{

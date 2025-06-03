@@ -1,6 +1,7 @@
 #pragma once
 #include "game.h"
 #include <string>
+#include <sstream>
 #include <iostream>
 
 namespace BoardGame
@@ -17,5 +18,6 @@ namespace BoardGame
 		int min(int a, int b);
 
 		Color brighten(Color color, float factor);
+		std::string convertRGBToHEX(Color color);
 	}
 }

@@ -15,10 +15,21 @@ namespace BoardGame
 		
 	public:
 		Entity() = default;
-		Entity(Texture2D imagePath, int x, int y);
-		Entity(GameEntityData entityData);
+		Entity(Texture2D image, int x, int y);
+		Entity(const GameEntityData& entityData);
+		~Entity();
+
 
 		void draw();
+
+		// Disable copying (because of textures)
+		Entity(const Entity&) = delete;
+		Entity& operator=(const Entity&) = delete;
+
+		// Move operators
+		Entity(Entity&& other) noexcept;
+		Entity& operator=(Entity&& other) noexcept;
+
 
 	};
 }
