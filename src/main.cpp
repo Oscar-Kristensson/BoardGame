@@ -1,4 +1,3 @@
-#define DEBUG 1
 #define USE_dGPU_OVER_iGPU 0
 
 
@@ -11,7 +10,7 @@
 
 #include <filesystem>
 
-#if USE_DGPU
+#if USE_dGPU_OVER_iGPU
 
 // Use dGPU
 #ifdef __cplusplus
@@ -31,7 +30,7 @@ extern "C" {
 int main()
 {
     
-#if DEBUG
+#if _DEBUG
     
     std::filesystem::path cwd = std::filesystem::current_path();
     std::cout << "Current working directory: " << cwd << std::endl;

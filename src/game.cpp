@@ -113,12 +113,12 @@ void BoardGame::Game::update()
 		changePlayer(false);
 	}
 
-	if (IsKeyDown(KEY_RIGHT)) m_Camera.target.x += 8 / m_Camera.zoom;
-	else if (IsKeyDown(KEY_LEFT)) m_Camera.target.x -= 8 / m_Camera.zoom;
+	if (IsKeyDown(KEY_RIGHT)) m_Camera.target.x += BoardGame::constants::cameraMovementSpeed / m_Camera.zoom * GetFrameTime();
+	else if (IsKeyDown(KEY_LEFT)) m_Camera.target.x -= BoardGame::constants::cameraMovementSpeed / m_Camera.zoom * GetFrameTime();
 
 
-	if (IsKeyDown(KEY_DOWN)) m_Camera.target.y += 8 / m_Camera.zoom;
-	else if (IsKeyDown(KEY_UP)) m_Camera.target.y -= 8 / m_Camera.zoom;
+	if (IsKeyDown(KEY_DOWN)) m_Camera.target.y += BoardGame::constants::cameraMovementSpeed / m_Camera.zoom * GetFrameTime();
+	else if (IsKeyDown(KEY_UP)) m_Camera.target.y -= BoardGame::constants::cameraMovementSpeed / m_Camera.zoom * GetFrameTime();
 
 
 	m_Camera.zoom = expf(logf(m_Camera.zoom) + ((float)GetMouseWheelMove() * 0.1f));

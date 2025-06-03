@@ -33,6 +33,8 @@ namespace BoardGame
 	{
 		extern Font font;
 
+		const unsigned int cameraMovementSpeed = 800;
+
 		constexpr uint8_t playerColorsLength = 8;
 		const Color playerColors[playerColorsLength] = {
 			{255, 42, 42, 255},		// red
@@ -76,6 +78,8 @@ namespace BoardGame
 		BoardGame::gui::ValueInput m_PlayerNumberDisplayUnit = BoardGame::gui::ValueInput(32, 20);
 		std::vector<int> m_PlayerBankBalance;
 		uint8_t m_CurrentPlayerID = 0;
+
+		bool m_UseHighFPS = false;
 
 	public:
 		Game(Vector2 boardSize, Color backgroundColor, 
