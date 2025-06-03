@@ -92,6 +92,7 @@ namespace BoardGame
 		void update() override;
 		void render() override;
 		void changePlayer(bool increase);
+		bool getUseHighFPS() { return m_UseHighFPS; }
 		
 	};
 

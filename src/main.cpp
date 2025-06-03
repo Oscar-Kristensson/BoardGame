@@ -51,12 +51,18 @@ int main()
     const unsigned int currentMonitor = GetCurrentMonitor();
     const unsigned int windowWidth = 1920;
     const unsigned int windowHeight = 1080;
-    const unsigned int targetFPS = GetMonitorRefreshRate(currentMonitor);
-        
+    
     SetConfigFlags(FLAG_WINDOW_RESIZABLE);  
     InitWindow(windowWidth, windowHeight, "BoardGame");
+        
+    const unsigned int targetFPS = GetMonitorRefreshRate(currentMonitor);
 
     SetTargetFPS(targetFPS);
+
+#if _DEBUG
+    std::cout << "Created screen: " << windowWidth << "x" << windowHeight << "@" << targetFPS << std::endl;
+#endif
+
     }
 
     BoardGame::constants::loadFont();
@@ -128,7 +134,9 @@ int main()
         default:
             break;
         }
-        
+
+        if (applicationState == StartMenu || (applicationState == Game  && gameApp != nullptr && !gameApp->getUseHighFPS()))
+            WaitTime(0.025);
 
         // Drawing
         BeginDrawing();

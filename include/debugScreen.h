@@ -5,7 +5,7 @@
 #include <string>
 #include <stdint.h>
 
-#define USE_DEBUG_SCREEN_MACROS 0
+#define USE_DEBUG_SCREEN_MACROS 1
 
 
 #if _DEBUG

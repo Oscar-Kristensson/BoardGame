@@ -93,6 +93,9 @@ void BoardGame::Game::changePlayer(bool increase)
 
 void BoardGame::Game::update()
 {
+	// Reset the use high FPS counter
+	m_UseHighFPS = false;
+
 	DEBUG_NEW_FRAME();
 
 
@@ -113,12 +116,29 @@ void BoardGame::Game::update()
 		changePlayer(false);
 	}
 
-	if (IsKeyDown(KEY_RIGHT)) m_Camera.target.x += BoardGame::constants::cameraMovementSpeed / m_Camera.zoom * GetFrameTime();
-	else if (IsKeyDown(KEY_LEFT)) m_Camera.target.x -= BoardGame::constants::cameraMovementSpeed / m_Camera.zoom * GetFrameTime();
+
+	if (IsKeyDown(KEY_RIGHT))
+	{
+		m_Camera.target.x += BoardGame::constants::cameraMovementSpeed / m_Camera.zoom * GetFrameTime();
+		m_UseHighFPS = true;
+	}
+	else if (IsKeyDown(KEY_LEFT))
+	{
+		m_Camera.target.x -= BoardGame::constants::cameraMovementSpeed / m_Camera.zoom * GetFrameTime();
+		m_UseHighFPS = true;
+	}
 
 
-	if (IsKeyDown(KEY_DOWN)) m_Camera.target.y += BoardGame::constants::cameraMovementSpeed / m_Camera.zoom * GetFrameTime();
-	else if (IsKeyDown(KEY_UP)) m_Camera.target.y -= BoardGame::constants::cameraMovementSpeed / m_Camera.zoom * GetFrameTime();
+	if (IsKeyDown(KEY_DOWN))
+	{
+		m_Camera.target.y += BoardGame::constants::cameraMovementSpeed / m_Camera.zoom * GetFrameTime();
+		m_UseHighFPS = true;
+	}
+	else if (IsKeyDown(KEY_UP))
+	{
+		m_Camera.target.y -= BoardGame::constants::cameraMovementSpeed / m_Camera.zoom * GetFrameTime();
+		m_UseHighFPS = true;
+	}
 
 
 	m_Camera.zoom = expf(logf(m_Camera.zoom) + ((float)GetMouseWheelMove() * 0.1f));
@@ -136,6 +156,7 @@ void BoardGame::Game::update()
 	{
 		m_Camera.target.x += mouseDelta.x / m_Camera.zoom;
 		m_Camera.target.y += mouseDelta.y / m_Camera.zoom;
+		m_UseHighFPS = true;
 	}
 
 	if (IsMouseButtonReleased(1))
@@ -188,7 +209,9 @@ void BoardGame::Game::update()
 
 	if (m_PlayerBankInput.has_value() && m_CommonPlayerInfo.hasAccounts)
 		(*m_PlayerBankInput).update(GetMouseX(), GetMouseY());
-
+	
+	DEBUG_POST_UPDATE(std::format("Use hFPS: {}", m_UseHighFPS));
+	DEBUG_POST_UPDATE(std::format("FPS: {}", GetFPS()));
 }
 
 void BoardGame::Game::render()
