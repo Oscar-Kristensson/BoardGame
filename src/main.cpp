@@ -38,6 +38,7 @@ int main()
 
 #endif
 
+
     enum ApplicationState
     {
         StartMenu = 0,
@@ -52,16 +53,17 @@ int main()
     const unsigned int windowWidth = 1920;
     const unsigned int windowHeight = 1080;
     const unsigned int targetFPS = GetMonitorRefreshRate(currentMonitor);
-    
+        
     SetConfigFlags(FLAG_WINDOW_RESIZABLE);  
     InitWindow(windowWidth, windowHeight, "BoardGame");
 
     SetTargetFPS(targetFPS);
     }
 
+    BoardGame::constants::loadFont();
 
     // Load Icon
-    Image icon = LoadImage("assets/icon.png");
+    Image icon = LoadImage("assets/icons/icon.png");
     SetWindowIcon(icon);
         
     BoardGame::Game* gameApp = nullptr;

@@ -17,10 +17,10 @@ void BoardGame::StartMenu::drawPlayerCountSelectMenu()
     std::string playerCountString = std::to_string(m_PlayerCount);
     double time = GetTime();
 
-    int playerCountTextLength = MeasureText("Player Count", fontSize);
-    int plusSignLength = MeasureText("K+", fontSize);
-    int minusSignLength = MeasureText("L-", fontSize);
-    int playerNumberCountTextLength = MeasureText(playerCountString.c_str(), fontSize);
+    int playerCountTextLength = MeasureTextEx(BoardGame::constants::font, "Player Count", fontSize, 2).x;
+    int plusSignLength = MeasureTextEx(BoardGame::constants::font, "K+", fontSize, 2).x;
+    int minusSignLength = MeasureTextEx(BoardGame::constants::font, "L-", fontSize, 2).x;
+    int playerNumberCountTextLength = MeasureTextEx(BoardGame::constants::font, playerCountString.c_str(), fontSize, 2).x;
     int marginUnit = plusSignLength / 2;
 
     int totalWidth = marginUnit + playerCountTextLength + marginUnit \
@@ -36,19 +36,19 @@ void BoardGame::StartMenu::drawPlayerCountSelectMenu()
 
     // Player Count
     //DrawRectangle(left, top, playerCountTextLength + marginUnit * 2, fontSize, m_PlayerCountSelectBackgroundColor);
-    DrawText("Player Count", left + marginUnit, top, fontSize, m_PlayerCountSelectTextColor);
+    DrawTextEx(BoardGame::constants::font, "Player Count", Vector2(left + marginUnit, top), fontSize, 2, m_PlayerCountSelectTextColor);
     
     // Plus
     //DrawRectangle(left + playerCountTextLength + marginUnit * 2, top, plusSignLength + marginUnit * 2, fontSize, m_PlayerCountSelectBackgroundColor);
-    DrawText("K+", left + playerCountTextLength + marginUnit * 3, top, fontSize, m_PlayerCountSelectTextColor);
+    DrawTextEx(BoardGame::constants::font, "K+", Vector2(left + playerCountTextLength + marginUnit * 3, top), fontSize, 2, m_PlayerCountSelectTextColor);
     
     // Amount
     //DrawRectangle(left + playerCountTextLength + marginUnit * 6, top, marginUnit * 2 + playerNumberCountTextLength, top, m_PlayerCountSelectBackgroundColor);
-    DrawText(playerCountString.c_str(), left + playerCountTextLength + marginUnit * 7, top, fontSize, m_PlayerCountSelectTextColor);
+    DrawTextEx(BoardGame::constants::font, playerCountString.c_str(), Vector2(left + playerCountTextLength + marginUnit * 7, top), fontSize, 2, m_PlayerCountSelectTextColor);
 
     // Minus
     //DrawRectangle(left + playerCountTextLength + marginUnit * 8 + playerNumberCountTextLength, top, minusSignLength + marginUnit * 2, fontSize, m_PlayerCountSelectBackgroundColor);
-    DrawText("L-", left + playerCountTextLength + marginUnit * 9 + playerNumberCountTextLength, top, fontSize, m_PlayerCountSelectTextColor);
+    DrawTextEx(BoardGame::constants::font, "L-", Vector2(left + playerCountTextLength + marginUnit * 9 + playerNumberCountTextLength, top), fontSize, 2, m_PlayerCountSelectTextColor);
 }
 
 uint8_t BoardGame::StartMenu::getPlayerCount()
@@ -117,9 +117,9 @@ void BoardGame::StartMenu::render()
 
         };
         
-        int textWidth = MeasureText(gameNameString.c_str(), fontSize);
+        int textWidth = MeasureTextEx(BoardGame::constants::font, gameNameString.c_str(), fontSize, 2).x;
 
-        DrawText(gameNameString.c_str(), GetScreenWidth()/2 - textWidth / 2, GetScreenHeight() / 2 - ((m_GameNames.size()/2 - i) * BoardGame::convertCPToPixels(10.0f)) - fontSize / 2, fontSize, textColor);
+        DrawTextEx(BoardGame::constants::font, gameNameString.c_str(), Vector2(GetScreenWidth()/2 - textWidth / 2, GetScreenHeight() / 2 - ((m_GameNames.size()/2 - i) * BoardGame::convertCPToPixels(10.0f)) - fontSize / 2), fontSize, 2, textColor);
     }
 
 

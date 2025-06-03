@@ -25,10 +25,14 @@ namespace BoardGame
 	{
 		const std::filesystem::path gamesDirPath = "games";
 		const std::filesystem::path gameDataTextFilePath = "game.txt";
+		const std::filesystem::path gameFontsPath = "assets/fonts";
+		const std::filesystem::path gameFontOpenSans = gameFontsPath / "OpenSans-Regular.ttf";
 	}
 
 	namespace constants
 	{
+		extern Font font;
+
 		constexpr uint8_t playerColorsLength = 8;
 		const Color playerColors[playerColorsLength] = {
 			{255, 42, 42, 255},		// red
@@ -40,6 +44,9 @@ namespace BoardGame
 			{42, 255, 255, 255},	// turkoise
 			{255, 42, 255, 255},	// pink
 		};
+
+
+		void loadFont();
 	}
 
 	const std::unordered_map<std::string, EntityType> entityMap =

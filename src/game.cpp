@@ -1,7 +1,13 @@
 #include "game.h"
 #include <cmath>
 
+Font BoardGame::constants::font;
 
+void BoardGame::constants::loadFont()
+{
+	std::string stringPath = BoardGame::paths::gameFontOpenSans.string();
+	BoardGame::constants::font = LoadFontEx(stringPath.c_str(), 128, nullptr, 0);
+}
 
 BoardGame::Game::Game(Vector2 boardSize, Color backgroundColor, std::vector<BoardGame::GameEntityData> entityData, uint8_t playerCount, CommonPlayerInfo commonPlayerInfo, std::vector<PlayerInfo> playersData)
 	:m_BoardSize(boardSize), m_BackgroundColor(backgroundColor), m_CommonPlayerInfo(commonPlayerInfo)
