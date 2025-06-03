@@ -1,4 +1,5 @@
 #define DEBUG 1
+#define USE_dGPU_OVER_iGPU 0
 
 
 #include <iostream>
@@ -10,11 +11,21 @@
 
 #include <filesystem>
 
+#if USE_DGPU
 
+// Use dGPU
+#ifdef __cplusplus
+extern "C" {
+#endif
 
+    __declspec(dllexport) unsigned long NvOptimusEnablement = 1;
+    __declspec(dllexport) int AmdPowerXpressRequestHighPerformance = 1;
 
+#ifdef __cplusplus
+}
+#endif
 
-
+#endif
 
 
 int main()
@@ -34,15 +45,19 @@ int main()
     };
 
     ApplicationState applicationState = StartMenu;
-
+    
+    
+    {
+    const unsigned int currentMonitor = GetCurrentMonitor();
     const unsigned int windowWidth = 1920;
     const unsigned int windowHeight = 1080;
-    const unsigned int targetFPS = 60;
+    const unsigned int targetFPS = GetMonitorRefreshRate(currentMonitor);
     
     SetConfigFlags(FLAG_WINDOW_RESIZABLE);  
     InitWindow(windowWidth, windowHeight, "BoardGame");
 
     SetTargetFPS(targetFPS);
+    }
 
 
     // Load Icon
@@ -88,10 +103,11 @@ int main()
                 return 0; // This should be improved
             };
 
+            {
             BoardGame::GameConfigData gameConfigData = BoardGame::parser::loadGameData(gameDataPath);
             delete gameApp;
             gameApp = new BoardGame::Game(gameConfigData, startMenu.getPlayerCount());
-
+            }
             applicationState = Game;
 
             std::string windowName = "BoardGame: " + gameName;

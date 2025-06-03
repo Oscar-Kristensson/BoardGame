@@ -5,7 +5,6 @@ GameInfo,
 
 ;# Entities;
 Entity, id="Background Image", img=games/WorldGame/map.png, x=0, y=0;
-Entity, id="Entity ID", img=games/WorldGame/test.png, x=0, y=0;
 
 ;# Configuring players;
 CommonPlayerInfo, hasAccounts=true, accountBalance=100;

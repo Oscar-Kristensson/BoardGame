@@ -21,11 +21,14 @@ BoardGame::Game::Game(Vector2 boardSize, Color backgroundColor, std::vector<Boar
 		std::cout << "Waring: Trying to create more players that configurated in the game file" << std::endl;
 	}
 	
+	m_Players.reserve(playerCount);
 	for (uint8_t i = 0; i < playerCount; i++)
 		m_Players.push_back(BoardGame::Player(playersData[i].x, playersData[i].y, playersData[i].color));
 
+	m_PlayerBankBalance.reserve(playerCount);
 	for (uint8_t i = 0; i < playerCount; i++)
 		m_PlayerBankBalance.push_back(m_CommonPlayerInfo.playerStartBalance);
+
 
 	if (m_CommonPlayerInfo.hasAccounts && playerCount > 0)
 	{
