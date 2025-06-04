@@ -12,6 +12,10 @@ namespace BoardGame
 		uint16_t width;
 		uint16_t height;
 		Color backgroundColor;
+		int turnDisplayX;
+		int turnDisplayY;
+		int bankDisplayX;
+		int bankDisplayY;
 	};
 
 
@@ -39,6 +43,14 @@ namespace BoardGame
 		int x;
 		int y;
 	};
+
+	struct DiceInfo
+	{
+		int x;
+		int y;
+		uint8_t min;
+		uint8_t max;
+	};
 	
 	struct GameConfigData
 	{
@@ -47,17 +59,20 @@ namespace BoardGame
 		std::vector<BoardGame::GameEntityData> entities;
 		CommonPlayerInfo commonPlayerInfo;
 		std::vector<BoardGame::PlayerInfo> players;
+		std::vector<BoardGame::DiceInfo> die;
 	};
 
 
 
-	enum EntityType {
+	enum EntityType 
+	{
 		TypeUnkown = 0,
 		TypeEntity = 1,
 		TypeGameInfo = 2,
 		TypeStartMenuInfo = 3,
 		TypeCommonPlayerInfo = 4,
-		TypePlayerInfo = 5
+		TypePlayerInfo = 5,
+		TypeDiceInfo = 6
 	};
 
 

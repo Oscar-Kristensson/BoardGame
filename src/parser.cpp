@@ -3,6 +3,11 @@
 namespace BoardGame {
     namespace parser {
 
+        /**
+         * @brief Matches the entity name (used in the text file) with its type (used in the parser to identify)
+         * @param entityTypeString -  the entity name (ex GameInfo)
+         * @return The entity type (TypeUnkown, TypeGameInfo etc)
+         */
         BoardGame::EntityType getEntityTypeFromName(std::string& entityTypeString)
         {
             auto it = BoardGame::entityMap.find(entityTypeString);
@@ -12,6 +17,11 @@ namespace BoardGame {
                 return TypeUnkown;
         };
 
+        /**
+         * @brief Matches the entity name (used in the text file) with its type (used in the parser to identify)
+         * @param entityType - The entity type (the id used by the parser)
+         * @return The entity name (used in the text file)
+         */
         std::string getNameFromEntityType(BoardGame::EntityType entityType)
         {
             for (const auto& pair : BoardGame::entityMap) {
@@ -21,6 +31,11 @@ namespace BoardGame {
             return "Unknown";
         };
 
+        /**
+         * @brief Stores the data from a single line
+         * 
+         * The data is stored with its commandType (TypeUnkown, TypeGameInfo etc) and a map <key, value>
+         */
         struct commandData
         {
             BoardGame::EntityType commandType;
@@ -31,7 +46,8 @@ namespace BoardGame {
                 std::string entityTypeString;
                 
 
-                std::string s = "Command Data\n|-- Type: " + std::to_string(commandType) + ", " + getNameFromEntityType(commandType);
+                // std::string s = "Command Data\n|-- Type: " + std::to_string(commandType) + ", " + getNameFromEntityType(commandType);
+                std::string s = std::to_string(commandType) + ", " + getNameFromEntityType(commandType);
                 for (const auto& pair : argumentMap) {
                     s += "\n|-- " + pair.first + ": " + pair.second;
                     
@@ -86,8 +102,6 @@ namespace BoardGame {
 
             PlayerInfo playerInfo = { x, y, color };
 
-            std::cout << "Creating player" << std::endl;
-
             return playerInfo;
         }
 
@@ -105,11 +119,41 @@ namespace BoardGame {
             BoardGame::utils::convertToUint16(cd.argumentMap.at("boardHeight"), boardHeight);
             Color backgroundColor = BoardGame::utils::convertHEXToRGB(backgroundColorString);
 
-            return { boardWidth, boardHeight, backgroundColor };
+
+            int turnDisplayX = 150;
+            int turnDisplayY = 20;
+            int bankDisplayX = 300;
+            int bankDisplayY = 20;
+
+            if (cd.argumentMap.find("turnDisplayX") != cd.argumentMap.end())
+                BoardGame::utils::convertToInt(cd.argumentMap.at("turnDisplayX"), turnDisplayX);
+
+            if (cd.argumentMap.find("turnDisplayY") != cd.argumentMap.end())
+                BoardGame::utils::convertToInt(cd.argumentMap.at("turnDisplayY"), turnDisplayY);
+
+            if (cd.argumentMap.find("bankDisplayX") != cd.argumentMap.end())
+                BoardGame::utils::convertToInt(cd.argumentMap.at("bankDisplayX"), bankDisplayX);
+
+            if (cd.argumentMap.find("bankDisplayY") != cd.argumentMap.end())
+                BoardGame::utils::convertToInt(cd.argumentMap.at("bankDisplayY"), bankDisplayY);
+
+
+
+
+
+            return { 
+                boardWidth, 
+                boardHeight, 
+                backgroundColor, 
+                turnDisplayX, 
+                turnDisplayY, 
+                bankDisplayX, 
+                bankDisplayY 
+            };
         };
 
 
-        BoardGame::GameEntityData createEntityObject(const commandData& cd)
+        GameEntityData createEntityObject(const commandData& cd)
         {
             if (cd.commandType != TypeEntity)
                 std::cerr << "Trying to create Entity from a " << cd.commandType << "object" << std::endl;
@@ -141,6 +185,34 @@ namespace BoardGame {
 
             return { backgroundColor };
         };
+
+
+        DiceInfo createDiceInfoObject(const commandData& cd)
+        {
+            if (cd.commandType != TypeDiceInfo)
+                std::cerr << "Trying to create DiceInfoObject from a " << cd.commandType << "object" << std::endl;
+
+            int x = 0;
+            int y = 0;
+            uint8_t min = 0;
+            uint8_t max = 0;
+
+            if (cd.argumentMap.find("x") != cd.argumentMap.end())
+                BoardGame::utils::convertToInt(cd.argumentMap.at("x"), x);
+
+            if (cd.argumentMap.find("y") != cd.argumentMap.end())
+                BoardGame::utils::convertToInt(cd.argumentMap.at("y"), y);
+
+            if (cd.argumentMap.find("min") != cd.argumentMap.end())
+                BoardGame::utils::convertToUint8(cd.argumentMap.at("min"), min);
+
+            if (cd.argumentMap.find("max") != cd.argumentMap.end())
+                BoardGame::utils::convertToUint8(cd.argumentMap.at("max"), max);
+
+
+            DiceInfo diceInfo = { x, y, min, max };
+            return diceInfo;
+        }
 
 
 
@@ -236,6 +308,7 @@ namespace BoardGame {
             std::vector<BoardGame::GameEntityData> entities;
             BoardGame::CommonPlayerInfo commonPlayerInfo = { false, 0};
             std::vector<BoardGame::PlayerInfo> players;
+            std::vector<BoardGame::DiceInfo> die;
 
             bool hasGameInfo = false;
             bool hasStartMenuInfo = false;
@@ -257,7 +330,9 @@ namespace BoardGame {
                     continue;
 
                 commandData cd = parseCommand(line);
-
+#if _DEBUG
+                std::cout << "Processed line: " << line << '\n' << cd.str() << '\n' << std::endl;
+#endif
 
 
                 switch (cd.commandType)
@@ -282,6 +357,11 @@ namespace BoardGame {
 
                 case TypePlayerInfo:
                     players.emplace_back(createPlayerInfoObject(cd));
+                    break;
+
+                case TypeDiceInfo:
+                    die.emplace_back(createDiceInfoObject(cd));
+                    break;
 
                 default:
                     break;
@@ -292,7 +372,7 @@ namespace BoardGame {
 
             file.close();
 
-            return { gameInfo, startMenuInfo, entities,  commonPlayerInfo, players };
+            return { gameInfo, startMenuInfo, entities,  commonPlayerInfo, players, die };
         };
     };
 };

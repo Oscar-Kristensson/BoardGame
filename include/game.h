@@ -23,13 +23,17 @@
 
 namespace BoardGame 
 {
+	/**
+	 * @brief Maps the phrase in the parsed file to the type (enum)
+	 */
 	const std::unordered_map<std::string, EntityType> entityMap =
 	{
 		{"Entity", TypeEntity},
 		{"GameInfo", TypeGameInfo},
 		{"StartMenu", TypeStartMenuInfo},
 		{"CommonPlayerInfo", TypeCommonPlayerInfo},
-		{"PlayerInfo", TypePlayerInfo}
+		{"PlayerInfo", TypePlayerInfo},
+		{"DiceInfo", TypeDiceInfo}
 	};
 
 
@@ -47,20 +51,26 @@ namespace BoardGame
 		std::vector<BoardGame::Player> m_Players;
 		CommonPlayerInfo m_CommonPlayerInfo;
 		std::optional<BoardGame::gui::ValueInput> m_PlayerBankInput;
-		BoardGame::gui::ValueInput m_PlayerNumberDisplayUnit = BoardGame::gui::ValueInput(32, 20);
+		BoardGame::gui::ValueInput m_PlayerNumberDisplayUnit;
 		std::vector<int> m_PlayerBankBalance;
 		uint8_t m_CurrentPlayerID = 0;
 
 		bool m_UseHighFPS = false;
 
-		BoardGame::gui::Dice m_Dice;
+		std::vector<BoardGame::gui::Dice> m_Die;
+
+#if _DEBUG
+		bool m_ShowDebugScreen = true;
+#endif
 
 
 	public:
 		Game(Vector2 boardSize, Color backgroundColor, 
 			std::vector<BoardGame::GameEntityData> entityData,
 			uint8_t playerCount, CommonPlayerInfo commonPlayerInfo,
-			std::vector<PlayerInfo> players);
+			std::vector<PlayerInfo> players, std::vector<DiceInfo> dieData,
+			int turnDisplayX, int turnDisplayY, int bankDisplayX,
+			int bankDisplayY);
 
 		Game(GameConfigData gameData, uint8_t playerCount);
 

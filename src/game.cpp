@@ -19,8 +19,12 @@ void BoardGame::constants::loadFont()
 
 
 
-BoardGame::Game::Game(Vector2 boardSize, Color backgroundColor, std::vector<BoardGame::GameEntityData> entityData, uint8_t playerCount, CommonPlayerInfo commonPlayerInfo, std::vector<PlayerInfo> playersData)
-	:m_BoardSize(boardSize), m_BackgroundColor(backgroundColor), m_CommonPlayerInfo(commonPlayerInfo), m_Dice(1000, 100, 6)
+BoardGame::Game::Game(Vector2 boardSize, Color backgroundColor, 
+	std::vector<BoardGame::GameEntityData> entityData, 
+	uint8_t playerCount, CommonPlayerInfo commonPlayerInfo, 
+	std::vector<PlayerInfo> playersData, std::vector<DiceInfo> dieData, 
+	int turnDisplayX, int turnDisplayY, int bankDisplayX, int bankDisplayY)
+	:m_BoardSize(boardSize), m_BackgroundColor(backgroundColor), m_CommonPlayerInfo(commonPlayerInfo)
 {
 	m_Camera.target = { m_BoardSize.x / 2, m_BoardSize.y / 2 };
 	m_Camera.offset = Vector2(GetScreenWidth() / 2.0f, GetScreenHeight() / 2.0f);
@@ -46,20 +50,30 @@ BoardGame::Game::Game(Vector2 boardSize, Color backgroundColor, std::vector<Boar
 		m_PlayerBankBalance.push_back(m_CommonPlayerInfo.playerStartBalance);
 
 
+	m_PlayerBankBalance.reserve(dieData.size());
+	for (size_t i = 0; i < dieData.size(); i++)
+		m_Die.push_back(BoardGame::gui::Dice(dieData[i].x, dieData[i].y, dieData[i].min, dieData[i].max));
+
+
 	if (m_CommonPlayerInfo.hasAccounts && playerCount > 0)
 	{
-		m_PlayerBankInput.emplace(BoardGame::gui::ValueInput(120, 20));
+		m_PlayerBankInput.emplace(BoardGame::gui::ValueInput(bankDisplayX, bankDisplayY));
 		(*m_PlayerBankInput).setValue(m_CommonPlayerInfo.playerStartBalance);
 	}
 
 	m_PlayerNumberDisplayUnit.setValue(1);
 
+
+	m_PlayerNumberDisplayUnit = BoardGame::gui::ValueInput(turnDisplayX, turnDisplayY);
+
 }
 
-BoardGame::Game::Game(GameConfigData gameData, uint8_t playerCount) 
-	: Game(Vector2(gameData.info.width, gameData.info.height), 
+BoardGame::Game::Game(GameConfigData gameData, uint8_t playerCount)
+	: Game(Vector2(gameData.info.width, gameData.info.height),
 		gameData.info.backgroundColor, gameData.entities, playerCount,
-		gameData.commonPlayerInfo, gameData.players)
+		gameData.commonPlayerInfo, gameData.players, gameData.die,
+		gameData.info.turnDisplayX, gameData.info.turnDisplayY,
+		gameData.info.bankDisplayX, gameData.info.bankDisplayY)
 {
 
 }
@@ -69,6 +83,7 @@ void BoardGame::Game::changePlayer(bool increase)
 {
 	if (m_Players.size() == 0)
 		return;
+
 	m_PlayerBankBalance[m_CurrentPlayerID] = (*m_PlayerBankInput).getValue();
 
 	if (increase)
@@ -221,13 +236,20 @@ void BoardGame::Game::update()
 		(*m_PlayerBankInput).update(GetMouseX(), GetMouseY());
 
 
-	m_Dice.update(GetMouseX(), GetMouseY());
+	for (size_t i = 0; i < m_Die.size(); i++)
+		m_Die[i].update(GetMouseX(), GetMouseY());
 
-	if (m_Dice.m_Hovered && IsMouseButtonPressed(0))
-		m_Dice.startRolling();
 	
 	DEBUG_POST_UPDATE(std::format("Use hFPS: {}", m_UseHighFPS));
 	DEBUG_POST_UPDATE(std::format("FPS: {}", GetFPS()));
+
+#if _DEBUG
+	if (IsKeyPressed(KEY_F4))
+		m_ShowDebugScreen = !m_ShowDebugScreen;
+#endif
+
+
+
 }
 
 void BoardGame::Game::render()
@@ -256,8 +278,11 @@ void BoardGame::Game::render()
 	if (m_Players.size() > 0)
 		m_PlayerNumberDisplayUnit.draw();
 
-	m_Dice.draw();
-	DEBUG_DRAW();
+	for (size_t i = 0; i < m_Die.size(); i++)
+		m_Die[i].draw();
+
+	if (m_ShowDebugScreen)
+		DEBUG_DRAW();
 }
 
 

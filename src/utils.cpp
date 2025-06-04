@@ -1,6 +1,5 @@
 #include "utils.h"
 #include <climits>
-#include <cmath>
 
 bool BoardGame::utils::convertToBool(const std::string& str)
 {
@@ -17,6 +16,20 @@ bool BoardGame::utils::convertToUint16(const std::string& str, uint16_t& result)
             return false; // Out of range
         }
         result = static_cast<uint16_t>(temp);
+        return true;
+    }
+    catch (...) {
+        return false; // Invalid format or other error
+    }
+}
+
+bool BoardGame::utils::convertToUint8(const std::string& str, uint8_t& result) {
+    try {
+        unsigned long temp = std::stoul(str);
+        if (temp > UINT8_MAX) {
+            return false; // Out of range
+        }
+        result = static_cast<uint8_t>(temp);
         return true;
     }
     catch (...) {
@@ -87,6 +100,35 @@ int BoardGame::utils::min(int a, int b)
         return a;
     return b;
 }
+
+/*
+201
+201/100=2,01
+2,01 -> 2
+2,01 - 2 = 0,01
+*/
+
+int BoardGame::utils::ceil(int value, uint8_t base)
+{
+    float dividedValue = (float)value / base;
+    int integerDivided = (int)(dividedValue);
+    int newValue = integerDivided * base;
+
+    return newValue + base;
+}
+
+
+
+
+int BoardGame::utils::floor(int value, uint8_t base)
+{
+    float dividedValue = (float)value / base;
+    int integerDivided = (int)(dividedValue);
+    int newValue = integerDivided * base;
+
+    return newValue;
+}
+
 
 
 Color BoardGame::utils::brighten(Color color, float factor) {

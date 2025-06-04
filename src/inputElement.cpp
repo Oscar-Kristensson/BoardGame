@@ -24,9 +24,9 @@ void BoardGame::gui::ValueInput::update(int cursorX, int cursorY)
 	{
 		if (IsKeyDown(KEY_LEFT_SHIFT))
 			if (IsKeyDown(KEY_LEFT_CONTROL))
-				setValue(m_Value + 100);
+				setValue(BoardGame::utils::ceil(m_Value + 100, 100));
 			else
-				setValue(m_Value + 10);
+				setValue(BoardGame::utils::ceil(m_Value + 10, 10));
 		else
 			setValue(m_Value + 1);
 	}
@@ -34,9 +34,9 @@ void BoardGame::gui::ValueInput::update(int cursorX, int cursorY)
 	{
 		if (IsKeyDown(KEY_LEFT_SHIFT))
 			if (IsKeyDown(KEY_LEFT_CONTROL))
-				setValue(m_Value - 100);
+				setValue(BoardGame::utils::floor(m_Value - 100, 100));
 			else
-				setValue(m_Value - 10);
+				setValue(BoardGame::utils::floor(m_Value - 10, 10));
 		else
 			setValue(m_Value - 1);
 	}
@@ -46,7 +46,8 @@ void BoardGame::gui::ValueInput::update(int cursorX, int cursorY)
 void BoardGame::gui::ValueInput::draw()
 {
 	DrawRectangle(m_X, m_Y, m_Width, m_Height, WHITE);
-	DrawText(m_ValueString.c_str(), m_X + m_PaddingX, m_Y + m_PaddingY, m_FontSize, BLACK);
+	DrawTextEx(BoardGame::constants::font, m_ValueString.c_str(), Vector2(m_X + m_PaddingX, m_Y + m_PaddingY), m_FontSize, 2, BLACK);
+	//DrawText(m_ValueString.c_str(), m_X + m_PaddingX, m_Y + m_PaddingY, m_FontSize, BLACK);
 }
 
 
@@ -54,7 +55,7 @@ int BoardGame::gui::ValueInput::getValue() { return m_Value; }
 
 void BoardGame::gui::ValueInput::updateSize()
 {
-	m_Width = MeasureText(m_ValueString.c_str(), m_FontSize) + m_PaddingX * 2;
+	m_Width = MeasureTextEx(BoardGame::constants::font, m_ValueString.c_str(), m_FontSize, 2).x + m_PaddingX * 2;
 }
 
 void BoardGame::gui::ValueInput::setValue(int value) 

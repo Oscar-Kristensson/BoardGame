@@ -1,7 +1,14 @@
 GameInfo,
     boardWidth=8000,
     boardHeight=8000,
-    backgroundColor=7dcfe7;
+    backgroundColor=7dcfe7,
+    turnDisplayX=150,
+    turnDisplayY=20,
+    bankDisplayX=250,
+    bankDisplayY=20;
+
+
+DiceInfo, x=32, y=20, min=1, max=6;
 
 ;# Entities;
 Entity, id="Background Image", img=games/WorldGame/map.png, x=0, y=0;

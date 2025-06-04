@@ -2,8 +2,8 @@
 #include "constants.h"
 
 
-BoardGame::gui::Dice::Dice(float x, float y, uint8_t maxNumber)
-	: Element(x, y), m_DiceMaxNumber(maxNumber), m_LastTimeUpdated(std::chrono::high_resolution_clock::now())
+BoardGame::gui::Dice::Dice(float x, float y, uint8_t minNumber , uint8_t maxNumber)
+	: Element(x, y), m_DiceMinNumber(minNumber), m_DiceMaxNumber(maxNumber), m_LastTimeUpdated(std::chrono::high_resolution_clock::now())
 {
 	m_Width = m_Height = m_FontSize + m_PaddingY * 2;
 }
@@ -30,18 +30,22 @@ void BoardGame::gui::Dice::update(int mouseX, int mouseY)
 	else if ((std::chrono::duration_cast<std::chrono::milliseconds>(now - m_LastTimeUpdated)).count() > 75)
 	{
 
-		uint8_t random = GetRandomValue(1, m_DiceMaxNumber);
+		uint8_t random = GetRandomValue(m_DiceMinNumber, m_DiceMaxNumber);
 		if (random == m_DisplayedValue)
 		{
 			random++;
 			if (random == m_DiceMaxNumber)
-				random = 1;
+				random = m_DiceMinNumber;
 		}
 
 		m_DisplayedValue = random;
 		m_TimesToRoll--;
 		m_LastTimeUpdated = now;
 	}
+
+
+	if (m_Hovered && IsMouseButtonDown(0))
+		startRolling();
 }
 
 void BoardGame::gui::Dice::draw()
