@@ -10,6 +10,7 @@ set(SOURCES
     inputElement.cpp
     uiElement.cpp
     debugScreen.cpp
+    dice.cpp
 )
 
 # Automatically find all header files in the include/ directory

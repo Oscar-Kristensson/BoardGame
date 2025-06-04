@@ -1,4 +1,4 @@
-#include "game.h"
+#include "gameApp.h"
 #include <cmath>
 
 Font BoardGame::constants::font;
@@ -9,18 +9,8 @@ void BoardGame::constants::loadFont()
 	BoardGame::constants::font = LoadFontEx(stringPath.c_str(), 128, nullptr, 0);
 }
 
-
-
-
-
-
-
-
-
-
-
 BoardGame::Game::Game(Vector2 boardSize, Color backgroundColor, std::vector<BoardGame::GameEntityData> entityData, uint8_t playerCount, CommonPlayerInfo commonPlayerInfo, std::vector<PlayerInfo> playersData)
-	:m_BoardSize(boardSize), m_BackgroundColor(backgroundColor), m_CommonPlayerInfo(commonPlayerInfo), m_Dice(1000, 100, 6)
+	:m_BoardSize(boardSize), m_BackgroundColor(backgroundColor), m_CommonPlayerInfo(commonPlayerInfo), m_Dice(100, 100, 6)
 {
 	m_Camera.target = { m_BoardSize.x / 2, m_BoardSize.y / 2 };
 	m_Camera.offset = Vector2(GetScreenWidth() / 2.0f, GetScreenHeight() / 2.0f);
@@ -53,6 +43,8 @@ BoardGame::Game::Game(Vector2 boardSize, Color backgroundColor, std::vector<Boar
 	}
 
 	m_PlayerNumberDisplayUnit.setValue(1);
+
+
 
 }
 
@@ -219,12 +211,6 @@ void BoardGame::Game::update()
 
 	if (m_PlayerBankInput.has_value() && m_CommonPlayerInfo.hasAccounts)
 		(*m_PlayerBankInput).update(GetMouseX(), GetMouseY());
-
-
-	m_Dice.update(GetMouseX(), GetMouseY());
-
-	if (m_Dice.m_Hovered && IsMouseButtonPressed(0))
-		m_Dice.startRolling();
 	
 	DEBUG_POST_UPDATE(std::format("Use hFPS: {}", m_UseHighFPS));
 	DEBUG_POST_UPDATE(std::format("FPS: {}", GetFPS()));
@@ -257,6 +243,7 @@ void BoardGame::Game::render()
 		m_PlayerNumberDisplayUnit.draw();
 
 	m_Dice.draw();
+
 	DEBUG_DRAW();
 }
 

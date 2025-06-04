@@ -1,47 +1,23 @@
 #pragma once
-
-
-
-#include "raylib.h"
-#include "dataTypes.h"
-#include "constants.h"
-#include "entity.h"
-#include "utils.h"
 #include "app.h"
-#include "startMenu.h"
-#include "parser.h"
-#include "player.h"
-#include "inputElement.h"
-#include "debugScreen.h"
-#include "dice.h"
-#include <unordered_map>
+#include "raylib.h"
+#include <optional>
 #include <string>
 #include <vector>
-#include <filesystem>
-#include <optional>
+#include "dataTypes.h"
+#include "entity.h"
+#include "player.h"
+#include "inputElement.h"
+#include "dice.h"
 
-
-namespace BoardGame 
+namespace BoardGame
 {
-	const std::unordered_map<std::string, EntityType> entityMap =
-	{
-		{"Entity", TypeEntity},
-		{"GameInfo", TypeGameInfo},
-		{"StartMenu", TypeStartMenuInfo},
-		{"CommonPlayerInfo", TypeCommonPlayerInfo},
-		{"PlayerInfo", TypePlayerInfo}
-	};
-
-
-
-
-
 
 	class Game : public App
 	{
 	private:
 		Camera2D m_Camera = { 0 };
-        Vector2 m_BoardSize;
+		Vector2 m_BoardSize;
 		Color m_BackgroundColor;
 		std::vector<BoardGame::Entity> m_Entities;
 		std::vector<BoardGame::Player> m_Players;
@@ -55,9 +31,8 @@ namespace BoardGame
 
 		BoardGame::gui::Dice m_Dice;
 
-
 	public:
-		Game(Vector2 boardSize, Color backgroundColor, 
+		Game(Vector2 boardSize, Color backgroundColor,
 			std::vector<BoardGame::GameEntityData> entityData,
 			uint8_t playerCount, CommonPlayerInfo commonPlayerInfo,
 			std::vector<PlayerInfo> players);
@@ -68,11 +43,8 @@ namespace BoardGame
 		void render() override;
 		void changePlayer(bool increase);
 		bool getUseHighFPS() { return m_UseHighFPS; }
-		
+
 	};
+}
 
 
-	int convertCPToPixels(float cp);
-	float convertPixelsToCP(int pixels);
-
-};
