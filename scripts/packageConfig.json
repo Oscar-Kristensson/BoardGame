@@ -1,3 +1,10 @@
 {
-    "executableDir": "" 
+    "executable": "build/bin/Release/game.exe",
+    "executableOutput": "BoardGame.exe",
+    "distDir": "dist",
+    "outputDir": "out",
+    "programName": "BoardGame",
+    "checksumFile": "checksums.txt",
+    "metadataFile": "metadata.json",
+    "includeGames": ["WorldGame"]
 }   
