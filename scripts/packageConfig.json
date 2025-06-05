@@ -7,5 +7,5 @@
     "checksumFile": "checksums.txt",
     "metadataFile": "metadata.json",
     "includeGames": [],
-    "copyScripts": ["install.bat", "_install.ps1"]
+    "windowsCopyScripts": ["install.bat", "_install.ps1", "launcher.vbs"]
 }   

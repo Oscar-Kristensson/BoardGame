@@ -21,6 +21,21 @@ file(GLOB HEADERS "${CMAKE_SOURCE_DIR}/include/*.h")
 add_executable(game ${SOURCES} ${HEADERS}) 
 
 
+if(MSVC)
+    target_compile_options(game PRIVATE
+        $<$<CONFIG:Debug>:/MDd>
+        $<$<CONFIG:Dist>:/MD>
+        $<$<CONFIG:Release>:/MD>
+        $<$<CONFIG:RelWithDebInfo>:/MD>
+        $<$<CONFIG:MinSizeRel>:/MD>
+    )
+endif()
+
+
+
+
+
+
 
 target_include_directories(game PRIVATE ${CMAKE_SOURCE_DIR}/include)
 target_include_directories(game PRIVATE ${CMAKE_SOURCE_DIR}/lib)

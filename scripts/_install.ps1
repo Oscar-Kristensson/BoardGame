@@ -1,9 +1,9 @@
 # === Configuration ===
 $ShortcutName = "BoardGame"                      # Name of the shortcut
-$TargetPath = "BoardGame.exe"                    # Full path to the executable
+$TargetPath = "launcher.vbs"                    # Full path to the executable
 #$IconLocation = "C:\Path\To\MyApp.ico"          # (Optional) Path to .ico file
 $Arguments = ""                                  # (Optional) Command-line arguments
-#$WorkingDirectory = "C:\Path\To"                # (Optional) Start-in directory
+# $WorkingDirectory = "C:\Path\To"                # (Optional) Start-in directory
 
 # === Create Shortcut ===
 $ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Definition
@@ -15,7 +15,7 @@ $Shortcut = $Shell.CreateShortcut($StartMenuPath)
 
 $Shortcut.TargetPath = Join-Path $ScriptDir $TargetPath
 $Shortcut.Arguments = $Arguments
-#$Shortcut.WorkingDirectory = $WorkingDirectory
+$Shortcut.WorkingDirectory = $ScriptDir
 #$Shortcut.IconLocation = $IconLocation
 $Shortcut.Save()
 

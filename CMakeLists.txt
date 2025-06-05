@@ -1,8 +1,38 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.15)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
+
+
+# Only for single-config generators (MinGW, Make)
+if(NOT CMAKE_CONFIGURATION_TYPES)
+    set(allowed_build_types Debug Release RelWithDebInfo MinSizeRel Dist)
+    set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS ${allowed_build_types})
+endif()
+
+if(CMAKE_GENERATOR MATCHES "Visual Studio")
+    set(CMAKE_CONFIGURATION_TYPES "Debug;Release;RelWithDebInfo;MinSizeRel;Dist" CACHE STRING "" FORCE)
+endif()
+
+# Linker flags to enable whole program optimization and other optimizations
+if (MSVC)
+set(CMAKE_EXE_LINKER_FLAGS_DIST "/LTCG")
+set(CMAKE_SHARED_LINKER_FLAGS_DIST "/LTCG")
+endif()
+
+# Use static runtime (optional, but common for distribution builds)
+foreach(flag_var
+    CMAKE_C_FLAGS_DIST
+    CMAKE_CXX_FLAGS_DIST
+)
+    string(REPLACE "/MD" "/MT" ${flag_var} "${${flag_var}}")
+    string(REPLACE "/MDd" "/MTd" ${flag_var} "${${flag_var}}")
+endforeach()
+
+
+
+
 
 project(game VERSION 1.0)
 

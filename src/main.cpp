@@ -1,5 +1,5 @@
 #define USE_dGPU_OVER_iGPU 0
-
+#define IS_WINDOWS_APP 1
 
 #include <iostream>
 #include "raylib.h"
@@ -9,6 +9,8 @@
 
 
 #include <filesystem>
+
+
 
 #if USE_dGPU_OVER_iGPU
 
@@ -25,6 +27,8 @@ extern "C" {
 #endif
 
 #endif
+
+
 
 
 int main()
@@ -158,4 +162,6 @@ int main()
     CloseWindow();
     delete gameApp;
     return 0;
-};
+}
+
+

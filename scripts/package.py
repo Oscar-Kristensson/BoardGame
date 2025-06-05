@@ -110,7 +110,7 @@ for game in CONFIG["includeGames"]:
 
 # Copying install scripts
 if sys.platform == "win32":
-    for scriptName in CONFIG["copyScripts"]:
+    for scriptName in CONFIG["windowsCopyScripts"]:
         shutil.copyfile(f"scripts/{scriptName}", f"build/{CONFIG['distDir']}/{scriptName}")
 
 
