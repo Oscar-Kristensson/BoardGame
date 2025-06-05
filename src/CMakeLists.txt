@@ -18,7 +18,7 @@ file(GLOB HEADERS "${CMAKE_SOURCE_DIR}/include/*.h")
 
 
 
-add_executable(game ${SOURCES} ${HEADERS}) 
+add_executable(game ${SOURCES} ${HEADERS} ../assets/icons/icon.rc) 
 
 
 if(MSVC)
