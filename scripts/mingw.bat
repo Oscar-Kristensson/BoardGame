@@ -1,12 +1,11 @@
 mkdir build
 cd build
-cmake ..
 
-cd ..
-cmake -G "MinGW Makefiles"
+cmake -G "MinGW Makefiles" -DCMAKE_BUILD_TYPE=Debug ..
 
 cmake --build .
 
+cd ..
 @echo off
 set /p answer=Do you want to run the executable? (Y/N):
 

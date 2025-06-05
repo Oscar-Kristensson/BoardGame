@@ -24,7 +24,7 @@ namespace BoardGame
 			uint8_t m_CurrentValue = 0;
 			uint8_t m_DisplayedValue = 0;
 			uint8_t m_FontSize = 64;
-			std::chrono::steady_clock::time_point m_LastTimeUpdated;
+			std::chrono::high_resolution_clock::time_point m_LastTimeUpdated;
 			uint8_t m_TimesToRoll = 0;
 			
 		

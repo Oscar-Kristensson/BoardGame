@@ -4,7 +4,7 @@ del CMakeCache.txt
 del cmake_install.cmake
 del game.exe
 del Makefile
-
+rmdir /S bin
 
 cd src
 rmdir /S CMakeFiles

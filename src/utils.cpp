@@ -1,4 +1,5 @@
 #include "utils.h"
+#include <cmath>
 #include <climits>
 
 bool BoardGame::utils::convertToBool(const std::string& str)

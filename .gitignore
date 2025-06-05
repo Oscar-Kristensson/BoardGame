@@ -1,7 +1,8 @@
 .vs
 out
 build
-
+bin
+dist
 
 # Games (only include default WorldGame)
 games/*

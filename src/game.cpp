@@ -121,9 +121,11 @@ void BoardGame::Game::update()
 	// Reset the use high FPS counter
 	m_UseHighFPS = false;
 
+#if _DEBUG
+
 	DEBUG_NEW_FRAME();
 
-
+#endif
 
 	// Change the camera offset
 	if (IsWindowResized())
@@ -281,8 +283,10 @@ void BoardGame::Game::render()
 	for (size_t i = 0; i < m_Die.size(); i++)
 		m_Die[i].draw();
 
+#if _DEBUG
 	if (m_ShowDebugScreen)
 		DEBUG_DRAW();
+#endif
 }
 
 
