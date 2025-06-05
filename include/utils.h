@@ -20,6 +20,8 @@ namespace BoardGame
 
 		int ceil(int value, uint8_t base);
 		int floor(int value, uint8_t base);
+		int toClosestHigher(int value, uint8_t base);
+		int toClosestLower(int value, uint8_t base);
 
 		Color brighten(Color color, float factor);
 		std::string convertRGBToHEX(Color color);

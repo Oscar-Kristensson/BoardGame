@@ -129,6 +129,22 @@ int BoardGame::utils::floor(int value, uint8_t base)
     return newValue;
 }
 
+int BoardGame::utils::toClosestHigher(int value, uint8_t base)
+{
+    int rest = value % (int)base;
+
+    if (rest == 0)
+        return value;
+
+    return value + (base - rest);
+}
+
+int BoardGame::utils::toClosestLower(int value, uint8_t base)
+{
+    int rest = value % (int)base;
+
+    return value - rest;
+}
 
 
 Color BoardGame::utils::brighten(Color color, float factor) {
