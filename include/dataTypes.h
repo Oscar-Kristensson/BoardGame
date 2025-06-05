@@ -4,9 +4,18 @@
 #include <stdint.h>
 #include <vector>
 #include <filesystem>
+#include <string>
 
 namespace BoardGame
 {
+	enum TextAlignment
+	{
+		Left,
+		Centered,
+		Right
+	};
+
+
 	struct GameInfo
 	{
 		uint16_t width;
@@ -17,6 +26,16 @@ namespace BoardGame
 		int bankDisplayX;
 		int bankDisplayY;
 	};
+
+	struct LabelInfo
+	{
+		std::string labelText;
+		int x;
+		int y;
+		uint8_t fontSize;
+		TextAlignment textAlignment;
+	};
+
 
 
 	struct CommonPlayerInfo
@@ -56,10 +75,12 @@ namespace BoardGame
 	{
 		GameInfo info;
 		StartMenuInfo startMenuInfo;
-		std::vector<BoardGame::GameEntityData> entities;
+		std::vector<GameEntityData> entities;
 		CommonPlayerInfo commonPlayerInfo;
-		std::vector<BoardGame::PlayerInfo> players;
-		std::vector<BoardGame::DiceInfo> die;
+		std::vector<PlayerInfo> players;
+		std::vector<DiceInfo> die;
+		std::vector<LabelInfo> labels;
+
 	};
 
 
@@ -72,8 +93,11 @@ namespace BoardGame
 		TypeStartMenuInfo = 3,
 		TypeCommonPlayerInfo = 4,
 		TypePlayerInfo = 5,
-		TypeDiceInfo = 6
+		TypeDiceInfo = 6,
+		TypeLabel = 7
 	};
+
+
 
 
 

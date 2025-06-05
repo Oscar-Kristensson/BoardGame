@@ -23,7 +23,8 @@ BoardGame::Game::Game(Vector2 boardSize, Color backgroundColor,
 	std::vector<BoardGame::GameEntityData> entityData, 
 	uint8_t playerCount, CommonPlayerInfo commonPlayerInfo, 
 	std::vector<PlayerInfo> playersData, std::vector<DiceInfo> dieData, 
-	int turnDisplayX, int turnDisplayY, int bankDisplayX, int bankDisplayY)
+	int turnDisplayX, int turnDisplayY, int bankDisplayX, int bankDisplayY,
+	std::vector<LabelInfo> labels)
 	:m_BoardSize(boardSize), m_BackgroundColor(backgroundColor), m_CommonPlayerInfo(commonPlayerInfo)
 {
 	m_Camera.target = { m_BoardSize.x / 2, m_BoardSize.y / 2 };
@@ -54,6 +55,10 @@ BoardGame::Game::Game(Vector2 boardSize, Color backgroundColor,
 	for (size_t i = 0; i < dieData.size(); i++)
 		m_Die.push_back(BoardGame::gui::Dice(dieData[i].x, dieData[i].y, dieData[i].min, dieData[i].max));
 
+	m_Labels.reserve(labels.size());
+	for (size_t i = 0; i < labels.size(); i++)
+		m_Labels.emplace_back(labels[i]);
+
 
 	if (m_CommonPlayerInfo.hasAccounts && playerCount > 0)
 	{
@@ -73,7 +78,8 @@ BoardGame::Game::Game(GameConfigData gameData, uint8_t playerCount)
 		gameData.info.backgroundColor, gameData.entities, playerCount,
 		gameData.commonPlayerInfo, gameData.players, gameData.die,
 		gameData.info.turnDisplayX, gameData.info.turnDisplayY,
-		gameData.info.bankDisplayX, gameData.info.bankDisplayY)
+		gameData.info.bankDisplayX, gameData.info.bankDisplayY,
+		gameData.labels)
 {
 
 }
@@ -273,6 +279,9 @@ void BoardGame::Game::render()
 
 
 	EndMode2D();
+
+	for (size_t i = 0; i < m_Labels.size(); i++)
+		m_Labels[i].draw();
 
 	if (m_PlayerBankInput.has_value() && m_CommonPlayerInfo.hasAccounts)
 		(*m_PlayerBankInput).draw();

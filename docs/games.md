@@ -13,6 +13,7 @@ The game data file defines the behavior of the game. The game is based on a simi
 * **CommonPlayerInfo** - Controlls the default account balance
 * **PlayerInfo** - Stores information about a player
 * **DiceInfo** - Creates a dice
+* **Label** - Displays text
 
 This is an example of how the game.txt file could look:
 
@@ -63,7 +64,7 @@ The common player info object has the following parameters:
 | hasAccounts     | bool          | Enables the accounts in the game |
 | accountBalance  | int           | Sets the start account balance |
 
-### Player Info
+#### Player Info
 The player info object has the following parameters:
 | Parameter       | Values        | Comments |
 |-----------------|---------------|----------|
@@ -80,3 +81,13 @@ The dice info object has the following parameters:
 | y               | int             | The dice y-pos |
 | min             | int > max > 255 | Sets the minimum value of the dice |
 | max             | int > 255       | Sets the maximum value of the dice |
+
+#### Label
+The label object has the following parameters:
+| Parameter       | Values           | Comments |
+|-----------------|------------------|----------|
+| x               | int              | The dice x-pos |
+| y               | int              | The dice y-pos |
+| text            | string           | The displayed text |
+| fontSize        | int > 255        | Sets the font size |
+| align           | string (L, C, R) | Sets the text align with L for left, C for centered and R for right |

@@ -14,6 +14,7 @@
 #include "inputElement.h"
 #include "debugScreen.h"
 #include "dice.h"
+#include "label.h"
 #include <unordered_map>
 #include <string>
 #include <vector>
@@ -33,7 +34,8 @@ namespace BoardGame
 		{"StartMenu", TypeStartMenuInfo},
 		{"CommonPlayerInfo", TypeCommonPlayerInfo},
 		{"PlayerInfo", TypePlayerInfo},
-		{"DiceInfo", TypeDiceInfo}
+		{"DiceInfo", TypeDiceInfo},
+		{"Label", TypeLabel}
 	};
 
 
@@ -58,6 +60,7 @@ namespace BoardGame
 		bool m_UseHighFPS = false;
 
 		std::vector<BoardGame::gui::Dice> m_Die;
+		std::vector<BoardGame::gui::Label> m_Labels;
 
 #if _DEBUG
 		bool m_ShowDebugScreen = true;
@@ -70,7 +73,7 @@ namespace BoardGame
 			uint8_t playerCount, CommonPlayerInfo commonPlayerInfo,
 			std::vector<PlayerInfo> players, std::vector<DiceInfo> dieData,
 			int turnDisplayX, int turnDisplayY, int bankDisplayX,
-			int bankDisplayY);
+			int bankDisplayY, std::vector<LabelInfo> labels);
 
 		Game(GameConfigData gameData, uint8_t playerCount);
 

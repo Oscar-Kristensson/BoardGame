@@ -214,6 +214,50 @@ namespace BoardGame {
             return diceInfo;
         }
 
+        LabelInfo createLabelInformationObject(const commandData& cd)
+        {
+            if (cd.commandType != TypeLabel)
+                std::cerr << "Trying to create LabelObject from a " << cd.commandType << "object" << std::endl;
+
+            std::string textString;
+
+            if (cd.argumentMap.find("text") != cd.argumentMap.end())
+                textString = cd.argumentMap.at("text");
+
+            else
+                textString = "label";
+
+
+            int x = 0;
+            if (cd.argumentMap.find("x") != cd.argumentMap.end())
+                BoardGame::utils::convertToInt(cd.argumentMap.at("x"), x);
+
+            int y;
+            if (cd.argumentMap.find("y") != cd.argumentMap.end())
+                BoardGame::utils::convertToInt(cd.argumentMap.at("y"), y);
+
+            uint8_t fontSize = 30;
+            if (cd.argumentMap.find("fontSize") != cd.argumentMap.end())
+                BoardGame::utils::convertToUint8(cd.argumentMap.at("fontSize"), fontSize);
+
+            TextAlignment textAlignment;
+
+            if (cd.argumentMap.find("align") == cd.argumentMap.end())
+                textAlignment = Left;
+            else
+                if (cd.argumentMap.at("align") == "C")
+                    textAlignment = Centered;
+                else if (cd.argumentMap.at("align") == "L")
+                    textAlignment = Left;
+                else if (cd.argumentMap.at("align") == "R")
+                    textAlignment = Right;
+                else
+                    textAlignment = Left;
+
+
+            return { textString, x, y, fontSize, textAlignment };
+
+        }
 
 
 
@@ -309,6 +353,7 @@ namespace BoardGame {
             BoardGame::CommonPlayerInfo commonPlayerInfo = { false, 0};
             std::vector<BoardGame::PlayerInfo> players;
             std::vector<BoardGame::DiceInfo> die;
+            std::vector<BoardGame::LabelInfo> labels;
 
             bool hasGameInfo = false;
             bool hasStartMenuInfo = false;
@@ -363,6 +408,10 @@ namespace BoardGame {
                     die.emplace_back(createDiceInfoObject(cd));
                     break;
 
+                case TypeLabel:
+                    labels.emplace_back(createLabelInformationObject(cd));
+                    break;
+
                 default:
                     break;
                 }
@@ -372,7 +421,7 @@ namespace BoardGame {
 
             file.close();
 
-            return { gameInfo, startMenuInfo, entities,  commonPlayerInfo, players, die };
+            return { gameInfo, startMenuInfo, entities,  commonPlayerInfo, players, die, labels };
         };
     };
 };

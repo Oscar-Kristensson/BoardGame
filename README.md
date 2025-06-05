@@ -106,10 +106,17 @@ Once in the game:
 * Use the mousewheel to zoom
 * Use Q and W to change which players turn it is
 * If applicable to the game, change the players balance with the O and P keys while hovering over the bank element. Use the SHIFT to change by 10 and CTRL + SHIFT to change by 100. 
+* Drag the players around. By default, only the selected player can be dragged but this can be overriden by pressing "l".
+* The debug screen (in debug builds) can be toggled with F4.
 
+Documentation about [how the game is built](./docs/structure.md) and about [the game.txt file and its structure](./docs/games.md) is available in the docs folder.  
 
 ## Licenses
 TBD
+
+All licenses are in the licences folder:
+- [Open Sans](./licenses/open-sans-license.txt)
+- [Raylib](./licenses/raylib-license.txt)
 
 ## Authors
 - [@Oscar-Kristensson](https://github.com/Oscar-Kristensson)

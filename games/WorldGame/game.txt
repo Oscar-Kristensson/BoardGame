@@ -3,12 +3,12 @@ GameInfo,
     boardHeight=8000,
     backgroundColor=7dcfe7,
     turnDisplayX=150,
-    turnDisplayY=20,
+    turnDisplayY=35,
     bankDisplayX=250,
-    bankDisplayY=20;
+    bankDisplayY=35;
 
 
-DiceInfo, x=32, y=20, min=1, max=6;
+DiceInfo, x=32, y=35, min=1, max=6;
 
 ;# Entities;
 Entity, id="Background Image", img=games/WorldGame/map.png, x=0, y=0;
@@ -24,3 +24,14 @@ PlayerInfo, x=5100, y=3402, color=942aff;
 PlayerInfo, x=5679, y=3574, color=ff942a;
 PlayerInfo, x=5415, y=3409, color=2affff;
 PlayerInfo, x=5512, y=2989, color=ff2aff;
+
+
+Label, x=32, y=0, text=Dice, fontSize=34, align=L; 
+Label, x=150, y=0, text=Turn, fontSize=34, align=L; 
+Label, x=250, y=0, text=Bank, fontSize=34, align=L; 
+
+
+
+
+
+
