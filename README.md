@@ -1,5 +1,11 @@
 # BoardGame
-TBD
+
+- [Building](#building)
+    - [VS 2022](#vs-2022)
+    - [MinGW](#mingw)
+    - [CMake](#cmake)
+- [Usage](#usage)
+- [Licenses](#licenses)
 
 ## Building
 ### VS 2022
@@ -77,6 +83,19 @@ Currently all assets are created as SVG:s. To render them out you can use the fo
 python scripts/renderAssets.py
 ```
 The script requires inkscape to be installed and that the correct path is in the script.
+
+### Building the distributable game
+The instructions above are for building the distributable game. Start off by compiling a release version of the game (se instructions above). This should make sure that there is a file called game.exe in build/bin/Release/. If that is not the case, move the file or change "executable" to the correct path in scripts/packageConfig. 
+
+Inorder to run the following script you need to have python installed:
+
+``` bash
+python scripts/package.py
+```
+
+If every thing went smoothly, you should have ended up with a compressed file containing the executable and required assets. 
+
+If the script failed or you can not run the script, simply create a compressed file containing the assets, licenses and games folders as well as the executable it self.
 
 ## Usage
 To use the app, install a game by moving it to the games folder. Then launch the executable and select the game. Change the number of players with the K and L keys. Click enter to launch the game. 

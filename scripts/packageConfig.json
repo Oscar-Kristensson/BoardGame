@@ -6,5 +6,6 @@
     "programName": "BoardGame",
     "checksumFile": "checksums.txt",
     "metadataFile": "metadata.json",
-    "includeGames": ["WorldGame"]
+    "includeGames": [],
+    "copyScripts": ["install.bat", "_install.ps1"]
 }   

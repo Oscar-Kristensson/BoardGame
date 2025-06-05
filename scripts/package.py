@@ -3,6 +3,7 @@ import shutil
 import json
 import tarfile
 import hashlib
+import sys
 
 
 with open("scripts/packageConfig.json", "r") as f:
@@ -93,6 +94,9 @@ if not os.path.exists(CONFIG["executable"]):
 
 shutil.copyfile(CONFIG["executable"], f"build/{CONFIG['distDir']}/{CONFIG['executableOutput']}")
 
+
+
+# Copy folders
 copyFolder("assets")
 copyFolder("licenses")
 
@@ -101,6 +105,14 @@ for game in CONFIG["includeGames"]:
     print(f"Installing game {game}")
     if installGame(game):
         installedGames.append(game)
+
+
+
+# Copying install scripts
+if sys.platform == "win32":
+    for scriptName in CONFIG["copyScripts"]:
+        shutil.copyfile(f"scripts/{scriptName}", f"build/{CONFIG['distDir']}/{scriptName}")
+
 
 
 # Compressing folders
