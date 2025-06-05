@@ -1,5 +1,4 @@
 #define USE_dGPU_OVER_iGPU 0
-#define IS_WINDOWS_APP 1
 
 #include <iostream>
 #include "raylib.h"
