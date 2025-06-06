@@ -9,6 +9,8 @@ GameInfo,
 
 
 DiceInfo, x=32, y=35, min=1, max=6;
+DiceInfo, x=32, y=155, min=1, max=12;
+
 
 ;# Entities;
 Entity, id="Background Image", img=games/WorldGame/map.png, x=0, y=0;
@@ -16,19 +18,20 @@ Entity, id="Background Image", img=games/WorldGame/map.png, x=0, y=0;
 ;# Configuring players;
 CommonPlayerInfo, hasAccounts=true, accountBalance=100;
 
-PlayerInfo, x=4850, y=3555, color=ff2a2a;
-PlayerInfo, x=3950, y=3420, color=009b00;
-PlayerInfo, x=5841, y=3285, color=2a2aff;
-PlayerInfo, x=4132, y=3917, color=ffff2a;
-PlayerInfo, x=5100, y=3402, color=942aff;
-PlayerInfo, x=5679, y=3574, color=ff942a;
-PlayerInfo, x=5415, y=3409, color=2affff;
-PlayerInfo, x=5512, y=2989, color=ff2aff;
+PlayerInfo, x=5812, y=73, color=ff2a2a;
+PlayerInfo, x=5812, y=73, color=009b00;
+PlayerInfo, x=5812, y=73, color=2a2aff;
+PlayerInfo, x=5812, y=73, color=ffff2a;
+PlayerInfo, x=5812, y=73, color=942aff;
+PlayerInfo, x=5812, y=73, color=ff942a;
+PlayerInfo, x=5812, y=73, color=2affff;
+PlayerInfo, x=5812, y=73, color=ff2aff;
 
 
 Label, x=32, y=0, text=Dice, fontSize=34, align=L; 
 Label, x=150, y=0, text=Turn, fontSize=34, align=L; 
 Label, x=250, y=0, text=Bank, fontSize=34, align=L; 
+Label, x=32, y=120, text=Challenge, fontSize=34, align=L; 
 
 
 

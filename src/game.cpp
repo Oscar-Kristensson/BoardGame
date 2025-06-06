@@ -66,10 +66,10 @@ BoardGame::Game::Game(Vector2 boardSize, Color backgroundColor,
 		(*m_PlayerBankInput).setValue(m_CommonPlayerInfo.playerStartBalance);
 	}
 
-	m_PlayerNumberDisplayUnit.setValue(1);
-
-
 	m_PlayerNumberDisplayUnit = BoardGame::gui::ValueInput(turnDisplayX, turnDisplayY);
+
+
+	m_PlayerNumberDisplayUnit.setValue(1);
 
 }
 
