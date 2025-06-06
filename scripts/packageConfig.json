@@ -1,6 +1,6 @@
 {
-    "executable": "build/bin/Release/game.exe",
-    "executableOutput": "BoardGame.exe",
+    "executable": "build/bin/Release/game",
+    "executableOutput": "BoardGame",
     "distDir": "dist",
     "outputDir": "out",
     "programName": "BoardGame",

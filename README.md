@@ -68,8 +68,8 @@ Start by downloading the ([raylib library](https://github.com/raysan5/raylib/rel
 ``` bash
 mkdir build
 cd
-cmake . .                               # Generates the build files
-make                                    # Builds the game
+cmake -DCMAKE_BUILD_TYPE=Debug ..       # Generates the build files
+cmake --build .                         # Builds the game
 ./build/bin/{Debug or Release}/game     # Runs the game
 ```
 

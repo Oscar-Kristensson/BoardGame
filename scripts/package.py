@@ -88,11 +88,16 @@ userCheckAndCreateDir(f"build/{CONFIG['outputDir']}", True)
 
 
 # Copy executable
-if not os.path.exists(CONFIG["executable"]):
+extension = ""
+if sys.platform == "win32":
+    extension = ".exe"
+
+
+if not os.path.exists(f"{CONFIG['executable']}{extension}"):
     print(f"ERROR: The executable {CONFIG['executable']} could not be found. Check the it exists and works.")
     quit("Failed to package")
 
-shutil.copyfile(CONFIG["executable"], f"build/{CONFIG['distDir']}/{CONFIG['executableOutput']}")
+shutil.copyfile(f"{CONFIG['executable']}{extension}", f"build/{CONFIG['distDir']}/{CONFIG['executableOutput']}{extension}")
 
 
 
