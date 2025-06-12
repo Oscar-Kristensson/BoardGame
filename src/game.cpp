@@ -129,12 +129,15 @@ void BoardGame::Game::handleKeyboardEvents(Vector2 mouseWorldPosition, Vector2 m
 	if (IsMouseButtonPressed(1))
 		DisableCursor();
 
-	if (IsMouseButtonDown(1) || IsMouseButtonDown(0))
+	if (IsMouseButtonDown(1))
 	{
 		m_Camera.target.x += mouseDelta.x / m_Camera.zoom;
 		m_Camera.target.y += mouseDelta.y / m_Camera.zoom;
 		m_UseHighFPS = true;
 	}
+
+	else if (IsMouseButtonDown(0))
+		m_UseHighFPS = true;
 
 	if (IsMouseButtonReleased(1))
 		EnableCursor();
@@ -154,7 +157,7 @@ void BoardGame::Game::handleKeyboardEvents(Vector2 mouseWorldPosition, Vector2 m
 			{
 				if (m_Entities[i].m_DragController.has_value() && m_Entities[i].isMouseHovering(mouseWorldPosition.x, mouseWorldPosition.y))
 				{
-					m_Entities[i].m_DragController.value().startDragging();
+					(*m_Entities[i].m_DragController).startDragging();
 					break;
 				}
 

@@ -94,6 +94,7 @@ bool BoardGame::Entity::isMouseHovering(int x, int y)
 
 void BoardGame::Entity::move(int x, int y)
 {
+	std::cout << "Moving entity" << x << ", " << y << std::endl;
 	m_X += x;
 	m_Y += y;
 }
