@@ -45,7 +45,9 @@ The game info object has the following parameters:
 | boardWidth      | int       | Defines the width of the game board, which is mainly used for centering the game camera.|
 | boardHeight     | int       | Similar to the boardWidth but for height |
 | backgroundColor | HEX color | Defines the background color of the game board. |
-
+| turnDisplayX    | int       | Sets the X-coordinate of the turnDisplay (shows the active player) |
+| turnDisplayY    | int       | Sets the Y-coordinate of the turnDisplay |
+| hoverForBank    | bool      | Determins whether the user must hover the banks to change the value |    
 
 #### Entity
 The entity has the following parameters:
