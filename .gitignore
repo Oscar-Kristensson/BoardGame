@@ -11,6 +11,7 @@ games/*
 
 # SVG files etc to generate the default WorldGame 
 games/WorldGame/raw
+games/WorldGame/Uppgifter.pdf
 
 
 # CMake

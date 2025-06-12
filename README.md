@@ -71,7 +71,7 @@ Start by downloading the ([raylib library](https://github.com/raysan5/raylib/rel
 ``` bash
 mkdir build
 cd build
-cmake -DCMAKE_BUILD_TYPE=Debug ..       # Generates the build files
+cmake -DCMAKE_BUILD_TYPE=Debug ..       # Generates the build files. Replace Debug with Release for release builds
 cmake --build .                         # Builds the game
 ./bin/{Debug or Release}/game     # Runs the game
 ```
@@ -98,7 +98,10 @@ python scripts/package.py
 
 If every thing went smoothly, you should have ended up with a compressed file containing the executable and required assets. 
 > Note
-> There is currently some issue with the script on MacOS. The workaround for this is to copy the executable from the Release dir to the dist dir. Rename the dist dir and compress it to a zip file. 
+> There is currently some issue with the script on MacOS. The workaround for this is to copy the executable from the Release dir to the dist dir and rename it to "BoardGame". Rename the dist dir and compress it to a zip file. 
+
+> Note
+> On linux you may have to run chmod +x BoardGame in the dist folder inorder for the executable to be able to execute.
 
 If the script failed or you can not run the script, simply create a compressed file containing the assets, licenses and games folders as well as the executable it self.
 
@@ -109,6 +112,12 @@ If you downloaded a ZIP file, extract it. Place the folder in a apppropriate dir
 
 
 #### MacOS
+> Note
+> If the Apple blocks the application, run the following command to remove the Quarantine Flag:
+> ``` bash
+> xattr -dr com.apple.quarantine BoardGame
+> ```
+
 TBD
 
 
