@@ -5,7 +5,11 @@
     "outputDir": "out",
     "programName": "BoardGame",
     "checksumFile": "checksums.txt",
+    "version":"1.0.0-beta",
     "metadataFile": "metadata.json",
     "includeGames": [],
-    "windowsCopyScripts": ["install.bat", "_install.ps1", "launcher.vbs"]
+    "copyFiles": {
+        "all": ["README.md"],
+        "windowsScripts": ["install.bat", "_install.ps1", "launcher.vbs"]
+    }
 }   

@@ -113,10 +113,19 @@ for game in CONFIG["includeGames"]:
 
 
 
-# Copying install scripts
+# Copy Windows files
 if sys.platform == "win32":
-    for scriptName in CONFIG["windowsCopyScripts"]:
+    for scriptName in CONFIG["copyFiles"]["windowsScripts"]:
         shutil.copyfile(f"scripts/{scriptName}", f"build/{CONFIG['distDir']}/{scriptName}")
+
+
+# Copy files
+for fileName in CONFIG["copyFiles"]["all"]:
+    if os.path.exists(fileName):
+        print(f"Copying file {fileName}")
+        shutil.copyfile(f"{fileName}", f"build/{CONFIG['distDir']}/{fileName}")
+    else:
+        print(f"Failed to copy {fileName} because the file does not exist")
 
 
 
@@ -150,7 +159,8 @@ with open(f"build/{CONFIG['outputDir']}/{CONFIG['checksumFile']}", "w") as f:
 
 
 METADATA = {
-    "checksums": CHECKSUMS
+    "checksums": CHECKSUMS,
+    "version": CONFIG["version"]
 }
 
 

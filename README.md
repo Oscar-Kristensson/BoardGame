@@ -8,6 +8,9 @@
 - [Licenses](#licenses)
 
 ## Building
+> Note
+> This section is only applicable to the source version and not the precompiled version.
+
 ### VS 2022
 Run the following script:
 
@@ -98,6 +101,19 @@ If every thing went smoothly, you should have ended up with a compressed file co
 If the script failed or you can not run the script, simply create a compressed file containing the assets, licenses and games folders as well as the executable it self.
 
 ## Usage
+### Installation
+#### Windows
+If you downloaded a ZIP file, extract it. Place the folder in a apppropriate directory and click the launcher.vbs (launches the file without the terminal, if you click the BoardGame.exe file directly, you will end up with a terminal window) file. To add it to the start menu, click the install.bat file. 
+
+
+#### MacOS
+TBD
+
+
+#### Linux
+TBD
+
+### How to use 
 To use the app, install a game by moving it to the games folder. Then launch the executable and select the game. Change the number of players with the K and L keys. Click enter to launch the game. 
 
 Once in the game:
@@ -107,9 +123,14 @@ Once in the game:
 * Use Q and W to change which players turn it is
 * If applicable to the game, change the players balance with the O and P keys while hovering over the bank element. Use the SHIFT to change by 10 and CTRL + SHIFT to change by 100. 
 * Drag the players around. By default, only the selected player can be dragged but this can be overriden by pressing "l".
-* The debug screen (in debug builds) can be toggled with F4.
+* The debug screen can be toggled with F4 (debug builds only).
 
-Documentation about [how the game is built](./docs/structure.md) and about [the game.txt file and its structure](./docs/games.md) is available in the docs folder.  
+Documentation about [the game.txt file and its structure](./docs/games.md) is available in the docs folder.  
+
+## Other documents
+- [Change Log](./docs/changeLog.md)
+- [Games](./docs/games.md) (Information about how to create games)
+- [Structure](./docs/structure.md)
 
 ## Licenses
 TBD
