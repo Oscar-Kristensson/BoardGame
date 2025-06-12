@@ -70,10 +70,10 @@ Start by downloading the ([raylib library](https://github.com/raysan5/raylib/rel
 
 ``` bash
 mkdir build
-cd
+cd build
 cmake -DCMAKE_BUILD_TYPE=Debug ..       # Generates the build files
 cmake --build .                         # Builds the game
-./build/bin/{Debug or Release}/game     # Runs the game
+./bin/{Debug or Release}/game     # Runs the game
 ```
 
 This is known to work for MacOS with the clang++ compiler and the "raylib-5.5_macos.tar.gz" library as well as linux Pop!_OS with g++ and "raylib-5.5-linux_amd64.tar.gz".
@@ -97,6 +97,8 @@ python scripts/package.py
 ```
 
 If every thing went smoothly, you should have ended up with a compressed file containing the executable and required assets. 
+> Note
+> There is currently some issue with the script on MacOS. The workaround for this is to copy the executable from the Release dir to the dist dir. Rename the dist dir and compress it to a zip file. 
 
 If the script failed or you can not run the script, simply create a compressed file containing the assets, licenses and games folders as well as the executable it self.
 
