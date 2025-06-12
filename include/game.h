@@ -81,11 +81,14 @@ namespace BoardGame
 		void render() override;
 		void changePlayer(bool increase);
 		bool getUseHighFPS() { return m_UseHighFPS; }
+
+		void handleKeyboardEvents(Vector2 mouseWorldPosition, Vector2 mouseDelta);
 		
 	};
 
 
 	int convertCPToPixels(float cp);
 	float convertPixelsToCP(int pixels);
+
 
 };

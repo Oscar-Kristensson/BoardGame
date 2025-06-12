@@ -21,6 +21,10 @@ BoardGame::Entity::Entity(const BoardGame::GameEntityData& entityData)
 	m_Width = m_Texture.width;
 	m_Height = m_Texture.height;
 
+	if (entityData.isDraggable)
+		m_DragController = BoardGame::DragController();
+
+
 }
 
 void BoardGame::Entity::draw()
@@ -70,4 +74,26 @@ BoardGame::Entity& BoardGame::Entity::operator=(BoardGame::Entity&& other) noexc
 		other.m_Height = 0;
 	}
 	return *this;
+}
+
+bool BoardGame::Entity::isMouseHovering(int x, int y)
+{
+	// Check X-axis (false if outside)
+	if (!(x > m_X && x < m_X + m_Width))
+		return false;
+
+	// Check Y-axis (true if inside)
+	if (y > m_Y && y < m_Y + m_Height)
+		return true;
+
+	// Otherwise false
+	return false;
+}
+
+
+
+void BoardGame::Entity::move(int x, int y)
+{
+	m_X += x;
+	m_Y += y;
 }

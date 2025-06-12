@@ -12,13 +12,6 @@ void BoardGame::constants::loadFont()
 
 
 
-
-
-
-
-
-
-
 BoardGame::Game::Game(Vector2 boardSize, Color backgroundColor, 
 	std::vector<BoardGame::GameEntityData> entityData, 
 	uint8_t playerCount, CommonPlayerInfo commonPlayerInfo, 
@@ -85,6 +78,154 @@ BoardGame::Game::Game(GameConfigData gameData, uint8_t playerCount)
 }
 
 
+void BoardGame::Game::handleKeyboardEvents(Vector2 mouseWorldPosition, Vector2 mouseDelta)
+{
+	// Change the camera offset (so that the camera stays centerd when resizing the window)
+	if (IsWindowResized())
+	{
+		m_Camera.offset = Vector2(GetScreenWidth() / 2.0f, GetScreenHeight() / 2.0f);
+	}
+
+	// Change player logic
+	if (IsKeyPressed(KEY_Q))
+	{
+		changePlayer(true);
+	}
+
+	if (IsKeyPressed(KEY_W))
+	{
+		changePlayer(false);
+	}
+
+	// Camera control
+	if (IsKeyDown(KEY_RIGHT))
+	{
+		m_Camera.target.x += BoardGame::constants::cameraMovementSpeed / m_Camera.zoom * GetFrameTime();
+		m_UseHighFPS = true;
+	}
+	else if (IsKeyDown(KEY_LEFT))
+	{
+		m_Camera.target.x -= BoardGame::constants::cameraMovementSpeed / m_Camera.zoom * GetFrameTime();
+		m_UseHighFPS = true;
+	}
+
+
+	if (IsKeyDown(KEY_DOWN))
+	{
+		m_Camera.target.y += BoardGame::constants::cameraMovementSpeed / m_Camera.zoom * GetFrameTime();
+		m_UseHighFPS = true;
+	}
+	else if (IsKeyDown(KEY_UP))
+	{
+		m_Camera.target.y -= BoardGame::constants::cameraMovementSpeed / m_Camera.zoom * GetFrameTime();
+		m_UseHighFPS = true;
+	}
+
+
+	m_Camera.zoom = expf(logf(m_Camera.zoom) + ((float)GetMouseWheelMove() * 0.1f));
+	if (m_Camera.zoom > 3.0f) m_Camera.zoom = 3.0f;
+	else if (m_Camera.zoom < 0.1f) m_Camera.zoom = 0.1f;
+
+	if (IsMouseButtonPressed(1))
+		DisableCursor();
+
+	if (IsMouseButtonDown(1))
+	{
+		m_Camera.target.x += mouseDelta.x / m_Camera.zoom;
+		m_Camera.target.y += mouseDelta.y / m_Camera.zoom;
+		m_UseHighFPS = true;
+	}
+
+	if (IsMouseButtonReleased(1))
+		EnableCursor();
+
+
+	if (IsMouseButtonPressed(0)) {
+		// Check if a player was clicked and dragged
+		if (m_Players.size() > 0 && \
+			m_Players[m_CurrentPlayerID].mouseHovers(mouseWorldPosition.x, mouseWorldPosition.y, 1 / m_Camera.zoom / 5))
+				m_Players[m_CurrentPlayerID].m_DragController.startDragging();
+
+
+		// Check if a entity was clicked and dragged
+		else if (m_Entities.size() > 0)
+		{
+			for (size_t i = 0; i < m_Entities.size(); i++)
+			{
+				if (m_Entities[i].m_DragController.has_value() && m_Entities[i].isMouseHovering(mouseWorldPosition.x, mouseWorldPosition.y))
+				{
+					m_Entities[i].m_DragController.value().startDragging();
+					break;
+				}
+
+			}
+		}
+
+	}
+
+
+	if (IsMouseButtonPressed(0) && IsKeyDown(KEY_L))
+		for (size_t i = m_Players.size(); i-- > 0; )
+		{
+			if (m_Players[i].mouseHovers(mouseWorldPosition.x, mouseWorldPosition.y, 1 / m_Camera.zoom / 5))
+			{
+				m_Players[i].m_DragController.startDragging();
+				break;
+			}
+		}
+
+
+	// Move the dragged players
+	for (size_t i = 0; i < m_Players.size(); i++)
+	{
+		if (m_Players[i].m_DragController.isDragged())
+		{
+			m_Players[i].move(mouseDelta.x / m_Camera.zoom, mouseDelta.y / m_Camera.zoom);
+		}
+	}
+
+	for (size_t i = 0; i < m_Entities.size(); i++)
+	{
+		if (m_Entities[i].m_DragController.has_value() && m_Entities[i].m_DragController.value().isDragged())
+			m_Entities[i].move(mouseDelta.x / m_Camera.zoom, mouseDelta.y / m_Camera.zoom);
+	}
+
+	if (IsMouseButtonReleased(0))
+	{
+		for (size_t i = 0; i < m_Players.size(); i++)
+		{
+			m_Players[i].m_DragController.stopDragging();
+		};
+
+		for (size_t i = 0; i < m_Entities.size(); i++)
+			if (m_Entities[i].m_DragController.has_value())
+				m_Entities[i].m_DragController.value().stopDragging();
+	}
+
+	if (m_PlayerBankInput.has_value() && m_CommonPlayerInfo.hasAccounts)
+		(*m_PlayerBankInput).update(GetMouseX(), GetMouseY());
+
+
+	for (size_t i = 0; i < m_Die.size(); i++)
+		m_Die[i].update(GetMouseX(), GetMouseY());
+
+
+
+
+
+
+	DEBUG_POST_UPDATE(std::format("Use hFPS: {}", m_UseHighFPS));
+	DEBUG_POST_UPDATE(std::format("FPS: {}", GetFPS()));
+
+#if _DEBUG
+	if (IsKeyPressed(KEY_F4))
+		m_ShowDebugScreen = !m_ShowDebugScreen;
+#endif
+
+
+
+}
+
 void BoardGame::Game::changePlayer(bool increase)
 {
 	if (m_Players.size() == 0)
@@ -119,6 +260,11 @@ void BoardGame::Game::changePlayer(bool increase)
 	(*m_PlayerBankInput).setValue(m_PlayerBankBalance[m_CurrentPlayerID]);
 
 	m_PlayerNumberDisplayUnit.setValue(m_CurrentPlayerID + 1);
+
+
+
+
+
 }
 
 
@@ -133,74 +279,12 @@ void BoardGame::Game::update()
 
 #endif
 
-	// Change the camera offset
-	if (IsWindowResized())
-	{
-		m_Camera.offset = Vector2(GetScreenWidth() / 2.0f, GetScreenHeight() / 2.0f);
-	}
-
-	if (IsKeyPressed(KEY_Q))
-	{
-		changePlayer(true);
-	}
-	
-	if (IsKeyPressed(KEY_W))
-	{
-		changePlayer(false);
-	}
-
-
-	if (IsKeyDown(KEY_RIGHT))
-	{
-		m_Camera.target.x += BoardGame::constants::cameraMovementSpeed / m_Camera.zoom * GetFrameTime();
-		m_UseHighFPS = true;
-	}
-	else if (IsKeyDown(KEY_LEFT))
-	{
-		m_Camera.target.x -= BoardGame::constants::cameraMovementSpeed / m_Camera.zoom * GetFrameTime();
-		m_UseHighFPS = true;
-	}
-
-
-	if (IsKeyDown(KEY_DOWN))
-	{
-		m_Camera.target.y += BoardGame::constants::cameraMovementSpeed / m_Camera.zoom * GetFrameTime();
-		m_UseHighFPS = true;
-	}
-	else if (IsKeyDown(KEY_UP))
-	{
-		m_Camera.target.y -= BoardGame::constants::cameraMovementSpeed / m_Camera.zoom * GetFrameTime();
-		m_UseHighFPS = true;
-	}
-
-
-	m_Camera.zoom = expf(logf(m_Camera.zoom) + ((float)GetMouseWheelMove() * 0.1f));
-	if (m_Camera.zoom > 3.0f) m_Camera.zoom = 3.0f;
-	else if (m_Camera.zoom < 0.1f) m_Camera.zoom = 0.1f;
-
 
 	Vector2 mouseWorldPosition = GetScreenToWorld2D(GetMousePosition(), m_Camera);
 	Vector2 mouseDelta = GetMouseDelta();
 
-	if (IsMouseButtonPressed(1))
-		DisableCursor();
+	handleKeyboardEvents(mouseWorldPosition, mouseDelta);
 
-	if (IsMouseButtonDown(1))
-	{
-		m_Camera.target.x += mouseDelta.x / m_Camera.zoom;
-		m_Camera.target.y += mouseDelta.y / m_Camera.zoom;
-		m_UseHighFPS = true;
-	}
-
-	if (IsMouseButtonReleased(1))
-		EnableCursor();
-
-	// Check if a player was clicked and dragged
-	if (m_Players.size() > 0 && IsMouseButtonPressed(0) && \
-		m_Players[m_CurrentPlayerID].mouseHovers(mouseWorldPosition.x, mouseWorldPosition.y, 1 / m_Camera.zoom / 5))
-	{
-		m_Players[m_CurrentPlayerID].startDragging();
-	}
 
 #if _DEBUG
 	DEBUG_POST_UPDATE(std::format("Player count {}", m_Players.size()));
@@ -212,49 +296,6 @@ void BoardGame::Game::update()
 	DEBUG_POST_UPDATE(temp);
 #endif
 
-	if (IsMouseButtonPressed(0) && IsKeyDown(KEY_L))
-		for (size_t i = m_Players.size(); i-- > 0; )
-		{
-			if (m_Players[i].mouseHovers(mouseWorldPosition.x, mouseWorldPosition.y, 1 / m_Camera.zoom / 5))
-			{
-				m_Players[i].startDragging();
-				break;
-			}
-		}
-
-
-	// Move the dragged players
-	for (size_t i = 0; i < m_Players.size(); i++)
-	{
-		if (m_Players[i].isDragged())
-		{
-			m_Players[i].move(mouseDelta.x / m_Camera.zoom, mouseDelta.y / m_Camera.zoom);
-		}
-	}
-
-	if (IsMouseButtonReleased(0))
-	{
-		for (size_t i = 0; i < m_Players.size(); i++)
-		{
-			m_Players[i].stopDragging();
-		};
-	}
-
-	if (m_PlayerBankInput.has_value() && m_CommonPlayerInfo.hasAccounts)
-		(*m_PlayerBankInput).update(GetMouseX(), GetMouseY());
-
-
-	for (size_t i = 0; i < m_Die.size(); i++)
-		m_Die[i].update(GetMouseX(), GetMouseY());
-
-	
-	DEBUG_POST_UPDATE(std::format("Use hFPS: {}", m_UseHighFPS));
-	DEBUG_POST_UPDATE(std::format("FPS: {}", GetFPS()));
-
-#if _DEBUG
-	if (IsKeyPressed(KEY_F4))
-		m_ShowDebugScreen = !m_ShowDebugScreen;
-#endif
 
 
 

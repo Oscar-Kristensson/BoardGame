@@ -24,9 +24,9 @@ void BoardGame::gui::ValueInput::update(int cursorX, int cursorY)
 	{
 		if (IsKeyDown(KEY_LEFT_SHIFT))
 			if (IsKeyDown(KEY_LEFT_CONTROL))
-				setValue(BoardGame::utils::floor(m_Value + 100, 100));
+				setValue(m_Value + 100);
 			else
-				setValue(BoardGame::utils::floor(m_Value + 10, 10));
+				setValue(m_Value + 10);
 		else
 			setValue(m_Value + 1);
 	}
@@ -34,9 +34,9 @@ void BoardGame::gui::ValueInput::update(int cursorX, int cursorY)
 	{
 		if (IsKeyDown(KEY_LEFT_SHIFT))
 			if (IsKeyDown(KEY_LEFT_CONTROL))
-				setValue(BoardGame::utils::toClosestHigher(m_Value - 100, 100));
+				setValue(m_Value - 100);
 			else
-				setValue(BoardGame::utils::toClosestHigher(m_Value - 10, 10));
+				setValue(m_Value - 10);
 		else
 			setValue(m_Value - 1);
 	}

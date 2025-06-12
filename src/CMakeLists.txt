@@ -12,6 +12,7 @@ set(SOURCES
     debugScreen.cpp
     dice.cpp
     label.cpp
+    mouseDragController.cpp
 )
 
 # Automatically find all header files in the include/ directory

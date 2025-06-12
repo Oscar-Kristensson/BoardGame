@@ -15,20 +15,6 @@ bool BoardGame::Player::mouseHovers(int cursorX, int cursorY, float scale)
 	return false;
 }
 
-bool BoardGame::Player::isDragged()
-{
-	return m_IsDragged;
-}
-
-void BoardGame::Player::startDragging()
-{
-	m_IsDragged = true;
-}
-
-void BoardGame::Player::stopDragging()
-{
-	m_IsDragged = false;
-}
 
 void BoardGame::Player::move(int x, int y)
 {

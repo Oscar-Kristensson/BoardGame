@@ -61,6 +61,7 @@ namespace BoardGame
 		std::filesystem::path imagePath;
 		int x;
 		int y;
+		bool isDraggable;
 	};
 
 	struct DiceInfo

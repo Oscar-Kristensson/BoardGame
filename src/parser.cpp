@@ -163,13 +163,16 @@ namespace BoardGame {
 
             int x;
             int y;
+            bool isDraggable = false;
 
             BoardGame::utils::convertToInt(cd.argumentMap.at("x"), x);
             BoardGame::utils::convertToInt(cd.argumentMap.at("y"), y);
 
+            if (cd.argumentMap.find("draggable") != cd.argumentMap.end())
+                isDraggable = BoardGame::utils::convertToBool(cd.argumentMap.at("draggable"));
             
 
-            return { imagePath, x, y};
+            return { imagePath, x, y, isDraggable};
         };
 
 

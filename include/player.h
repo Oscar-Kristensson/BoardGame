@@ -1,5 +1,6 @@
 #pragma once
 #include "entity.h"
+#include "mouseDragController.h"
 
 namespace BoardGame
 {
@@ -15,7 +16,9 @@ namespace BoardGame
 		static const int k_Radius = 100;
 		const Color m_Color;
 
-		bool m_IsDragged = false;
+	public:
+		BoardGame::DragController m_DragController;
+
 
 	public:
 		Player() : Player(0, 0, GRAY) {}
@@ -23,9 +26,6 @@ namespace BoardGame
 
 		void draw(float scale, bool isSelected);
 		bool mouseHovers(int cursorX, int cursorY, float scale);
-		bool isDragged();
-		void startDragging();
-		void stopDragging();
 		void move(int x, int y);
 	};
 }
