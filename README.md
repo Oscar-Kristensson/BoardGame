@@ -97,10 +97,10 @@ python scripts/package.py
 ```
 
 If every thing went smoothly, you should have ended up with a compressed file containing the executable and required assets. 
-> Note
+> Note:
 > There is currently some issue with the script on MacOS. The workaround for this is to copy the executable from the Release dir to the dist dir and rename it to "BoardGame". Rename the dist dir and compress it to a zip file. 
 
-> Note
+> Note:
 > On linux you may have to run chmod +x BoardGame in the dist folder inorder for the executable to be able to execute.
 
 If the script failed or you can not run the script, simply create a compressed file containing the assets, licenses and games folders as well as the executable it self.
@@ -112,7 +112,7 @@ If you downloaded a ZIP file, extract it. Place the folder in a apppropriate dir
 
 
 #### MacOS
-> Note
+> Note:
 > If the Apple blocks the application, run the following command to remove the Quarantine Flag:
 > ``` bash
 > xattr -dr com.apple.quarantine BoardGame
