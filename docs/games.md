@@ -26,7 +26,7 @@ GameInfo,
 DiceInfo, x=32, y=20, min=1, max=6;
 
 
-Entity, id=Background, img=assets/WorldGame/map.png, x=0, y=0;
+Entity, id=Background, img=assets/WorldGame/map.png, x=0, y=0, draggable=false;
 
 CommonPlayerInfo, hasAccounts=true, accountBalance=100;
 
@@ -56,6 +56,7 @@ The entity has the following parameters:
 | img             | string (path) | The path to the image (will be changed to relative to game dir) |
 | x               | int           | The x-cord |
 | y               | int           | The y-cord |
+| draggable       | bool          | Changes whether the entity can be dragged around |
 
 #### Common Player Info
 The common player info object has the following parameters:

@@ -13,9 +13,10 @@ namespace BoardGame
 			int m_Value = 0;
 			std::string m_ValueString = "0";
 			uint8_t m_FontSize = 48;
+			bool m_RequireHover = false;
 			
 		public:
-			ValueInput(float x, float y);
+			ValueInput(float x, float y, bool requireHover);
 			ValueInput();
 			void draw() override;
 			void update(int cursorX, int cursorY); 

@@ -124,6 +124,7 @@ namespace BoardGame {
             int turnDisplayY = 20;
             int bankDisplayX = 300;
             int bankDisplayY = 20;
+            bool requireHoverForBank = true;
 
             if (cd.argumentMap.find("turnDisplayX") != cd.argumentMap.end())
                 BoardGame::utils::convertToInt(cd.argumentMap.at("turnDisplayX"), turnDisplayX);
@@ -137,18 +138,22 @@ namespace BoardGame {
             if (cd.argumentMap.find("bankDisplayY") != cd.argumentMap.end())
                 BoardGame::utils::convertToInt(cd.argumentMap.at("bankDisplayY"), bankDisplayY);
 
+            if (cd.argumentMap.find("hoverForBank") != cd.argumentMap.end())
+                requireHoverForBank = BoardGame::utils::convertToBool(cd.argumentMap.at("hoverForBank"));
 
 
 
 
-            return { 
-                boardWidth, 
-                boardHeight, 
-                backgroundColor, 
-                turnDisplayX, 
-                turnDisplayY, 
-                bankDisplayX, 
-                bankDisplayY 
+
+            return {
+                boardWidth,
+                boardHeight,
+                backgroundColor,
+                turnDisplayX,
+                turnDisplayY,
+                bankDisplayX,
+                bankDisplayY,
+                requireHoverForBank
             };
         };
 

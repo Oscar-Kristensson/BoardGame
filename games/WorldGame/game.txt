@@ -5,7 +5,8 @@ GameInfo,
     turnDisplayX=150,
     turnDisplayY=35,
     bankDisplayX=250,
-    bankDisplayY=35;
+    bankDisplayY=35,
+    hoverForBank=false;
 
 
 DiceInfo, x=32, y=35, min=1, max=6;

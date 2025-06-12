@@ -25,6 +25,7 @@ namespace BoardGame
 		int turnDisplayY;
 		int bankDisplayX;
 		int bankDisplayY;
+		bool requireHoverForBanks;
 	};
 
 	struct LabelInfo

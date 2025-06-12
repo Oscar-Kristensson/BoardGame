@@ -9,8 +9,8 @@ BoardGame::gui::ValueInput::ValueInput()
 }
 
 
-BoardGame::gui::ValueInput::ValueInput(float x, float y)
-	: Element(x, y)
+BoardGame::gui::ValueInput::ValueInput(float x, float y, bool requireHover)
+	: Element(x, y), m_RequireHover(requireHover)
 {
 	updateSize();
 	m_Height = m_FontSize + m_PaddingY * 2;
@@ -20,7 +20,7 @@ void BoardGame::gui::ValueInput::update(int cursorX, int cursorY)
 {
 	updateElement(cursorX, cursorY);
 	
-	if (m_Hovered && (IsKeyPressed(KEY_P) || IsKeyPressedRepeat(KEY_P)))
+	if ((!m_RequireHover || m_Hovered) && (IsKeyPressed(KEY_P) || IsKeyPressedRepeat(KEY_P)))
 	{
 		if (IsKeyDown(KEY_LEFT_SHIFT))
 			if (IsKeyDown(KEY_LEFT_CONTROL))
@@ -28,9 +28,13 @@ void BoardGame::gui::ValueInput::update(int cursorX, int cursorY)
 			else
 				setValue(m_Value + 10);
 		else
-			setValue(m_Value + 1);
+			if (IsKeyDown(KEY_LEFT_CONTROL))
+				setValue(m_Value + 5);
+			else
+				setValue(m_Value + 1);
+
 	}
-	else if (m_Hovered && (IsKeyPressed(KEY_O) || IsKeyPressedRepeat(KEY_O)))
+	else if ((!m_RequireHover || m_Hovered) && (IsKeyPressed(KEY_O) || IsKeyPressedRepeat(KEY_O)))
 	{
 		if (IsKeyDown(KEY_LEFT_SHIFT))
 			if (IsKeyDown(KEY_LEFT_CONTROL))
@@ -38,7 +42,10 @@ void BoardGame::gui::ValueInput::update(int cursorX, int cursorY)
 			else
 				setValue(m_Value - 10);
 		else
-			setValue(m_Value - 1);
+			if (IsKeyDown(KEY_LEFT_CONTROL))
+				setValue(m_Value - 5);
+			else
+				setValue(m_Value - 1);
 	}
 }
 

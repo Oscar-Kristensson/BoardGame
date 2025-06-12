@@ -58,6 +58,7 @@ namespace BoardGame
 		uint8_t m_CurrentPlayerID = 0;
 
 		bool m_UseHighFPS = false;
+		bool m_RequireHoverForBanks = false;
 
 		std::vector<BoardGame::gui::Dice> m_Die;
 		std::vector<BoardGame::gui::Label> m_Labels;
@@ -73,7 +74,8 @@ namespace BoardGame
 			uint8_t playerCount, CommonPlayerInfo commonPlayerInfo,
 			std::vector<PlayerInfo> players, std::vector<DiceInfo> dieData,
 			int turnDisplayX, int turnDisplayY, int bankDisplayX,
-			int bankDisplayY, std::vector<LabelInfo> labels);
+			int bankDisplayY, std::vector<LabelInfo> labels,
+			bool requireHoverForBanks);
 
 		Game(GameConfigData gameData, uint8_t playerCount);
 

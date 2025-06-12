@@ -17,8 +17,8 @@ BoardGame::Game::Game(Vector2 boardSize, Color backgroundColor,
 	uint8_t playerCount, CommonPlayerInfo commonPlayerInfo, 
 	std::vector<PlayerInfo> playersData, std::vector<DiceInfo> dieData, 
 	int turnDisplayX, int turnDisplayY, int bankDisplayX, int bankDisplayY,
-	std::vector<LabelInfo> labels)
-	:m_BoardSize(boardSize), m_BackgroundColor(backgroundColor), m_CommonPlayerInfo(commonPlayerInfo)
+	std::vector<LabelInfo> labels, bool requireHoverForBanks)
+	:m_BoardSize(boardSize), m_BackgroundColor(backgroundColor), m_CommonPlayerInfo(commonPlayerInfo), m_RequireHoverForBanks(requireHoverForBanks)
 {
 	m_Camera.target = { m_BoardSize.x / 2, m_BoardSize.y / 2 };
 	m_Camera.offset = Vector2(GetScreenWidth() / 2.0f, GetScreenHeight() / 2.0f);
@@ -55,11 +55,11 @@ BoardGame::Game::Game(Vector2 boardSize, Color backgroundColor,
 
 	if (m_CommonPlayerInfo.hasAccounts && playerCount > 0)
 	{
-		m_PlayerBankInput.emplace(BoardGame::gui::ValueInput(bankDisplayX, bankDisplayY));
+		m_PlayerBankInput.emplace(BoardGame::gui::ValueInput(bankDisplayX, bankDisplayY, m_RequireHoverForBanks));
 		(*m_PlayerBankInput).setValue(m_CommonPlayerInfo.playerStartBalance);
 	}
 
-	m_PlayerNumberDisplayUnit = BoardGame::gui::ValueInput(turnDisplayX, turnDisplayY);
+	m_PlayerNumberDisplayUnit = BoardGame::gui::ValueInput(turnDisplayX, turnDisplayY, true);
 
 
 	m_PlayerNumberDisplayUnit.setValue(1);
@@ -72,7 +72,7 @@ BoardGame::Game::Game(GameConfigData gameData, uint8_t playerCount)
 		gameData.commonPlayerInfo, gameData.players, gameData.die,
 		gameData.info.turnDisplayX, gameData.info.turnDisplayY,
 		gameData.info.bankDisplayX, gameData.info.bankDisplayY,
-		gameData.labels)
+		gameData.labels, gameData.info.requireHoverForBanks)
 {
 
 }
