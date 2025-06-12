@@ -129,7 +129,7 @@ void BoardGame::Game::handleKeyboardEvents(Vector2 mouseWorldPosition, Vector2 m
 	if (IsMouseButtonPressed(1))
 		DisableCursor();
 
-	if (IsMouseButtonDown(1))
+	if (IsMouseButtonDown(1) || IsMouseButtonDown(0))
 	{
 		m_Camera.target.x += mouseDelta.x / m_Camera.zoom;
 		m_Camera.target.y += mouseDelta.y / m_Camera.zoom;
