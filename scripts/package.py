@@ -6,6 +6,16 @@ import hashlib
 import sys
 
 
+
+if sys.platform == "win32":
+    PLATFORM = "windows"
+else:
+    PLATFORM = "<platform>"
+
+
+
+
+
 with open("scripts/packageConfig.json", "r") as f:
     CONFIG = json.load(f) 
 
@@ -131,14 +141,14 @@ for fileName in CONFIG["copyFiles"]["all"]:
 
 # Compressing folders
 print("Compressing folders")
-compressFolder("build/dist", f"build/{CONFIG['outputDir']}/{CONFIG['programName']}.tar.xz")
-shutil.make_archive(f"build/{CONFIG['outputDir']}/{CONFIG['programName']}", "zip", f"build/dist")
+compressFolder("build/dist", f"build/{CONFIG['outputDir']}/{CONFIG['programName']}-{PLATFORM}-{CONFIG['version']}.tar.xz")
+shutil.make_archive(f"build/{CONFIG['outputDir']}/{CONFIG['programName']}-{PLATFORM}-{CONFIG['version']}", "zip", f"build/dist")
 
 
 # Generating metadata
 CHECKSUMS = {
-    f"{CONFIG['programName']}.tar.xz": getFileHash(f"build/{CONFIG['outputDir']}/{CONFIG['programName']}.tar.xz", True),
-    f"{CONFIG['programName']}.zip": getFileHash(f"build/{CONFIG['outputDir']}/{CONFIG['programName']}.zip", True)
+    f"{CONFIG['programName']}-{PLATFORM}-{CONFIG['version']}.tar.xz": getFileHash(f"build/{CONFIG['outputDir']}/{CONFIG['programName']}-{PLATFORM}-{CONFIG['version']}.tar.xz", True),
+    f"{CONFIG['programName']}-{PLATFORM}-{CONFIG['version']}.zip": getFileHash(f"build/{CONFIG['outputDir']}/{CONFIG['programName']}-{PLATFORM}-{CONFIG['version']}.zip", True)
 }
 
 
