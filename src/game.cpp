@@ -27,7 +27,7 @@ BoardGame::Game::Game(Vector2 boardSize, Color backgroundColor,
 
 	m_Entities.reserve(entityData.size());
 	for (unsigned int i = 0; i < entityData.size(); i++)
-		m_Entities.emplace_back(entityData[i]);
+		m_Entities.emplace_back(entityData[i], m_TextureManager);
 
 	if (playerCount > playersData.size())
 	{

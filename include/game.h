@@ -15,6 +15,7 @@
 #include "debugScreen.h"
 #include "dice.h"
 #include "label.h"
+#include "assetManager.h"
 #include <unordered_map>
 #include <string>
 #include <vector>
@@ -62,6 +63,9 @@ namespace BoardGame
 
 		std::vector<BoardGame::gui::Dice> m_Die;
 		std::vector<BoardGame::gui::Label> m_Labels;
+
+		BoardGame::TextureManager m_TextureManager;
+		
 
 #if _DEBUG
 		bool m_ShowDebugScreen = true;

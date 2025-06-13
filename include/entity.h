@@ -2,6 +2,7 @@
 #include "dataTypes.h"
 #include "raylib.h"
 #include "mouseDragController.h"
+#include "assetManager.h"
 #include <optional>
 
 namespace BoardGame
@@ -9,7 +10,7 @@ namespace BoardGame
 	class Entity
 	{
 	private:
-		Texture2D m_Texture;
+		Texture2D* m_Texture;
 		int m_X;
 		int m_Y;
 		int m_Width;
@@ -21,8 +22,8 @@ namespace BoardGame
 	public:
 
 		Entity() = default;
-		Entity(Texture2D image, int x, int y);
-		Entity(const GameEntityData& entityData);
+		Entity(Texture2D* image, int x, int y);
+		Entity(const GameEntityData& entityData, BoardGame::TextureManager& textureManager);
 		~Entity();
 
 

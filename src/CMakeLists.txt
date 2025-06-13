@@ -13,6 +13,7 @@ set(SOURCES
     dice.cpp
     label.cpp
     mouseDragController.cpp
+    assetManager.cpp
 )
 
 # Automatically find all header files in the include/ directory
