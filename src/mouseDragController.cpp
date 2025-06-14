@@ -3,7 +3,7 @@
 
 BoardGame::DragController::DragController()
 {
-
+	std::cout << "Created dragController" << std::endl;
 }
 
 

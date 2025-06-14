@@ -24,18 +24,23 @@ namespace BoardGame
 		Entity() = default;
 		Entity(Texture2D* image, int x, int y);
 		Entity(const GameEntityData& entityData, BoardGame::TextureManager& textureManager);
-		~Entity();
 
 
 		void draw();
 
 		// Disable copying (because of textures)
+		/*
+		* This should work because the Texture is now a pointer
 		Entity(const Entity&) = delete;
 		Entity& operator=(const Entity&) = delete;
+		*/
 
-		// Move operators
-		Entity(Entity&& other) noexcept;
-		Entity& operator=(Entity&& other) noexcept;
+
+		// Copy + move constructors
+		Entity(const Entity&) = default;
+		Entity& operator=(const Entity&) = default;
+		Entity(Entity&&) noexcept = default;
+		Entity& operator=(Entity&&) noexcept = default;
 
 		bool isMouseHovering(int x, int y);
 		void move(int x, int y);

@@ -26,8 +26,9 @@ BoardGame::Entity::Entity(const BoardGame::GameEntityData& entityData, BoardGame
 	{
 		if (!std::filesystem::exists(entityData.imagePath))
 			throw std::runtime_error("Could not find image at " + stringPath);
-		textureID = textureManager.load(stringPath, "");
+		textureID = textureManager.load(stringPath, entityData.imagePath.string());
 	}
+
 	m_Texture = textureManager.getTexture(textureID);
 	m_Width = m_Texture->width;
 	m_Height = m_Texture->height;
@@ -44,15 +45,11 @@ void BoardGame::Entity::draw()
 }
 
 
-BoardGame::Entity::~Entity()
-{
-	UnloadTexture(*m_Texture);
-}
-
 // Move constructor
+/*
 BoardGame::Entity::Entity(BoardGame::Entity&& other) noexcept
 	: m_Texture(other.m_Texture), m_X(other.m_X), m_Y(other.m_Y),
-	m_Width(other.m_Width), m_Height(other.m_Height)
+	m_Width(other.m_Width), m_Height(other.m_Height), m_DragController()
 {
 	/* This code is not necessary if the texture manager is used
 	// Invalidate other's texture so destructor doesn't unload twice
@@ -61,10 +58,13 @@ BoardGame::Entity::Entity(BoardGame::Entity&& other) noexcept
 	other.m_Y = 0;
 	other.m_Width = 0;
 	other.m_Height = 0;
-	*/
+	
+	
 }
+*/
 
 
+	/*
 BoardGame::Entity& BoardGame::Entity::operator=(BoardGame::Entity&& other) noexcept
 {
 	if (this != &other)
@@ -86,10 +86,21 @@ BoardGame::Entity& BoardGame::Entity::operator=(BoardGame::Entity&& other) noexc
 		other.m_Y = 0;
 		other.m_Width = 0;
 		other.m_Height = 0;
-		*/
+		
 	}
+
 	return *this;
 }
+	*/
+/*
+BoardGame::Entity::Entity(const BoardGame::Entity& other)
+	:m_Texture(other.m_Texture), m_X(other.m_X), m_Y(other.m_Y),
+	m_Height(other.m_Height), m_Width(other.m_Width)
+{
+	if (other.m_DragController.has_value())
+		m_DragController = DragController();
+}
+*/
 
 bool BoardGame::Entity::isMouseHovering(int x, int y)
 {

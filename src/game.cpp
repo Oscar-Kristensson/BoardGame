@@ -29,9 +29,7 @@ BoardGame::Game::Game(Vector2 boardSize, Color backgroundColor,
 
 	// Load shared textures
 	for (size_t i = 0; i < sharedTextures.size(); i++)
-	{
 		m_TextureManager.load(sharedTextures[i].path, sharedTextures[i].stringID);
-	}
 
 
 	m_Entities.reserve(entityData.size());
@@ -60,8 +58,6 @@ BoardGame::Game::Game(Vector2 boardSize, Color backgroundColor,
 	m_Labels.reserve(labels.size());
 	for (size_t i = 0; i < labels.size(); i++)
 		m_Labels.emplace_back(labels[i]);
-
-
 
 
 	if (m_CommonPlayerInfo.hasAccounts && playerCount > 0)
@@ -172,6 +168,7 @@ void BoardGame::Game::handleKeyboardEvents(Vector2 mouseWorldPosition, Vector2 m
 		{
 			for (size_t i = 0; i < m_Entities.size(); i++)
 			{
+				std::cout << m_Entities[i].m_DragController.has_value() << std::endl;
 				if (m_Entities[i].m_DragController.has_value() && m_Entities[i].isMouseHovering(mouseWorldPosition.x, mouseWorldPosition.y))
 				{
 					(*m_Entities[i].m_DragController).startDragging();
