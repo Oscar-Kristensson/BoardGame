@@ -2,6 +2,7 @@
 #include <vector>
 #include <unordered_map>
 #include <string>
+#include <filesystem>
 #include "raylib.h"
 
 
@@ -17,9 +18,13 @@ namespace BoardGame
 
 	public:
 		TextureManager();
-		uint16_t load(std::string filePath, std::string name);
+		uint16_t load(std::filesystem::path filePath, std::string name);
 		uint16_t getID(std::string name);
 		Texture2D* getTexture(uint16_t id);
+
+#if _DEBUG
+		void printOut();
+#endif
 
 		// Add a destructor that unloads the textures
 

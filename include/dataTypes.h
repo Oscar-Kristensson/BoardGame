@@ -15,6 +15,12 @@ namespace BoardGame
 		Right
 	};
 
+	struct SharedTextureInfo
+	{
+		std::filesystem::path path;
+		std::string stringID;
+	};
+
 
 	struct GameInfo
 	{
@@ -82,6 +88,7 @@ namespace BoardGame
 		std::vector<PlayerInfo> players;
 		std::vector<DiceInfo> die;
 		std::vector<LabelInfo> labels;
+		std::vector<SharedTextureInfo> sharedTextures;
 
 	};
 
@@ -96,7 +103,8 @@ namespace BoardGame
 		TypeCommonPlayerInfo = 4,
 		TypePlayerInfo = 5,
 		TypeDiceInfo = 6,
-		TypeLabel = 7
+		TypeLabel = 7,
+		TypeSharedTextureInfo = 8
 	};
 
 

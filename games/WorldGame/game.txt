@@ -14,7 +14,7 @@ DiceInfo, x=32, y=155, min=1, max=12;
 
 
 ;# Entities;
-Entity, id="Background Image", img=games/WorldGame/map.png, x=0, y=0, draggable=false;
+Entity, id="Background Image", img=#importantTexture, x=0, y=0, draggable=false;
 
 ;# Configuring players;
 CommonPlayerInfo, hasAccounts=true, accountBalance=100;
@@ -34,7 +34,7 @@ Label, x=150, y=0, text=Turn, fontSize=34, align=L;
 Label, x=250, y=0, text=Bank, fontSize=34, align=L; 
 Label, x=32, y=120, text=Challenge, fontSize=34, align=L; 
 
-
+SharedTexture, src=games/WorldGame/map.png, id=#importantTexture;
 
 
 

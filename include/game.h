@@ -36,7 +36,8 @@ namespace BoardGame
 		{"CommonPlayerInfo", TypeCommonPlayerInfo},
 		{"PlayerInfo", TypePlayerInfo},
 		{"DiceInfo", TypeDiceInfo},
-		{"Label", TypeLabel}
+		{"Label", TypeLabel},
+		{"SharedTexture", TypeSharedTextureInfo}
 	};
 
 
@@ -79,7 +80,7 @@ namespace BoardGame
 			std::vector<PlayerInfo> players, std::vector<DiceInfo> dieData,
 			int turnDisplayX, int turnDisplayY, int bankDisplayX,
 			int bankDisplayY, std::vector<LabelInfo> labels,
-			bool requireHoverForBanks);
+			bool requireHoverForBanks, std::vector<SharedTextureInfo> sharedTextures);
 
 		Game(GameConfigData gameData, uint8_t playerCount);
 

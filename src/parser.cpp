@@ -1,4 +1,5 @@
 #include "game.h"
+#include <stdexcept>
 
 namespace BoardGame {
     namespace parser {
@@ -69,6 +70,33 @@ namespace BoardGame {
             CommonPlayerInfo playerInfo = { usePlayerAccounts, playerAccountStartValue };
 
             return playerInfo;
+        }
+
+
+        SharedTextureInfo createSharedTextureInfo(const commandData& cd)
+        {
+            if (cd.commandType != TypeSharedTextureInfo)
+                std::cerr << "Trying to create CommonPlayerInfo from a " << cd.commandType << "object" << std::endl;
+
+
+            std::filesystem::path path;
+            if (cd.argumentMap.find("src") != cd.argumentMap.end())
+                path = cd.argumentMap.at("src");
+            else
+                throw std::runtime_error("A shared texture must have a src attribute");
+
+            std::string stringID;
+            if (cd.argumentMap.find("id") != cd.argumentMap.end())
+                stringID = cd.argumentMap.at("id");
+            else
+                throw std::runtime_error("A shared texture must have a id attribute");
+
+
+            
+
+            SharedTextureInfo sharedTextureInfo = { path, stringID };
+
+            return sharedTextureInfo;
         }
 
         PlayerInfo createPlayerInfoObject(const commandData& cd)
@@ -362,6 +390,7 @@ namespace BoardGame {
             std::vector<BoardGame::PlayerInfo> players;
             std::vector<BoardGame::DiceInfo> die;
             std::vector<BoardGame::LabelInfo> labels;
+            std::vector<BoardGame::SharedTextureInfo> sharedTextures;
 
             bool hasGameInfo = false;
             bool hasStartMenuInfo = false;
@@ -420,6 +449,10 @@ namespace BoardGame {
                     labels.emplace_back(createLabelInformationObject(cd));
                     break;
 
+                case TypeSharedTextureInfo:
+                    sharedTextures.emplace_back(createSharedTextureInfo(cd));
+                    break;
+
                 default:
                     break;
                 }
@@ -429,7 +462,7 @@ namespace BoardGame {
 
             file.close();
 
-            return { gameInfo, startMenuInfo, entities,  commonPlayerInfo, players, die, labels };
+            return { gameInfo, startMenuInfo, entities,  commonPlayerInfo, players, die, labels, sharedTextures };
         };
     };
 };

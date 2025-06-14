@@ -14,8 +14,7 @@ BoardGame::Entity::Entity(const BoardGame::GameEntityData& entityData, BoardGame
 	:m_X(entityData.x), m_Y(entityData.y)
 {
 	std::string stringPath = entityData.imagePath.string();
-	if (!std::filesystem::exists(entityData.imagePath))
-		throw std::runtime_error("Could not find image at " + stringPath);
+
 
 	// If the path is a shared texture
 	uint16_t textureID;
@@ -25,6 +24,8 @@ BoardGame::Entity::Entity(const BoardGame::GameEntityData& entityData, BoardGame
 	}
 	else
 	{
+		if (!std::filesystem::exists(entityData.imagePath))
+			throw std::runtime_error("Could not find image at " + stringPath);
 		textureID = textureManager.load(stringPath, "");
 	}
 	m_Texture = textureManager.getTexture(textureID);

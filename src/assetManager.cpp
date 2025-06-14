@@ -1,15 +1,17 @@
 #include "assetManager.h"
 #include <stdexcept>
-
+#include <filesystem>
 
 BoardGame::TextureManager::TextureManager()
 {
 }
 
-uint16_t BoardGame::TextureManager::load(std::string filePath, std::string name)
+uint16_t BoardGame::TextureManager::load(std::filesystem::path filePath, std::string name)
 {
+	// TBD: Add checks for if the file exists
 	m_StringIDs[name] = m_Textures.size();
-	m_Textures.emplace_back(LoadTexture(filePath.c_str()));
+	std::string filePathString = filePath.string();
+	m_Textures.emplace_back(LoadTexture(filePathString.c_str()));
 	return m_Textures.size() - 1;
 }
 
@@ -26,3 +28,18 @@ Texture2D* BoardGame::TextureManager::getTexture(uint16_t id)
 	return &(m_Textures[id]);
 
 }
+
+#if _DEBUG
+#include <iostream>
+
+void BoardGame::TextureManager::printOut()
+{
+	std::cout << "Loaded textures\n";
+	for (const auto& [stringID, id] : m_StringIDs) {
+		std::cout << "Texture " << stringID << ": " << id << " " << m_Textures[id].width << "x" << m_Textures[id].height << "\n";
+	}
+	std::cout << std::endl;
+}
+
+
+#endif

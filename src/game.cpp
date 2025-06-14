@@ -17,13 +17,22 @@ BoardGame::Game::Game(Vector2 boardSize, Color backgroundColor,
 	uint8_t playerCount, CommonPlayerInfo commonPlayerInfo, 
 	std::vector<PlayerInfo> playersData, std::vector<DiceInfo> dieData, 
 	int turnDisplayX, int turnDisplayY, int bankDisplayX, int bankDisplayY,
-	std::vector<LabelInfo> labels, bool requireHoverForBanks)
+	std::vector<LabelInfo> labels, bool requireHoverForBanks,
+	std::vector<SharedTextureInfo> sharedTextures)
 	:m_BoardSize(boardSize), m_BackgroundColor(backgroundColor), m_CommonPlayerInfo(commonPlayerInfo), m_RequireHoverForBanks(requireHoverForBanks)
 {
 	m_Camera.target = { m_BoardSize.x / 2, m_BoardSize.y / 2 };
 	m_Camera.offset = Vector2(GetScreenWidth() / 2.0f, GetScreenHeight() / 2.0f);
 	m_Camera.rotation = 0.0f;
 	m_Camera.zoom = 0.5f;
+
+
+	// Load shared textures
+	for (size_t i = 0; i < sharedTextures.size(); i++)
+	{
+		m_TextureManager.load(sharedTextures[i].path, sharedTextures[i].stringID);
+	}
+
 
 	m_Entities.reserve(entityData.size());
 	for (unsigned int i = 0; i < entityData.size(); i++)
@@ -53,6 +62,8 @@ BoardGame::Game::Game(Vector2 boardSize, Color backgroundColor,
 		m_Labels.emplace_back(labels[i]);
 
 
+
+
 	if (m_CommonPlayerInfo.hasAccounts && playerCount > 0)
 	{
 		m_PlayerBankInput.emplace(BoardGame::gui::ValueInput(bankDisplayX, bankDisplayY, m_RequireHoverForBanks));
@@ -64,6 +75,12 @@ BoardGame::Game::Game(Vector2 boardSize, Color backgroundColor,
 
 	m_PlayerNumberDisplayUnit.setValue(1);
 
+
+#if _DEBUG
+	m_TextureManager.printOut();
+
+#endif
+
 }
 
 BoardGame::Game::Game(GameConfigData gameData, uint8_t playerCount)
@@ -72,7 +89,7 @@ BoardGame::Game::Game(GameConfigData gameData, uint8_t playerCount)
 		gameData.commonPlayerInfo, gameData.players, gameData.die,
 		gameData.info.turnDisplayX, gameData.info.turnDisplayY,
 		gameData.info.bankDisplayX, gameData.info.bankDisplayY,
-		gameData.labels, gameData.info.requireHoverForBanks)
+		gameData.labels, gameData.info.requireHoverForBanks, gameData.sharedTextures)
 {
 
 }
