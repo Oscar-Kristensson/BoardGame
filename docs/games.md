@@ -14,6 +14,7 @@ The game data file defines the behavior of the game. The game is based on a simi
 * **PlayerInfo** - Stores information about a player
 * **DiceInfo** - Creates a dice
 * **Label** - Displays text
+* **SharedTexture** - Loads a texture that can be shared by multiple entities
 
 This is an example of how the game.txt file could look:
 
@@ -52,13 +53,13 @@ The game info object has the following parameters:
 #### Entity
 The entity has the following parameters:
 
-| Parameter       | Values        | Comments |
-|-----------------|---------------|----------|
-| id              | string        | Defines the name ID of the entity, which is currently only used for readabillity |
-| img             | string (path) | The path to the image (will be changed to relative to game dir) |
-| x               | int           | The x-cord |
-| y               | int           | The y-cord |
-| draggable       | bool          | Changes whether the entity can be dragged around |
+| Parameter       | Values           | Comments |
+|-----------------|------------------|----------|
+| id              | string           | Defines the name ID of the entity, which is currently only used for readabillity |
+| img             | string (path/id) | The path to the image (will be changed to relative to game dir) or a shared texture |
+| x               | int              | The x-cord |
+| y               | int              | The y-cord |
+| draggable       | bool             | Changes whether the entity can be dragged around |
 
 #### Common Player Info
 The common player info object has the following parameters:
@@ -94,3 +95,11 @@ The label object has the following parameters:
 | text            | string           | The displayed text |
 | fontSize        | int > 255        | Sets the font size |
 | align           | string (L, C, R) | Sets the text align with L for left, C for centered and R for right |
+
+#### Shared Texture
+The shared texture object has the following parameters:
+
+| Parameter       | Values           | Comments |
+|-----------------|------------------|----------|
+| src             | string (path)    | The filepath to the image |
+| id              | string (id)      | The id must start with a "#" and can be used instead of filepaths in some objects (check the objects parameters to be on the safe side)
