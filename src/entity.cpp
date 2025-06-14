@@ -4,14 +4,14 @@
 
 
 BoardGame::Entity::Entity(Texture2D* texture, int x, int y)
-	:m_Texture(texture), m_X(x), m_Y(y), m_Width(texture->width), m_Height(texture->height)
+	:m_Texture(texture), m_X(x), m_Y(y), m_Width(texture->width), m_Height(texture->height), m_IsCopyable(false)
 {
 	
 }
 
 
 BoardGame::Entity::Entity(const BoardGame::GameEntityData& entityData, BoardGame::TextureManager& textureManager)
-	:m_X(entityData.x), m_Y(entityData.y)
+	:m_X(entityData.x), m_Y(entityData.y), m_IsCopyable(entityData.isCopyable)
 {
 	std::string stringPath = entityData.imagePath.string();
 
@@ -44,7 +44,7 @@ void BoardGame::Entity::draw()
 	DrawTexture(*m_Texture, m_X, m_Y, WHITE);
 }
 
-
+// TBD Clean up this mess
 // Move constructor
 /*
 BoardGame::Entity::Entity(BoardGame::Entity&& other) noexcept
@@ -120,7 +120,11 @@ bool BoardGame::Entity::isMouseHovering(int x, int y)
 
 void BoardGame::Entity::move(int x, int y)
 {
-	std::cout << "Moving entity" << x << ", " << y << std::endl;
 	m_X += x;
 	m_Y += y;
+}
+
+bool BoardGame::Entity::getIsCopyable()
+{
+	return m_IsCopyable;
 }

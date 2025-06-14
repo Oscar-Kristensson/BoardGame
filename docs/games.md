@@ -60,6 +60,7 @@ The entity has the following parameters:
 | x               | int              | The x-cord |
 | y               | int              | The y-cord |
 | draggable       | bool             | Changes whether the entity can be dragged around |
+| copyable        | bool             | Changes whether the entity can be copied by hovering and pressing D |
 
 #### Common Player Info
 The common player info object has the following parameters:

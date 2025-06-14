@@ -197,6 +197,7 @@ namespace BoardGame {
             int x;
             int y;
             bool isDraggable = false;
+            bool isCopyable = false;
 
             BoardGame::utils::convertToInt(cd.argumentMap.at("x"), x);
             BoardGame::utils::convertToInt(cd.argumentMap.at("y"), y);
@@ -204,8 +205,11 @@ namespace BoardGame {
             if (cd.argumentMap.find("draggable") != cd.argumentMap.end())
                 isDraggable = BoardGame::utils::convertToBool(cd.argumentMap.at("draggable"));
             
+            if (cd.argumentMap.find("copyable") != cd.argumentMap.end())
+                isCopyable = BoardGame::utils::convertToBool(cd.argumentMap.at("copyable"));
 
-            return { imagePath, x, y, isDraggable};
+
+            return { imagePath, x, y, isDraggable, isCopyable };
         };
 
 

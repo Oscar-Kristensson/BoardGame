@@ -228,6 +228,45 @@ void BoardGame::Game::handleKeyboardEvents(Vector2 mouseWorldPosition, Vector2 m
 
 
 
+	// Check and copy entity
+	if (IsKeyPressed(KEY_D))
+	{
+		std::cout << "Check copy" << std::endl;
+		for (size_t i = 0; i < m_Entities.size(); i++)
+			if (m_Entities[i].getIsCopyable() && m_Entities[i].isMouseHovering(mouseWorldPosition.x, mouseWorldPosition.y))
+			{
+				// Copy entity
+				m_Entities.emplace_back(m_Entities[i]);
+				Entity& newEntity = m_Entities[m_Entities.size() - 1];
+				if (newEntity.m_DragController.has_value())
+					(*newEntity.m_DragController).startDragging();
+
+				std::cout << "Copied" << std::endl;
+				break;
+			}
+
+	}
+
+	// Check and copy entity
+	if (IsKeyPressed(KEY_X))
+	{
+		std::cout << "Check delete" << std::endl;
+		for (size_t i = 0; i < m_Entities.size(); i++)
+			if (m_Entities[i].getIsCopyable() && m_Entities[i].isMouseHovering(mouseWorldPosition.x, mouseWorldPosition.y))
+			{
+				if (i < m_Entities.size()) {
+					m_Entities.erase(m_Entities.begin() + i);
+				}
+
+				std::cout << "Deleted" << std::endl;
+				break;
+			}
+
+	}
+
+
+
+
 
 
 

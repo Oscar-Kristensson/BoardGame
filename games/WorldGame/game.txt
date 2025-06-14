@@ -14,7 +14,8 @@ DiceInfo, x=32, y=155, min=1, max=12;
 
 
 ;# Entities;
-Entity, id="Background Image", img=#importantTexture, x=0, y=0, draggable=false;
+Entity, id="Background Image", img=#importantTexture, x=0, y=0, draggable=false, copyable=false;
+Entity, id="Blockage", img=#blockage, x=1800, y=3000, draggable=true, copyable=true;
 
 ;# Configuring players;
 CommonPlayerInfo, hasAccounts=true, accountBalance=100;
@@ -35,6 +36,7 @@ Label, x=250, y=0, text=Bank, fontSize=34, align=L;
 Label, x=32, y=120, text=Challenge, fontSize=34, align=L; 
 
 SharedTexture, src=games/WorldGame/map.png, id=#importantTexture;
+SharedTexture, src=games/WorldGame/blockage.png, id=#blockage;
 
 
 

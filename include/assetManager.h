@@ -18,6 +18,7 @@ namespace BoardGame
 
 	public:
 		TextureManager();
+		~TextureManager();
 		uint16_t load(std::filesystem::path filePath, std::string name);
 		uint16_t getID(std::string name);
 		Texture2D* getTexture(uint16_t id);

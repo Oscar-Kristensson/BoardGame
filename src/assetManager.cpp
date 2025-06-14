@@ -6,6 +6,13 @@ BoardGame::TextureManager::TextureManager()
 {
 }
 
+BoardGame::TextureManager::~TextureManager()
+{
+	// Unload the textures and free up memory
+	for (size_t i = 0; i < m_Textures.size(); i++)
+		UnloadTexture(m_Textures[i]);
+}
+
 uint16_t BoardGame::TextureManager::load(std::filesystem::path filePath, std::string name)
 {
 	// TBD: Add checks for if the file exists

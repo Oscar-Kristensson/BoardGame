@@ -69,6 +69,7 @@ namespace BoardGame
 		int x;
 		int y;
 		bool isDraggable;
+		bool isCopyable;
 	};
 
 	struct DiceInfo
