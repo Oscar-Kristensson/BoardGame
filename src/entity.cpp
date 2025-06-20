@@ -26,6 +26,8 @@ BoardGame::Entity::Entity(const BoardGame::GameEntityData& entityData, BoardGame
 	{
 		if (!std::filesystem::exists(entityData.imagePath))
 			throw std::runtime_error("Could not find image at " + stringPath);
+		
+		std::cout << "There may be issues when loading images without shared textures. This should be fixed in future" << std::endl;
 		textureID = textureManager.load(stringPath, entityData.imagePath.string());
 	}
 

@@ -16,7 +16,8 @@ DiceInfo, x=32, y=155, min=1, max=12;
 ;# Entities;
 Entity, id="Background Image", img=#importantTexture, x=0, y=0, draggable=false, copyable=false;
 Entity, id="Blockage", img=#blockage, x=1964, y=3144, draggable=true, copyable=true;
-Entity, id="Blockage", img=#ice, x=2102, y=2960, draggable=true, copyable=true;
+Entity, id="Ice", img=#ice, x=2102, y=2960, draggable=true, copyable=true;
+Entity, id="BadWeather", img=#badWeather, x=1741, y=2176, draggable=true, copyable=true;
 
 ;# Configuring players;
 CommonPlayerInfo, hasAccounts=true, accountBalance=100;
@@ -31,6 +32,23 @@ PlayerInfo, x=5812, y=73, color=2affff;
 PlayerInfo, x=5812, y=73, color=ff2aff;
 
 
+Entity, id="Flag", img=#redFlag, x=500, y=500, draggable=true, copyable=true;
+Entity, id="Flag", img=#greenFlag, x=650, y=500, draggable=true, copyable=true;
+Entity, id="Flag", img=#blueFlag, x=800, y=500, draggable=true, copyable=true;
+Entity, id="Flag", img=#yellowFlag, x=950, y=500, draggable=true, copyable=true;
+Entity, id="Flag", img=#magentaFlag, x=1100, y=500, draggable=true, copyable=true;
+Entity, id="Flag", img=#orangeFlag, x=1250, y=500, draggable=true, copyable=true;
+Entity, id="Flag", img=#turkoiseFlag, x=1500, y=500, draggable=true, copyable=true;
+Entity, id="Flag", img=#pinkFlag, x=1750, y=500, draggable=true, copyable=true;
+
+
+
+
+
+
+
+
+
 Label, x=32, y=0, text=Dice, fontSize=34, align=L; 
 Label, x=150, y=0, text=Turn, fontSize=34, align=L; 
 Label, x=250, y=0, text=Bank, fontSize=34, align=L; 
@@ -39,6 +57,21 @@ Label, x=32, y=120, text=Challenge, fontSize=34, align=L;
 SharedTexture, src=games/WorldGame/map.png, id=#importantTexture;
 SharedTexture, src=games/WorldGame/blockage.png, id=#blockage;
 SharedTexture, src=games/WorldGame/ice.png, id=#ice;
+SharedTexture, src=games/WorldGame/badWeather.png, id=#badWeather;
+
+
+
+SharedTexture, src=games/WorldGame/flags/red.png, id=#redFlag;
+SharedTexture, src=games/WorldGame/flags/green.png, id=#greenFlag;
+SharedTexture, src=games/WorldGame/flags/magenta.png, id=#magentaFlag;
+SharedTexture, src=games/WorldGame/flags/oragne.png, id=#orangeFlag;
+SharedTexture, src=games/WorldGame/flags/pink.png, id=#pinkFlag;
+SharedTexture, src=games/WorldGame/flags/turkoise.png, id=#turkoiseFlag;
+SharedTexture, src=games/WorldGame/flags/yellow.png, id=#yellowFlag;
+SharedTexture, src=games/WorldGame/flags/blue.png, id=#blueFlag;
+
+
+
 
 
 
