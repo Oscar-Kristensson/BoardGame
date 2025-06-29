@@ -237,8 +237,13 @@ void BoardGame::Game::handleKeyboardEvents(Vector2 mouseWorldPosition, Vector2 m
 				// Copy entity
 				m_Entities.emplace_back(m_Entities[i]);
 				Entity& newEntity = m_Entities[m_Entities.size() - 1];
-				if (newEntity.m_DragController.has_value())
-					(*newEntity.m_DragController).startDragging();
+				newEntity.setIsClone(true);
+				
+				// Make the new entity draggable if not already
+				if (!newEntity.m_DragController.has_value())
+					newEntity.m_DragController = BoardGame::DragController();
+
+				(*newEntity.m_DragController).startDragging();
 
 				break;
 			}
@@ -314,7 +319,7 @@ void BoardGame::Game::changePlayer(bool increase)
 
 
 
-
+	
 }
 
 

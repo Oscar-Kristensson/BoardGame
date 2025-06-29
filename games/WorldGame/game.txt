@@ -32,14 +32,14 @@ PlayerInfo, x=5812, y=73, color=2affff;
 PlayerInfo, x=5812, y=73, color=ff2aff;
 
 
-Entity, id="Flag", img=#redFlag, x=500, y=500, draggable=true, copyable=true;
-Entity, id="Flag", img=#greenFlag, x=650, y=500, draggable=true, copyable=true;
-Entity, id="Flag", img=#blueFlag, x=800, y=500, draggable=true, copyable=true;
-Entity, id="Flag", img=#yellowFlag, x=950, y=500, draggable=true, copyable=true;
-Entity, id="Flag", img=#magentaFlag, x=1100, y=500, draggable=true, copyable=true;
-Entity, id="Flag", img=#orangeFlag, x=1250, y=500, draggable=true, copyable=true;
-Entity, id="Flag", img=#turkoiseFlag, x=1500, y=500, draggable=true, copyable=true;
-Entity, id="Flag", img=#pinkFlag, x=1750, y=500, draggable=true, copyable=true;
+Entity, id="Flag", img=#redFlag, x=500, y=500, draggable=false, copyable=true;
+Entity, id="Flag", img=#greenFlag, x=650, y=500, draggable=false, copyable=true;
+Entity, id="Flag", img=#blueFlag, x=800, y=500, draggable=false, copyable=true;
+Entity, id="Flag", img=#yellowFlag, x=950, y=500, draggable=false, copyable=true;
+Entity, id="Flag", img=#magentaFlag, x=1100, y=500, draggable=false, copyable=true;
+Entity, id="Flag", img=#orangeFlag, x=1250, y=500, draggable=false, copyable=true;
+Entity, id="Flag", img=#turkoiseFlag, x=1400, y=500, draggable=false, copyable=true;
+Entity, id="Flag", img=#pinkFlag, x=1550, y=500, draggable=false, copyable=true;
 
 
 
@@ -64,7 +64,7 @@ SharedTexture, src=games/WorldGame/badWeather.png, id=#badWeather;
 SharedTexture, src=games/WorldGame/flags/red.png, id=#redFlag;
 SharedTexture, src=games/WorldGame/flags/green.png, id=#greenFlag;
 SharedTexture, src=games/WorldGame/flags/magenta.png, id=#magentaFlag;
-SharedTexture, src=games/WorldGame/flags/oragne.png, id=#orangeFlag;
+SharedTexture, src=games/WorldGame/flags/orange.png, id=#orangeFlag;
 SharedTexture, src=games/WorldGame/flags/pink.png, id=#pinkFlag;
 SharedTexture, src=games/WorldGame/flags/turkoise.png, id=#turkoiseFlag;
 SharedTexture, src=games/WorldGame/flags/yellow.png, id=#yellowFlag;

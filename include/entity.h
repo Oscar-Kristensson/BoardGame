@@ -16,6 +16,7 @@ namespace BoardGame
 		int m_Width;
 		int m_Height;
 		bool m_IsCopyable;
+		bool m_IsClone;
 
 	public:
 		std::optional<BoardGame::DragController> m_DragController;
@@ -46,6 +47,8 @@ namespace BoardGame
 		bool isMouseHovering(int x, int y);
 		void move(int x, int y);
 		bool getIsCopyable();
+		bool getIsClone();
+		void setIsClone(bool isClone);
 
 	};
 }

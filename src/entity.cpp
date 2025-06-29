@@ -4,14 +4,14 @@
 
 
 BoardGame::Entity::Entity(Texture2D* texture, int x, int y)
-	:m_Texture(texture), m_X(x), m_Y(y), m_Width(texture->width), m_Height(texture->height), m_IsCopyable(false)
+	:m_Texture(texture), m_X(x), m_Y(y), m_Width(texture->width), m_Height(texture->height), m_IsCopyable(false), m_IsClone(false)
 {
 	
 }
 
 
 BoardGame::Entity::Entity(const BoardGame::GameEntityData& entityData, BoardGame::TextureManager& textureManager)
-	:m_X(entityData.x), m_Y(entityData.y), m_IsCopyable(entityData.isCopyable)
+	:m_X(entityData.x), m_Y(entityData.y), m_IsCopyable(entityData.isCopyable), m_IsClone(false)
 {
 	std::string stringPath = entityData.imagePath.string();
 
@@ -27,6 +27,7 @@ BoardGame::Entity::Entity(const BoardGame::GameEntityData& entityData, BoardGame
 		if (!std::filesystem::exists(entityData.imagePath))
 			throw std::runtime_error("Could not find image at " + stringPath);
 		
+        // NOTE: There is a suspected bug with loading directly from a path 
 		std::cout << "There may be issues when loading images without shared textures. This should be fixed in future" << std::endl;
 		textureID = textureManager.load(stringPath, entityData.imagePath.string());
 	}
@@ -129,4 +130,14 @@ void BoardGame::Entity::move(int x, int y)
 bool BoardGame::Entity::getIsCopyable()
 {
 	return m_IsCopyable;
+}
+
+bool BoardGame::Entity::getIsClone()
+{
+	return m_IsClone;
+}
+
+void BoardGame::Entity::setIsClone(bool isClone)
+{
+	m_IsClone = isClone;
 }

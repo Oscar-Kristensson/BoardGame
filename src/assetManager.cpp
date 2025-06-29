@@ -1,6 +1,7 @@
 #include "assetManager.h"
 #include <stdexcept>
 #include <filesystem>
+#include <iostream>
 
 BoardGame::TextureManager::TextureManager()
 {
@@ -16,6 +17,9 @@ BoardGame::TextureManager::~TextureManager()
 uint16_t BoardGame::TextureManager::load(std::filesystem::path filePath, std::string name)
 {
 	// TBD: Add checks for if the file exists
+	if (!std::filesystem::exists(filePath))
+		std::cout << "Path " << filePath.string() << " does not exist" << std::endl;
+
 	m_StringIDs[name] = m_Textures.size();
 	std::string filePathString = filePath.string();
 	m_Textures.emplace_back(LoadTexture(filePathString.c_str()));
