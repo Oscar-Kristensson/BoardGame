@@ -26,11 +26,12 @@ namespace BoardGame
 			uint8_t m_FontSize = 64;
 			std::chrono::high_resolution_clock::time_point m_LastTimeUpdated;
 			uint8_t m_TimesToRoll = 0;
+			std::optional<std::vector<uint8_t>> m_NumbersLeft;
 			
 		
 		public:			
 			Dice() = default;
-			Dice(float x, float y, uint8_t minNumber, uint8_t maxNumber);
+			Dice(float x, float y, uint8_t minNumber, uint8_t maxNumber, bool repeatValues);
 
 			/**
 			 * @brief Rolls the dice
@@ -43,6 +44,9 @@ namespace BoardGame
 			uint8_t startRolling();
 			void update(int mouseX, int mouseY);
 			void draw() override;
+			
+			// Fills the m_NumbersLeft (only if it exists)
+			void generateNumbersLeft();
 		};
 	}
 }

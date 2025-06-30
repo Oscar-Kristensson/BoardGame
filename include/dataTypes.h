@@ -78,6 +78,7 @@ namespace BoardGame
 		int y;
 		uint8_t min;
 		uint8_t max;
+		bool repeat;
 	};
 	
 	struct GameConfigData

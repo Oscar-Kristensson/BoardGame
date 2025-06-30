@@ -10,7 +10,7 @@ GameInfo,
 
 
 DiceInfo, x=32, y=35, min=1, max=6;
-DiceInfo, x=32, y=155, min=1, max=12;
+DiceInfo, x=32, y=155, min=1, max=12, repeat=false;
 
 
 ;# Entities;

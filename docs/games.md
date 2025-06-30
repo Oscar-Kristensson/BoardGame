@@ -86,6 +86,7 @@ The dice info object has the following parameters:
 | y               | int             | The dice y-pos |
 | min             | int > max > 255 | Sets the minimum value of the dice |
 | max             | int > 255       | Sets the maximum value of the dice |
+| repeat          | bool            | Sets wether the same values can occur multiple times. Note that once every values is used, it restarts the repeat counter |
 
 #### Label
 The label object has the following parameters:

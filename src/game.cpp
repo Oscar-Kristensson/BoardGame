@@ -26,7 +26,6 @@ BoardGame::Game::Game(Vector2 boardSize, Color backgroundColor,
 	m_Camera.rotation = 0.0f;
 	m_Camera.zoom = 0.5f;
 
-
 	// Load shared textures
 	for (size_t i = 0; i < sharedTextures.size(); i++)
 		m_TextureManager.load(sharedTextures[i].path, sharedTextures[i].stringID);
@@ -53,7 +52,7 @@ BoardGame::Game::Game(Vector2 boardSize, Color backgroundColor,
 
 	m_PlayerBankBalance.reserve(dieData.size());
 	for (size_t i = 0; i < dieData.size(); i++)
-		m_Die.push_back(BoardGame::gui::Dice(dieData[i].x, dieData[i].y, dieData[i].min, dieData[i].max));
+		m_Die.push_back(BoardGame::gui::Dice(dieData[i].x, dieData[i].y, dieData[i].min, dieData[i].max, dieData[i].repeat));
 
 	m_Labels.reserve(labels.size());
 	for (size_t i = 0; i < labels.size(); i++)

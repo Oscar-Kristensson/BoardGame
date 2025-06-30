@@ -236,6 +236,7 @@ namespace BoardGame {
             int y = 0;
             uint8_t min = 0;
             uint8_t max = 0;
+            bool repeat = true;
 
             if (cd.argumentMap.find("x") != cd.argumentMap.end())
                 BoardGame::utils::convertToInt(cd.argumentMap.at("x"), x);
@@ -249,8 +250,11 @@ namespace BoardGame {
             if (cd.argumentMap.find("max") != cd.argumentMap.end())
                 BoardGame::utils::convertToUint8(cd.argumentMap.at("max"), max);
 
+            if (cd.argumentMap.find("repeat") != cd.argumentMap.end())
+                repeat = BoardGame::utils::convertToBool(cd.argumentMap.at("repeat"));
 
-            DiceInfo diceInfo = { x, y, min, max };
+
+            DiceInfo diceInfo = { x, y, min, max, repeat };
             return diceInfo;
         }
 
