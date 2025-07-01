@@ -8,6 +8,12 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 # Only for single-config generators (MinGW, Make)
 if(NOT CMAKE_CONFIGURATION_TYPES)
     set(allowed_build_types Debug Release RelWithDebInfo MinSizeRel Dist)
+    
+    # Create CMAKE_BUILD_TYPE in cache if not defined yet
+    if(NOT DEFINED CMAKE_BUILD_TYPE)
+        set(CMAKE_BUILD_TYPE "Release" CACHE STRING "Choose the type of build." FORCE)
+    endif()
+
     set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS ${allowed_build_types})
 endif()
 

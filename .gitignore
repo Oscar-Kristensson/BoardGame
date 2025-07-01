@@ -22,5 +22,8 @@ games/WorldGame/Uppgifter.pdf
 src/CMakeFiles
 CMakeFiles
 
+# Scripts
+scripts/__pycache__
+
 # Raylib library
 lib/libraylib.a
