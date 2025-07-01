@@ -5,7 +5,7 @@
     "outputDir": "out",
     "programName": "BoardGame",
     "checksumFile": "checksums.txt",
-    "version":"1.0.0-beta",
+    "version":"<ask>",
     "metadataFile": "metadata.json",
     "includeGames": [],
     "copyFiles": {

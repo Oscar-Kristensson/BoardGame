@@ -21,23 +21,18 @@ else:
     PLATFORM = "<platform>"
 
 
-
-
-
 with open("scripts/packageConfig.json", "r") as f:
     CONFIG = json.load(f) 
 
 
-print("Current working dir", os.getcwd())
+while CONFIG["version"] == "<ask>":
+    userInput = input("Version: (stop with q)")
+    if userInput == "q":
+        quit()
+    
+    if input(f'Confirm version "{userInput}" (Y/n)') == "Y":
+        CONFIG["version"] = userInput
 
-if os.path.isdir("build/dist"):
-    print("The build/dist dir already exists. Trying to auto remove it", end=": ")
-    try:
-        shutil.rmtree("build/dist")
-        print("Success")
-    except Exception as e:
-        print(f"\nSomething went wrong: \n {e}")
-        quit("Failed to package")
 
 def getFileHash(file_path, returnDict = False):
     out = []
@@ -98,94 +93,119 @@ def installGame(name):
     
     copyFolder(f"games/{name}")
 
-# Create the new dirs
-userCheckAndCreateDir("build")
-userCheckAndCreateDir(f"build/{CONFIG['distDir']}", True)
-userCheckAndCreateDir(f"build/{CONFIG['distDir']}/games", True)
-userCheckAndCreateDir(f"build/{CONFIG['outputDir']}", True)
 
 
-# Copy executable
-extension = ""
-if sys.platform == "win32":
-    extension = ".exe"
-
-
-if not os.path.exists(f"{CONFIG['executable']}{extension}"):
-    print(f"ERROR: The executable {CONFIG['executable']} could not be found. Check the it exists and works.")
-    quit("Failed to package")
-
-shutil.copyfile(f"{CONFIG['executable']}{extension}", f"build/{CONFIG['distDir']}/{CONFIG['executableOutput']}{extension}")
-
-
-
-# Copy folders
-copyFolder("assets")
-copyFolder("licenses")
-
-installedGames = []
-for game in CONFIG["includeGames"]:
-    print(f"Installing game {game}")
-    if installGame(game):
-        installedGames.append(game)
-
-
-
-# Copy Windows files
-if PLATFORM == "windows":
-    for scriptName in CONFIG["copyFiles"]["windowsScripts"]:
-        shutil.copyfile(f"scripts/{scriptName}", f"build/{CONFIG['distDir']}/{scriptName}")
-
-
-# Copy files
-for fileName in CONFIG["copyFiles"]["all"]:
-    if os.path.exists(fileName):
-        print(f"Copying file {fileName}")
-        shutil.copyfile(f"{fileName}", f"build/{CONFIG['distDir']}/{fileName}")
-    else:
-        print(f"Failed to copy {fileName} because the file does not exist")
-
-
-
-# Add execution permissions on MacOS and linux
-if PLATFORM == "linux" or PLATFORM == "macOS":
-    print("Adding execution permissions")
-    subprocess.run(["chmod", "+x", f"build/{CONFIG['distDir']}/{CONFIG['executableOutput']}{extension}"])
-
-# Compressing folders
-print("Compressing folders")
-compressFolder("build/dist", f"build/{CONFIG['outputDir']}/{CONFIG['programName']}-{PLATFORM}-{CONFIG['version']}.tar.xz")
-shutil.make_archive(f"build/{CONFIG['outputDir']}/{CONFIG['programName']}-{PLATFORM}-{CONFIG['version']}", "zip", f"build/dist")
-
-
-# Generating metadata
-CHECKSUMS = {
-    f"{CONFIG['programName']}-{PLATFORM}-{CONFIG['version']}.tar.xz": getFileHash(f"build/{CONFIG['outputDir']}/{CONFIG['programName']}-{PLATFORM}-{CONFIG['version']}.tar.xz", True),
-    f"{CONFIG['programName']}-{PLATFORM}-{CONFIG['version']}.zip": getFileHash(f"build/{CONFIG['outputDir']}/{CONFIG['programName']}-{PLATFORM}-{CONFIG['version']}.zip", True)
-}
+def package():
 
 
 
 
-# Generate CHECKSUM TEXT
-string = ""
-for key in CHECKSUMS:
-    string += f"\n{key}:\n"
-    for algorithm in CHECKSUMS[key]:
-        string += f"{algorithm}: {CHECKSUMS[key][algorithm]}\n"
+    print("Current working dir", os.getcwd())
 
-print(string)
-
-with open(f"build/{CONFIG['outputDir']}/{CONFIG['checksumFile']}", "w") as f:
-    f.write(string)
-
+    if os.path.isdir("build/dist"):
+        print("The build/dist dir already exists. Trying to auto remove it", end=": ")
+        try:
+            shutil.rmtree("build/dist")
+            print("Success")
+        except Exception as e:
+            print(f"\nSomething went wrong: \n {e}")
+            quit("Failed to package")
 
 
-METADATA = {
-    "checksums": CHECKSUMS,
-    "version": CONFIG["version"]
-}
+    # Create the new dirs
+    userCheckAndCreateDir("build")
+    userCheckAndCreateDir(f"build/{CONFIG['distDir']}", True)
+    userCheckAndCreateDir(f"build/{CONFIG['distDir']}/games", True)
+    userCheckAndCreateDir(f"build/{CONFIG['outputDir']}", True)
 
 
-with open(f"build/{CONFIG['outputDir']}/{CONFIG['metadataFile']}", "w") as f:
-    json.dump(METADATA, f, indent=4)
+    # Copy executable
+    extension = ""
+    if sys.platform == "win32":
+        extension = ".exe"
+
+
+    if not os.path.exists(f"{CONFIG['executable']}{extension}"):
+        print(f"ERROR: The executable {CONFIG['executable']} could not be found. Check the it exists and works.")
+        quit("Failed to package")
+
+    shutil.copyfile(f"{CONFIG['executable']}{extension}", f"build/{CONFIG['distDir']}/{CONFIG['executableOutput']}{extension}")
+
+
+
+    # Copy folders
+    copyFolder("assets")
+    copyFolder("licenses")
+
+    installedGames = []
+    for game in CONFIG["includeGames"]:
+        print(f"Installing game {game}")
+        if installGame(game):
+            installedGames.append(game)
+
+
+
+    # Copy Windows files
+    if PLATFORM == "windows":
+        for scriptName in CONFIG["copyFiles"]["windowsScripts"]:
+            shutil.copyfile(f"scripts/{scriptName}", f"build/{CONFIG['distDir']}/{scriptName}")
+
+
+    # Copy files
+    for fileName in CONFIG["copyFiles"]["all"]:
+        if os.path.exists(fileName):
+            print(f"Copying file {fileName}")
+            shutil.copyfile(f"{fileName}", f"build/{CONFIG['distDir']}/{fileName}")
+        else:
+            print(f"Failed to copy {fileName} because the file does not exist")
+
+
+
+    # Add execution permissions on MacOS and linux
+    if PLATFORM == "linux" or PLATFORM == "macOS":
+        print("Adding execution permissions")
+        subprocess.run(["chmod", "+x", f"build/{CONFIG['distDir']}/{CONFIG['executableOutput']}{extension}"])
+
+    # Compressing folders
+    print("Compressing folders")
+    compressFolder("build/dist", f"build/{CONFIG['outputDir']}/{CONFIG['programName']}-{PLATFORM}-{CONFIG['version']}.tar.xz")
+    shutil.make_archive(f"build/{CONFIG['outputDir']}/{CONFIG['programName']}-{PLATFORM}-{CONFIG['version']}", "zip", f"build/dist")
+
+
+    # Generating metadata
+    CHECKSUMS = {
+        f"{CONFIG['programName']}-{PLATFORM}-{CONFIG['version']}.tar.xz": getFileHash(f"build/{CONFIG['outputDir']}/{CONFIG['programName']}-{PLATFORM}-{CONFIG['version']}.tar.xz", True),
+        f"{CONFIG['programName']}-{PLATFORM}-{CONFIG['version']}.zip": getFileHash(f"build/{CONFIG['outputDir']}/{CONFIG['programName']}-{PLATFORM}-{CONFIG['version']}.zip", True)
+    }
+
+
+
+
+    # Generate CHECKSUM TEXT
+    string = ""
+    for key in CHECKSUMS:
+        string += f"\n{key}:\n"
+        for algorithm in CHECKSUMS[key]:
+            string += f"{algorithm}: {CHECKSUMS[key][algorithm]}\n"
+
+    print(string)
+
+    with open(f"build/{CONFIG['outputDir']}/{CONFIG['checksumFile']}", "w") as f:
+        f.write(string)
+
+
+
+    METADATA = {
+        "checksums": CHECKSUMS,
+        "version": CONFIG["version"]
+    }
+
+
+    with open(f"build/{CONFIG['outputDir']}/{CONFIG['metadataFile']}", "w") as f:
+        json.dump(METADATA, f, indent=4)
+
+    return METADATA
+
+
+if __name__ == "__main__":
+    package()
