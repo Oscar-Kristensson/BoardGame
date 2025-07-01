@@ -4,6 +4,8 @@
 #include "raylib.h"
 #include <string>
 #include <chrono>
+#include <optional>
+#include <vector>
 
 
 namespace BoardGame

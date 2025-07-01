@@ -4,11 +4,19 @@ import json
 import tarfile
 import hashlib
 import sys
+import subprocess
 
 
 
 if sys.platform == "win32":
     PLATFORM = "windows"
+
+elif sys.platform.startswith("linux"):
+    PLATFORM = "linux"
+
+elif sys.platform == "darwin":
+    PLATFORM = "darwin"
+
 else:
     PLATFORM = "<platform>"
 
@@ -124,7 +132,7 @@ for game in CONFIG["includeGames"]:
 
 
 # Copy Windows files
-if sys.platform == "win32":
+if PLATFORM == "windows":
     for scriptName in CONFIG["copyFiles"]["windowsScripts"]:
         shutil.copyfile(f"scripts/{scriptName}", f"build/{CONFIG['distDir']}/{scriptName}")
 
@@ -138,6 +146,11 @@ for fileName in CONFIG["copyFiles"]["all"]:
         print(f"Failed to copy {fileName} because the file does not exist")
 
 
+
+# Add execution permissions on MacOS and linux
+if PLATFORM == "linux" or PLATFORM == "macOS":
+    print("Adding execution permissions")
+    subprocess.run(["chmod", "+x", f"build/{CONFIG['distDir']}/{CONFIG['executableOutput']}{extension}"])
 
 # Compressing folders
 print("Compressing folders")
