@@ -1,6 +1,7 @@
 # BoardGame
 
 - [Building](#building)
+    - [Build script](#the-build-script)
     - [VS 2022](#vs-2022)
     - [MinGW](#mingw)
     - [CMake](#cmake)
@@ -10,6 +11,14 @@
 ## Building
 > Note
 > This section is only applicable to the source version and not the precompiled version.
+
+
+### The build script
+To be able to quickly build the project, you can use the build.py script. In the script, you can choose the build system and the type. Run it with the following command:
+``` bash
+python scripts/build.py
+```
+
 
 ### VS 2022
 Run the following script:
@@ -79,14 +88,6 @@ cmake --build .                         # Builds the game
 This is known to work for MacOS with the clang++ compiler and the "raylib-5.5_macos.tar.gz" library as well as linux Pop!_OS with g++ and "raylib-5.5-linux_amd64.tar.gz".
 
 
-### Generate Assets
-(This is game specific and should not be here)
-Currently all assets are created as SVG:s. To render them out you can use the following python scripts:
-``` bash
-python scripts/renderAssets.py
-```
-The script requires inkscape to be installed and that the correct path is in the script.
-
 ### Building the distributable game
 The instructions above are for building the distributable game. Start off by compiling a release version of the game (se instructions above). This should make sure that there is a file called game.exe in build/bin/Release/. If that is not the case, move the file or change "executable" to the correct path in scripts/packageConfig. 
 
@@ -96,12 +97,16 @@ Inorder to run the following script you need to have python installed:
 python scripts/package.py
 ```
 
+
+> Note: 
+> This script can be automatically run from scripts/build.py if 
+
 If every thing went smoothly, you should have ended up with a compressed file containing the executable and required assets. 
 > Note:
-> There is currently some issue with the script on MacOS. The workaround for this is to copy the executable from the Release dir to the dist dir and rename it to "BoardGame". Rename the dist dir and compress it to a zip file. 
+> There is currently some issue with the script on MacOS. The workaround for this is to copy the executable from the Release dir to the dist dir and rename it to "BoardGame". Rename the dist dir and compress it to a zip file. (This may be fixed)
 
 > Note:
-> On linux you may have to run chmod +x BoardGame in the dist folder inorder for the executable to be able to execute.
+> On linux you may have to run chmod +x BoardGame in the dist folder inorder for the executable to be able to execute. The script should try to give it execution permissions, but that may fail.
 
 If the script failed or you can not run the script, simply create a compressed file containing the assets, licenses and games folders as well as the executable it self.
 
