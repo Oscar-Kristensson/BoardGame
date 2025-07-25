@@ -126,6 +126,9 @@ def createInformationPanelUI():
 
     autoPackage = input("Do you want to package? (Y/n): ") == "Y"
 
+    if autoPackage and buildType != "Release":
+        print("Warning! Use the Release buildType inorder to package!")
+
     return {
         "system": buildSystem,
         "type": buildType,
